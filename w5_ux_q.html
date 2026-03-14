@@ -1,621 +1,554 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>W5: クイズ - ユーザー心理と包摂性</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    
-    .container {
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      max-width: 700px;
-      width: 100%;
-      overflow: hidden;
-    }
-    
-    .header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 40px 30px;
-      text-align: center;
-    }
-    
-    .header h1 {
-      font-size: 2em;
-      margin-bottom: 8px;
-      font-weight: 700;
-    }
-    
-    .header p {
-      font-size: 1em;
-      opacity: 0.95;
-      font-weight: 500;
-    }
-    
-    .progress-container {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 15px 30px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    
-    .progress-bar {
-      width: 100%;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 3px;
-      overflow: hidden;
-      margin-bottom: 10px;
-    }
-    
-    .progress-fill {
-      height: 100%;
-      background: white;
-      width: 0%;
-      transition: width 0.3s ease;
-      border-radius: 3px;
-    }
-    
-    .progress-text {
-      color: white;
-      font-size: 0.9em;
-      text-align: center;
-      font-weight: 600;
-    }
-    
-    .content {
-      padding: 40px 30px;
-      min-height: 400px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    
-    .quiz-section {
-      display: none;
-    }
-    
-    .quiz-section.active {
-      display: block;
-    }
-    
-    .quiz-question {
-      font-size: 1.3em;
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 25px;
-      line-height: 1.5;
-    }
-    
-    .quiz-options {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 25px;
-    }
-    
-    .option-label {
-      display: flex;
-      align-items: center;
-      padding: 16px;
-      background: #f5f5f5;
-      border: 2px solid transparent;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 1em;
-      color: #333;
-    }
-    
-    .option-label:hover {
-      background: #f0f0f0;
-      border-color: #667eea;
-    }
-    
-    .option-label input[type="radio"] {
-      margin-right: 12px;
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-      accent-color: #667eea;
-    }
-    
-    .option-label.selected {
-      background: #e8eaf6;
-      border-color: #667eea;
-    }
-    
-    .option-label.correct {
-      background: #c8e6c9;
-      border-color: #4caf50;
-      border-width: 3px;
-    }
-    
-    .option-label.incorrect {
-      background: #ffcdd2;
-      border-color: #f44336;
-      border-width: 3px;
-    }
-    
-    .feedback-box {
-      margin-top: 20px;
-      padding: 16px;
-      border-radius: 8px;
-      border-left: 4px solid;
-      display: none;
-      font-size: 0.95em;
-      line-height: 1.6;
-    }
-    
-    .feedback-box.show {
-      display: block;
-    }
-    
-    .feedback-box.correct {
-      background: #f1f8f4;
-      border-color: #4caf50;
-      color: #2e7d32;
-    }
-    
-    .feedback-box.incorrect {
-      background: #fde7e7;
-      border-color: #f44336;
-      color: #c62828;
-    }
-    
-    .feedback-title {
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-    
-    .button-group {
-      display: flex;
-      gap: 12px;
-      margin-top: 25px;
-    }
-    
-    .btn {
-      flex: 1;
-      padding: 14px;
-      border: none;
-      border-radius: 8px;
-      font-size: 1em;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-      text-align: center;
-    }
-    
-    .btn-submit {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-    }
-    
-    .btn-submit:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
-    }
-    
-    .btn-submit:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-    
-    .btn-next {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-    }
-    
-    .btn-next:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
-    }
-    
-    .score-display {
-      text-align: center;
-      padding: 40px 20px;
-    }
-    
-    .score-number {
-      font-size: 3.5em;
-      font-weight: 700;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin: 20px 0;
-    }
-    
-    .score-message {
-      font-size: 1.2em;
-      color: #333;
-      margin: 20px 0;
-      font-weight: 600;
-    }
-    
-    .score-detail {
-      font-size: 1em;
-      color: #666;
-      margin: 10px 0;
-    }
-    
-    .score-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 30px;
-    }
-    
-    .score-buttons a {
-      padding: 12px 24px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-      text-align: center;
-      transition: all 0.3s ease;
-      font-size: 1em;
-    }
-    
-    .btn-next-week {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-    }
-    
-    .btn-next-week:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
-    }
-    
-    .btn-review {
-      background: #f5f5f5;
-      color: #667eea;
-      border: 2px solid #667eea;
-    }
-    
-    .btn-review:hover {
-      background: #efefef;
-    }
-    
-    .btn-home {
-      background: #f5f5f5;
-      color: #333;
-      border: 2px solid #ddd;
-    }
-    
-    .btn-home:hover {
-      background: #efefef;
-    }
-    
-    .footer {
-      background: #f9f9f9;
-      padding: 20px;
-      text-align: center;
-      color: #999;
-      font-size: 0.85em;
-      border-top: 1px solid #eee;
-    }
-    
-    @media (max-width: 600px) {
-      .header {
-        padding: 30px 20px;
-      }
-      
-      .header h1 {
-        font-size: 1.6em;
-      }
-      
-      .content {
-        padding: 25px 20px;
-      }
-      
-      .score-number {
-        font-size: 2.5em;
-      }
-      
-      .button-group {
-        flex-direction: column;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W5: クイズ - ユーザー心理と包摂性</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.8;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .week-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .progress-info {
+            background: rgba(0,0,0,0.1);
+            padding: 15px 30px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .quiz-container {
+            margin-bottom: 30px;
+        }
+        
+        .question {
+            background: #f5f7fa;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+        }
+        
+        .question h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .question p {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 15px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        .option label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+        
+        .option.selected-correct {
+            background: #d4edda;
+            border-color: #28a745;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.3);
+        }
+        
+        .option.selected-incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.3);
+        }
+        
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .feedback.show {
+            display: block;
+        }
+        
+        .feedback.correct {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+        
+        .feedback.incorrect {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+        }
+        
+        .feedback strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+        
+        .submit-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .score-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            margin-top: 40px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .score-section.show {
+            display: block;
+        }
+        
+        .score-number {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .score-message {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .nav-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        
+        .nav-btn-primary {
+            background: white;
+            color: #667eea;
+        }
+        
+        .nav-btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .nav-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .question {
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>🎯 W5 クイズ</h1>
-      <p>ユーザー心理と包摂性 - 理解度チェック</p>
-    </div>
-    
-    <div class="progress-container">
-      <div class="progress-bar">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
-      <div class="progress-text"><span id="progressText">問題 1/10</span></div>
-    </div>
-    
-    <div class="content">
-      <div class="quiz-section active" id="quizSection">
-        <div class="quiz-question" id="questionText"></div>
-        <div class="quiz-options" id="optionsContainer"></div>
-        <div class="feedback-box" id="feedbackBox"></div>
-        <div class="button-group">
-          <button class="btn btn-submit" id="submitBtn" onclick="submitAnswer()">回答する</button>
+    <div class="container">
+        <div class="header">
+            <div class="week-badge">🧠 W5 クイズ</div>
+            <h1>ユーザー心理と包摂性</h1>
         </div>
-      </div>
-      
-      <div class="quiz-section" id="scoreSection">
-        <div class="score-display">
-          <div>🎉 クイズ完了！</div>
-          <div class="score-number" id="scoreNumber">0/10</div>
-          <div class="score-message" id="scoreMessage"></div>
-          <div class="score-detail" id="scoreDetail"></div>
-          <div class="score-buttons" id="scoreButtons"></div>
+        <div class="progress-info">
+            <span id="progress">問題 1/10</span>
         </div>
-      </div>
+        
+        <div class="content" id="quizContent">
+            <!-- Questions will be inserted here -->
+        </div>
+        
+        <div class="score-section" id="scoreSection">
+            <h2>🎉 クイズ完了！</h2>
+            <div class="score-number"><span id="scoreValue">0</span>/<span id="totalQuestions">10</span></div>
+            <div class="score-message" id="scoreMessage"></div>
+            <div class="nav-buttons" id="navButtons"></div>
+        </div>
+        
+        <div class="footer">
+            <p>📚 UX学習プログラム Week 5/7 クイズ</p>
+        </div>
     </div>
     
-    <div class="footer">
-      📚 UX学習プログラム Week 5/7 クイズ
-    </div>
-  </div>
-
-  <script>
-    const quizData = [
-      {
-        question: "行動経済学における『アンカリング効果』とは何ですか？",
-        options: [
-          { text: "最初に提示された情報が判断に大きく影響する現象", correct: true },
-          { text: "ユーザーがデフォルト設定のまま選択肢を受け入れる傾向", correct: false },
-          { text: "同じ情報でも提示方法によって受け止め方が変わる現象", correct: false },
-          { text: "自分の信念に合った情報を探し、合わない情報を無視する傾向", correct: false }
-        ],
-        explanation: "アンカリング効果は、最初に提示された情報（アンカー）がその後の判断に大きく影響する現象です。例えば、価格表示で元値を大きく表示することで、割引値が安く感じられます。"
-      },
-      {
-        question: "認知心理学で『認知負荷』を最小化するために、UIデザインで推奨されることは？",
-        options: [
-          { text: "できるだけ多くの情報を1画面に表示する", correct: false },
-          { text: "シンプルで段階的なプロセス設計を行う", correct: true },
-          { text: "複雑な機能を前面に出して見栄えを良くする", correct: false },
-          { text: "ユーザーの判断を最小限にするため選択肢を1つだけ提供する", correct: false }
-        ],
-        explanation: "認知負荷は、ユーザーが一度に処理できる情報量には限界があるという概念です。シンプルで段階的な設計により、ユーザーストレスを減らし、理解しやすいインターフェースが実現できます。"
-      },
-      {
-        question: "メンタルモデルとは何ですか？",
-        options: [
-          { text: "ユーザーが持つ『システムはこう動く』という心的モデル", correct: true },
-          { text: "デザイナーが設計時に想定する理想的なユーザー像", correct: false },
-          { text: "ユーザーのファッションやブランド選択に関する知識", correct: false },
-          { text: "心理学的なパーソナリティタイプの分類方法", correct: false }
-        ],
-        explanation: "メンタルモデルはユーザーが持つ心的モデルで、『このシステムはこう動く』という予測を表します。設計がメンタルモデルと一致していれば、直感的に理解できます。"
-      },
-      {
-        question: "作業記憶（短期記憶）の容量に関する一般的な限界は？",
-        options: [
-          { text: "3±1個の情報", correct: false },
-          { text: "7±2個の情報", correct: true },
-          { text: "15±5個の情報", correct: false },
-          { text: "制限なし、訓練で無制限に保持可能", correct: false }
-        ],
-        explanation: "人間の短期記憶は一般的に7±2個の情報しか保持できません。ナビゲーションメニューは7個程度に限定するなど、この制限を考慮した設計が重要です。"
-      },
-      {
-        question: "ゲシュタルト心理学の『近接性』原則とは？",
-        options: [
-          { text: "似た色や形の要素を一つのグループとして認識すること", correct: false },
-          { text: "近い要素は一緒のグループと無意識に認識すること", correct: true },
-          { text: "ユーザーが画面の中央に注目する傾向", correct: false },
-          { text: "ユーザーが複数の要素の平均値を判断基準とする傾向", correct: false }
-        ],
-        explanation: "近接性の原則では、物理的に近い要素は、無意識に一つのグループとして認識されます。UIデザインでは、関連する要素をグループ化することで、視覚的な統一感を作ります。"
-      },
-      {
-        question: "グローバルなUXデザインにおいて、文化人類学の知見が重要な理由は？",
-        options: [
-          { text: "すべての文化で同じUIが最適だから", correct: false },
-          { text: "ユーザーの行動は文化的背景に大きく影響されるから", correct: true },
-          { text: "文化は技術進化に影響しないから", correct: false },
-          { text: "西洋のデザイン原則が普遍的だから", correct: false }
-        ],
-        explanation: "ユーザーの行動は、その文化的背景に大きく影響されます。同じUIでも、文化によって解釈が異なることがあり、グローバルなUXデザインでは文化的差異を考慮することが不可欠です。"
-      },
-      {
-        question: "人間工学（エルゴノミクス）がUXデザインで重要な理由は？",
-        options: [
-          { text: "人間の身体的特性を考慮した設計ができるから", correct: true },
-          { text: "経済コストを削減できるから", correct: false },
-          { text: "デザインを美しくしてくれるから", correct: false },
-          { text: "技術的な問題を解決するから", correct: false }
-        ],
-        explanation: "人間工学は、人間の身体的特性を考慮した設計を研究します。スマートフォンのボタンサイズやWebサイトのテキストサイズなど、人間の能力に合わせた設計が重要です。"
-      },
-      {
-        question: "ISO 9241-11で定義されるユーザビリティの3軸は？",
-        options: [
-          { text: "速度、コスト、美しさ", correct: false },
-          { text: "有効性、効率性、満足度", correct: true },
-          { text: "機能性、安全性、経済性", correct: false },
-          { text: "アクセシビリティ、可視性、操作性", correct: false }
-        ],
-        explanation: "ISO 9241-11では、ユーザビリティを『有効性』『効率性』『満足度』の3軸で定義しています。これらすべてを達成するには、心理学、人間工学、認知科学の知識が必要です。"
-      },
-      {
-        question: "WCAG 2.1の4つの基本原則として正しくないものはどれですか？",
-        options: [
-          { text: "認識可能性（Perceivable）", correct: false },
-          { text: "操作可能性（Operable）", correct: false },
-          { text: "効率性（Efficiency）", correct: true },
-          { text: "堅牢性（Robust）", correct: false }
-        ],
-        explanation: "WCAG 2.1の4つの基本原則は『認識可能性』『操作可能性』『理解可能性』『堅牢性』です。『効率性』はこの4原則に含まれていません。"
-      },
-      {
-        question: "包摂的設計（インクルーシブデザイン）の哲学について、正しいものは？",
-        options: [
-          { text: "障害者専用の特別な設計を作ること", correct: false },
-          { text: "障害者対応と思われるアクセシビリティ対応は、実は全ユーザーの体験を向上させる", correct: true },
-          { text: "健常者向けに最適化してから障害者向けに調整する", correct: false },
-          { text: "アクセシビリティはコストが高いので優先度を下げる", correct: false }
-        ],
-        explanation: "包摂的設計では、一見障害者向けと思われるアクセシビリティ対応が、実は全ユーザーに利益をもたらすことを認識しています。例えば、動画のキャプションは聴覚障害者だけでなく、音声を出せない環境のユーザーにも役立ちます。"
-      }
-    ];
-
-    let currentQuestion = 0;
-    let score = 0;
-    let answered = false;
-    let shuffledOptions = [];
-
-    function shuffleArray(array) {
-      const shuffled = [...array];
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
-      return shuffled;
-    }
-
-    function renderQuestion() {
-      const quiz = quizData[currentQuestion];
-      shuffledOptions = shuffleArray(quiz.options);
-
-      document.getElementById('questionText').textContent = quiz.question;
-      document.getElementById('progressText').textContent = `問題 ${currentQuestion + 1}/${quizData.length}`;
-
-      const progress = ((currentQuestion + 1) / quizData.length) * 100;
-      document.getElementById('progressFill').style.width = progress + '%';
-
-      const optionsHTML = shuffledOptions.map((option, idx) => `
-        <label class="option-label" onclick="selectOption(${idx})">
-          <input type="radio" name="answer" value="${idx}">
-          <span>${option.text}</span>
-        </label>
-      `).join('');
-
-      document.getElementById('optionsContainer').innerHTML = optionsHTML;
-      document.getElementById('feedbackBox').classList.remove('show', 'correct', 'incorrect');
-      document.getElementById('feedbackBox').innerHTML = '';
-      document.getElementById('submitBtn').style.display = 'block';
-      document.getElementById('submitBtn').disabled = false;
-
-      answered = false;
-    }
-
-    function selectOption(idx) {
-      document.querySelectorAll('.option-label').forEach(label => {
-        label.classList.remove('selected');
-      });
-      document.querySelectorAll('.option-label')[idx].classList.add('selected');
-      document.querySelector(`input[value="${idx}"]`).checked = true;
-    }
-
-    function submitAnswer() {
-      if (!document.querySelector('input[name="answer"]:checked')) {
-        alert('回答を選択してください');
-        return;
-      }
-
-      answered = true;
-      const selectedIdx = parseInt(document.querySelector('input[name="answer"]:checked').value);
-      const selectedOption = shuffledOptions[selectedIdx];
-      const quiz = quizData[currentQuestion];
-
-      const feedbackBox = document.getElementById('feedbackBox');
-      const optionLabels = document.querySelectorAll('.option-label');
-
-      if (selectedOption.correct) {
-        score++;
-        optionLabels[selectedIdx].classList.add('correct');
-        feedbackBox.classList.add('correct');
-        feedbackBox.innerHTML = `<div class="feedback-title">✅ 正解です！</div><div>${quiz.explanation}</div>`;
-      } else {
-        const correctIdx = shuffledOptions.findIndex(opt => opt.correct);
-        optionLabels[selectedIdx].classList.add('incorrect');
-        optionLabels[correctIdx].classList.add('correct');
-        feedbackBox.classList.add('incorrect');
-        feedbackBox.innerHTML = `<div class="feedback-title">❌ 残念、不正解です</div><div>${quiz.explanation}</div>`;
-      }
-
-      feedbackBox.classList.add('show');
-      document.getElementById('submitBtn').disabled = true;
-
-      setTimeout(() => {
-        if (currentQuestion < quizData.length - 1) {
-          currentQuestion++;
-          renderQuestion();
-        } else {
-          showScore();
+    <script>
+        const quizData = [
+            {
+                question: "行動経済学における『アンカリング効果』とは何ですか？",
+                options: [
+                    { text: "最初に提示された情報が判断に大きく影響する現象", correct: true },
+                    { text: "ユーザーがデフォルト設定のまま選択肢を受け入れる傾向", correct: false },
+                    { text: "同じ情報でも提示方法によって受け止め方が変わる現象", correct: false },
+                    { text: "自分の信念に合った情報を探し、合わない情報を無視する傾向", correct: false }
+                ],
+                explanation: "アンカリング効果は、最初に提示された情報（アンカー）がその後の判断に大きく影響する現象です。例えば、価格表示で元値を大きく表示することで、割引値が安く感じられます。"
+            },
+            {
+                question: "認知心理学で『認知負荷』を最小化するために、UIデザインで推奨されることは？",
+                options: [
+                    { text: "できるだけ多くの情報を1画面に表示する", correct: false },
+                    { text: "シンプルで段階的なプロセス設計を行う", correct: true },
+                    { text: "複雑な機能を前面に出して見栄えを良くする", correct: false },
+                    { text: "ユーザーの判断を最小限にするため選択肢を1つだけ提供する", correct: false }
+                ],
+                explanation: "認知負荷は、ユーザーが一度に処理できる情報量には限界があるという概念です。シンプルで段階的な設計により、ユーザーストレスを減らし、理解しやすいインターフェースが実現できます。"
+            },
+            {
+                question: "メンタルモデルとは何ですか？",
+                options: [
+                    { text: "ユーザーが持つ『システムはこう動く』という心的モデル", correct: true },
+                    { text: "デザイナーが設計時に想定する理想的なユーザー像", correct: false },
+                    { text: "ユーザーのファッションやブランド選択に関する知識", correct: false },
+                    { text: "心理学的なパーソナリティタイプの分類方法", correct: false }
+                ],
+                explanation: "メンタルモデルはユーザーが持つ心的モデルで、『このシステムはこう動く』という予測を表します。設計がメンタルモデルと一致していれば、直感的に理解できます。"
+            },
+            {
+                question: "作業記憶（短期記憶）の容量に関する一般的な限界は？",
+                options: [
+                    { text: "3±1個の情報", correct: false },
+                    { text: "7±2個の情報", correct: true },
+                    { text: "15±5個の情報", correct: false },
+                    { text: "制限なし、訓練で無制限に保持可能", correct: false }
+                ],
+                explanation: "人間の短期記憶は一般的に7±2個の情報しか保持できません。ナビゲーションメニューは7個程度に限定するなど、この制限を考慮した設計が重要です。"
+            },
+            {
+                question: "ゲシュタルト心理学の『近接性』原則とは？",
+                options: [
+                    { text: "似た色や形の要素を一つのグループとして認識すること", correct: false },
+                    { text: "近い要素は一緒のグループと無意識に認識すること", correct: true },
+                    { text: "ユーザーが画面の中央に注目する傾向", correct: false },
+                    { text: "ユーザーが複数の要素の平均値を判断基準とする傾向", correct: false }
+                ],
+                explanation: "近接性の原則では、物理的に近い要素は、無意識に一つのグループとして認識されます。UIデザインでは、関連する要素をグループ化することで、視覚的な統一感を作ります。"
+            },
+            {
+                question: "グローバルなUXデザインにおいて、文化人類学の知見が重要な理由は？",
+                options: [
+                    { text: "すべての文化で同じUIが最適だから", correct: false },
+                    { text: "ユーザーの行動は文化的背景に大きく影響されるから", correct: true },
+                    { text: "文化は技術進化に影響しないから", correct: false },
+                    { text: "西洋のデザイン原則が普遍的だから", correct: false }
+                ],
+                explanation: "ユーザーの行動は、その文化的背景に大きく影響されます。同じUIでも、文化によって解釈が異なることがあり、グローバルなUXデザインでは文化的差異を考慮することが不可欠です。"
+            },
+            {
+                question: "人間工学（エルゴノミクス）がUXデザインで重要な理由は？",
+                options: [
+                    { text: "人間の身体的特性を考慮した設計ができるから", correct: true },
+                    { text: "経済コストを削減できるから", correct: false },
+                    { text: "デザインを美しくしてくれるから", correct: false },
+                    { text: "技術的な問題を解決するから", correct: false }
+                ],
+                explanation: "人間工学は、人間の身体的特性を考慮した設計を研究します。スマートフォンのボタンサイズやWebサイトのテキストサイズなど、人間の能力に合わせた設計が重要です。"
+            },
+            {
+                question: "ISO 9241-11で定義されるユーザビリティの3軸は？",
+                options: [
+                    { text: "速度、コスト、美しさ", correct: false },
+                    { text: "有効性、効率性、満足度", correct: true },
+                    { text: "機能性、安全性、経済性", correct: false },
+                    { text: "アクセシビリティ、可視性、操作性", correct: false }
+                ],
+                explanation: "ISO 9241-11では、ユーザビリティを『有効性』『効率性』『満足度』の3軸で定義しています。これらすべてを達成するには、心理学、人間工学、認知科学の知識が必要です。"
+            },
+            {
+                question: "WCAG 2.1の4つの基本原則として正しくないものはどれですか？",
+                options: [
+                    { text: "認識可能性（Perceivable）", correct: false },
+                    { text: "操作可能性（Operable）", correct: false },
+                    { text: "効率性（Efficiency）", correct: true },
+                    { text: "堅牢性（Robust）", correct: false }
+                ],
+                explanation: "WCAG 2.1の4つの基本原則は『認識可能性』『操作可能性』『理解可能性』『堅牢性』です。『効率性』はこの4原則に含まれていません。"
+            },
+            {
+                question: "包摂的設計（インクルーシブデザイン）の哲学について、正しいものは？",
+                options: [
+                    { text: "障害者専用の特別な設計を作ること", correct: false },
+                    { text: "障害者対応と思われるアクセシビリティ対応は、実は全ユーザーの体験を向上させる", correct: true },
+                    { text: "健常者向けに最適化してから障害者向けに調整する", correct: false },
+                    { text: "アクセシビリティはコストが高いので優先度を下げる", correct: false }
+                ],
+                explanation: "包摂的設計では、一見障害者向けと思われるアクセシビリティ対応が、実は全ユーザーに利益をもたらすことを認識しています。例えば、動画のキャプションは聴覚障害者だけでなく、音声を出せない環境のユーザーにも役立ちます。"
+            }
+        ];
+        
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+        
+        function initQuiz() {
+            renderQuestion();
         }
-      }, 2000);
-    }
-
-    function showScore() {
-      const percentage = Math.round((score / quizData.length) * 100);
-
-      let message = '';
-      if (percentage === 100) {
-        message = '🎉 素晴らしい！完璧な正解です！';
-      } else if (percentage >= 80) {
-        message = '✅ よく理解できていますね！';
-      } else if (percentage >= 60) {
-        message = '📚 もう一度資料を確認しましょう';
-      } else {
-        message = '❌ 資料をもう一度確認してください';
-      }
-
-      document.getElementById('scoreNumber').textContent = `${score}/${quizData.length}`;
-      document.getElementById('scoreMessage').textContent = message;
-      document.getElementById('scoreDetail').textContent = `得点率: ${percentage}%`;
-
-      let buttonsHTML = '';
-      if (percentage === 100) {
-        buttonsHTML = `
-          <a href="w6_ux.html" class="score-buttons a btn-next-week">✅ W6へ進む</a>
-          <a href="w5_ux.html" class="score-buttons a btn-review">📖 W5資料を確認</a>
-          <a href="index.html" class="score-buttons a btn-home">🏠 トップに戻る</a>
-        `;
-      } else if (percentage >= 80) {
-        buttonsHTML = `
-          <a href="w6_ux.html" class="score-buttons a btn-next-week">✅ W6へ進む</a>
-          <a href="w5_ux.html" class="score-buttons a btn-review">📖 W5資料を確認</a>
-          <a href="w5_ux_q.html" class="score-buttons a btn-review">🔄 もう一度挑戦</a>
-          <a href="index.html" class="score-buttons a btn-home">🏠 トップに戻る</a>
-        `;
-      } else {
-        buttonsHTML = `
-          <a href="w5_ux.html" class="score-buttons a btn-next-week">📖 W5資料を確認</a>
-          <a href="w5_ux_q.html" class="score-buttons a btn-review">🔄 もう一度挑戦</a>
-          <a href="index.html" class="score-buttons a btn-home">🏠 トップに戻る</a>
-        `;
-      }
-
-      document.getElementById('scoreButtons').innerHTML = buttonsHTML;
-
-      document.getElementById('quizSection').classList.remove('active');
-      document.getElementById('scoreSection').classList.add('active');
-    }
-
-    // 初期化
-    renderQuestion();
-  </script>
+        
+        function renderQuestion() {
+            const container = document.getElementById('quizContent');
+            const question = quizData[currentQuestion];
+            
+            let html = `
+                <div class="quiz-container">
+                    <div class="question">
+                        <h3>Q${currentQuestion + 1}. ${question.question}</h3>
+                        <div class="options" id="optionsContainer">
+            `;
+            
+            question.options.forEach((option, index) => {
+                html += `
+                    <div class="option" id="option-${index}">
+                        <label>
+                            <input type="radio" name="answer" value="${index}" onchange="selectOption(${index})">
+                            ${option.text}
+                        </label>
+                    </div>
+                `;
+            });
+            
+            html += `
+                        </div>
+                        <div class="feedback" id="feedback"></div>
+                        <button class="submit-btn" id="submitBtn" onclick="submitAnswer()">回答する</button>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            updateProgress();
+        }
+        
+        function selectOption(index) {
+            const options = document.querySelectorAll('.option input[type="radio"]');
+            options.forEach((opt, i) => {
+                if (i === index) {
+                    opt.checked = true;
+                }
+            });
+        }
+        
+        function submitAnswer() {
+            if (answered) return;
+            
+            const selected = document.querySelector('input[name="answer"]:checked');
+            if (!selected) {
+                alert('選択してください');
+                return;
+            }
+            
+            answered = true;
+            const answerIndex = parseInt(selected.value);
+            const question = quizData[currentQuestion];
+            const isCorrect = question.options[answerIndex].correct;
+            
+            if (isCorrect) {
+                score++;
+                document.getElementById(`option-${answerIndex}`).classList.add('selected-correct');
+            } else {
+                document.getElementById(`option-${answerIndex}`).classList.add('selected-incorrect');
+                const correctIndex = question.options.findIndex(opt => opt.correct);
+                document.getElementById(`option-${correctIndex}`).classList.add('correct');
+            }
+            
+            const feedback = document.getElementById('feedback');
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'incorrect');
+            feedback.innerHTML = `
+                <strong>${isCorrect ? '✓ 正解です！' : '✗ 不正解です'}</strong>
+                ${question.explanation}
+            `;
+            
+            const btn = document.getElementById('submitBtn');
+            btn.textContent = currentQuestion === quizData.length - 1 ? '完了' : '次へ';
+            btn.onclick = nextQuestion;
+        }
+        
+        function nextQuestion() {
+            currentQuestion++;
+            answered = false;
+            
+            if (currentQuestion >= quizData.length) {
+                showScore();
+            } else {
+                renderQuestion();
+            }
+        }
+        
+        function updateProgress() {
+            document.getElementById('progress').textContent = `問題 ${currentQuestion + 1}/${quizData.length}`;
+        }
+        
+        function showScore() {
+            document.getElementById('quizContent').style.display = 'none';
+            const scoreSection = document.getElementById('scoreSection');
+            scoreSection.classList.add('show');
+            
+            document.getElementById('scoreValue').textContent = score;
+            document.getElementById('totalQuestions').textContent = quizData.length;
+            
+            const percentage = (score / quizData.length) * 100;
+            let message = '';
+            
+            if (percentage === 100) {
+                message = '🌟 完璧です！ユーザー心理と包摂性について完全に理解できています。';
+            } else if (percentage >= 80) {
+                message = '👏 よくできました！心理学とアクセシビリティの基本をしっかり理解しています。';
+            } else if (percentage >= 60) {
+                message = '📚 基本は理解できています。各要素の関連性をより深く学びましょう。';
+            } else {
+                message = '🔍 もう一度資料を確認して、理解を深めましょう。';
+            }
+            
+            document.getElementById('scoreMessage').textContent = message;
+            
+            // Add navigation buttons
+            let navHTML = '';
+            if (percentage === 100) {
+                navHTML = `
+                    <a href="w6_ux.html" class="nav-btn nav-btn-primary">✅ W6へ進む</a>
+                    <a href="w5_ux.html" class="nav-btn nav-btn-secondary">📖 W5資料を確認</a>
+                    <a href="index.html" class="nav-btn nav-btn-secondary">🏠 トップに戻る</a>
+                `;
+            } else if (percentage >= 80) {
+                navHTML = `
+                    <a href="w6_ux.html" class="nav-btn nav-btn-primary">✅ W6へ進む</a>
+                    <a href="w5_ux.html" class="nav-btn nav-btn-secondary">📖 W5資料を確認</a>
+                    <a href="w5_ux_q.html" class="nav-btn nav-btn-secondary">🔄 もう一度挑戦</a>
+                    <a href="index.html" class="nav-btn nav-btn-secondary">🏠 トップに戻る</a>
+                `;
+            } else {
+                navHTML = `
+                    <a href="w5_ux.html" class="nav-btn nav-btn-primary">📖 W5資料を確認</a>
+                    <a href="w5_ux_q.html" class="nav-btn nav-btn-secondary">🔄 もう一度挑戦</a>
+                    <a href="index.html" class="nav-btn nav-btn-secondary">🏠 トップに戻る</a>
+                `;
+            }
+            
+            document.getElementById('navButtons').innerHTML = navHTML;
+        }
+        
+        // Initialize quiz
+        initQuiz();
+    </script>
 </body>
 </html>
