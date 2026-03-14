@@ -5,13 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>W5: クイズ - ユーザー心理と包摂性</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
       padding: 20px;
     }
+
     .container {
       max-width: 800px;
       margin: 0 auto;
@@ -20,20 +26,24 @@
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
       overflow: hidden;
     }
+
     .header {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
       padding: 30px;
       text-align: center;
     }
+
     .header h1 {
       font-size: 2.5em;
       margin-bottom: 10px;
     }
+
     .header p {
       font-size: 1.1em;
       opacity: 0.9;
     }
+
     .back-link {
       color: white;
       text-decoration: none;
@@ -45,33 +55,40 @@
       border-radius: 6px;
       transition: background 0.3s;
     }
+
     .back-link:hover {
       background: rgba(255, 255, 255, 0.3);
     }
+
     .progress {
       height: 8px;
       background: #e0e0e0;
       position: relative;
       overflow: hidden;
     }
+
     .progress-bar {
       height: 100%;
       background: linear-gradient(90deg, #667eea, #764ba2);
       width: 0%;
       transition: width 0.3s ease;
     }
+
     .content {
       padding: 40px;
     }
+
     .score-section {
       display: none;
       text-align: center;
       padding: 40px 20px;
       animation: fadeIn 0.5s ease;
     }
+
     .score-section.show {
       display: block;
     }
+
     .score-display {
       font-size: 4em;
       font-weight: bold;
@@ -80,12 +97,14 @@
       -webkit-text-fill-color: transparent;
       margin: 20px 0;
     }
+
     .score-message {
       font-size: 1.3em;
       color: #333;
       margin: 20px 0;
       line-height: 1.6;
     }
+
     .nav-buttons {
       display: flex;
       gap: 10px;
@@ -93,6 +112,7 @@
       flex-wrap: wrap;
       margin-top: 30px;
     }
+
     .btn {
       padding: 12px 24px;
       border: none;
@@ -104,38 +124,46 @@
       transition: all 0.3s;
       font-weight: 600;
     }
+
     .btn-primary {
       background: linear-gradient(135deg, #667eea, #764ba2);
       color: white;
     }
+
     .btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
     }
+
     .btn-secondary {
       background: #f5f5f5;
       color: #667eea;
       border: 2px solid #667eea;
     }
+
     .btn-secondary:hover {
       background: #f0f0f0;
     }
+
     .question-counter {
       color: #999;
       font-size: 0.9em;
       margin-bottom: 20px;
     }
+
     .question {
       font-size: 1.2em;
       font-weight: 600;
       margin-bottom: 25px;
       color: #333;
     }
+
     .options {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
+
     .option {
       display: flex;
       align-items: center;
@@ -146,40 +174,36 @@
       transition: all 0.3s;
       background: white;
     }
+
     .option:hover {
       border-color: #667eea;
       background: #f9f9ff;
     }
+
     .option input[type="radio"] {
       margin-right: 15px;
       width: 20px;
       height: 20px;
       cursor: pointer;
     }
+
     .option.selected {
       border-color: #667eea;
       background: #f9f9ff;
     }
+
     .option.correct {
       border-color: #4caf50;
       background: #f1f8f4;
       border-width: 3px;
     }
-    .option.correct::after {
-      content: " ✅";
-      color: #4caf50;
-      font-weight: bold;
-    }
+
     .option.incorrect {
       border-color: #ff6b6b;
       background: #fff5f5;
       border-width: 3px;
     }
-    .option.incorrect::after {
-      content: " ❌";
-      color: #ff6b6b;
-      font-weight: bold;
-    }
+
     .feedback {
       margin-top: 20px;
       padding: 16px;
@@ -188,23 +212,28 @@
       line-height: 1.6;
       display: none;
     }
+
     .feedback.show {
       display: block;
     }
+
     .feedback.correct {
       background: #f1f8f4;
       border-left: 4px solid #4caf50;
       color: #2e7d32;
     }
+
     .feedback.incorrect {
       background: #fff5f5;
       border-left: 4px solid #ff6b6b;
       color: #d32f2f;
     }
+
     .feedback-title {
       font-weight: 600;
       margin-bottom: 8px;
     }
+
     .submit-btn {
       width: 100%;
       padding: 14px;
@@ -218,298 +247,313 @@
       cursor: pointer;
       transition: all 0.3s;
     }
+
     .submit-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
     }
+
     .submit-btn:disabled {
       opacity: 0.5;
       cursor: not-allowed;
     }
+
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
     }
+
     @media (max-width: 600px) {
-      .content { padding: 20px; }
-      .header h1 { font-size: 1.8em; }
-      .score-display { font-size: 2.5em; }
+      .content {
+        padding: 20px;
+      }
+      .header h1 {
+        font-size: 1.8em;
+      }
+      .score-display {
+        font-size: 2.5em;
+      }
     }
   </style>
 </head>
 <body>
-<div class="container">
-  <div class="header">
-    <a href="index.html" class="back-link">← トップに戻る</a>
-    <h1>W5: クイズ</h1>
-    <p>ユーザー心理と包摂性 - 理解度チェック</p>
+  <div class="container">
+    <div class="header">
+      <a href="index.html" class="back-link">← トップに戻る</a>
+      <h1>W5: クイズ</h1>
+      <p>ユーザー心理と包摂性 - 理解度チェック</p>
+    </div>
+
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="content">
+      <div class="score-section" id="scoreSection"></div>
+      <div id="quizContent"></div>
+      <div class="feedback" id="feedback"></div>
+    </div>
   </div>
-  
-  <div class="progress">
-    <div class="progress-bar" id="progressBar"></div>
-  </div>
-  
-  <div class="content">
-    <div class="score-section" id="scoreSection"></div>
-    <div id="quizContent"></div>
-  </div>
-</div>
 
-<script>
-  const quizData = [
-    {
-      question: "行動経済学における『アンカリング効果』とは何ですか？",
-      options: [
-        { text: "最初に提示された情報が判断に大きく影響する現象", correct: true },
-        { text: "ユーザーがデフォルト設定のまま選択肢を受け入れる傾向", correct: false },
-        { text: "同じ情報でも提示方法によって受け止め方が変わる現象", correct: false },
-        { text: "自分の信念に合った情報を探し、合わない情報を無視する傾向", correct: false }
-      ],
-      explanation: "アンカリング効果は、最初に提示された情報（アンカー）が その後の判断に大きく影響する現象です。例えば、価格表示で元値を大きく表示することで、割引値が安く感じられます。"
-    },
-    {
-      question: "認知心理学で『認知負荷』を最小化するために、UIデザインで推奨されることは？",
-      options: [
-        { text: "できるだけ多くの情報を1画面に表示する", correct: false },
-        { text: "シンプルで段階的なプロセス設計を行う", correct: true },
-        { text: "複雑な機能を前面に出して見栄えを良くする", correct: false },
-        { text: "ユーザーの判断を最小限にするため選択肢を1つだけ提供する", correct: false }
-      ],
-      explanation: "認知負荷は、ユーザーが一度に処理できる情報量には限界があるという概念です。シンプルで段階的な設計により、ユーザーストレスを減らし、理解しやすいインターフェースが実現できます。"
-    },
-    {
-      question: "メンタルモデルとは何ですか？",
-      options: [
-        { text: "ユーザーが持つ『システムはこう動く』という心的モデル", correct: true },
-        { text: "デザイナーが設計時に想定する理想的なユーザー像", correct: false },
-        { text: "ユーザーのファッションやブランド選択に関する知識", correct: false },
-        { text: "心理学的なパーソナリティタイプの分類方法", correct: false }
-      ],
-      explanation: "メンタルモデルはユーザーが持つ心的モデルで、『このシステムはこう動く』という予測を表します。設計がメンタルモデルと一致していれば、直感的に理解できます。"
-    },
-    {
-      question: "作業記憶（短期記憶）の容量に関する一般的な限界は？",
-      options: [
-        { text: "3±1個の情報", correct: false },
-        { text: "7±2個の情報", correct: true },
-        { text: "15±5個の情報", correct: false },
-        { text: "制限なし、訓練で無制限に保持可能", correct: false }
-      ],
-      explanation: "人間の短期記憶は一般的に7±2個の情報しか保持できません。ナビゲーションメニューは7個程度に限定するなど、この制限を考慮した設計が重要です。"
-    },
-    {
-      question: "ゲシュタルト心理学の『近接性』原則とは？",
-      options: [
-        { text: "似た色や形の要素を一つのグループとして認識すること", correct: false },
-        { text: "近い要素は一緒のグループと無意識に認識すること", correct: true },
-        { text: "ユーザーが画面の中央に注目する傾向", correct: false },
-        { text: "ユーザーが複数の要素の平均値を判断基準とする傾向", correct: false }
-      ],
-      explanation: "近接性の原則では、物理的に近い要素は、無意識に一つのグループとして認識されます。UIデザインでは、関連する要素をグループ化することで、視覚的な統一感を作ります。"
-    },
-    {
-      question: "グローバルなUXデザインにおいて、文化人類学の知見が重要な理由は？",
-      options: [
-        { text: "すべての文化で同じUIが最適だから", correct: false },
-        { text: "ユーザーの行動は文化的背景に大きく影響されるから", correct: true },
-        { text: "文化は技術進化に影響しないから", correct: false },
-        { text: "西洋のデザイン原則が普遍的だから", correct: false }
-      ],
-      explanation: "ユーザーの行動は、その文化的背景に大きく影響されます。同じUIでも、文化によって解釈が異なることがあり、グローバルなUXデザインでは文化的差異を考慮することが不可欠です。"
-    },
-    {
-      question: "人間工学（エルゴノミクス）がUXデザインで重要な理由は？",
-      options: [
-        { text: "人間の身体的特性を考慮した設計ができるから", correct: true },
-        { text: "経済コストを削減できるから", correct: false },
-        { text: "デザインを美しくしてくれるから", correct: false },
-        { text: "技術的な問題を解決するから", correct: false }
-      ],
-      explanation: "人間工学は、人間の身体的特性を考慮した設計を研究します。スマートフォンのボタンサイズやWebサイトのテキストサイズなど、人間の能力に合わせた設計が重要です。"
-    },
-    {
-      question: "ISO 9241-11で定義されるユーザビリティの3軸は？",
-      options: [
-        { text: "速度、コスト、美しさ", correct: false },
-        { text: "有効性、効率性、満足度", correct: true },
-        { text: "機能性、安全性、経済性", correct: false },
-        { text: "アクセシビリティ、可視性、操作性", correct: false }
-      ],
-      explanation: "ISO 9241-11では、ユーザビリティを『有効性』『効率性』『満足度』の3軸で定義しています。これらすべてを達成するには、心理学、人間工学、認知科学の知識が必要です。"
-    },
-    {
-      question: "WCAG 2.1の4つの基本原則として正しくないものはどれですか？",
-      options: [
-        { text: "認識可能性（Perceivable）", correct: false },
-        { text: "操作可能性（Operable）", correct: false },
-        { text: "効率性（Efficiency）", correct: true },
-        { text: "堅牢性（Robust）", correct: false }
-      ],
-      explanation: "WCAG 2.1の4つの基本原則は『認識可能性』『操作可能性』『理解可能性』『堅牢性』です。『効率性』はこの4原則に含まれていません。W5資料の表「心理学とアクセシビリティの統合」を参照してください。"
-    },
-    {
-      question: "包摂的設計（インクルーシブデザイン）の哲学について、正しいものは？",
-      options: [
-        { text: "障害者専用の特別な設計を作ること", correct: false },
-        { text: "障害者対応と思われるアクセシビリティ対応は、実は全ユーザーの体験を向上させる", correct: true },
-        { text: "健常者向けに最適化してから障害者向けに調整する", correct: false },
-        { text: "アクセシビリティはコストが高いので優先度を下げる", correct: false }
-      ],
-      explanation: "包摂的設計では、一見障害者向けと思われるアクセシビリティ対応が、実は全ユーザーに利益をもたらすことを認識しています。例えば、動画のキャプションは聴覚障害者だけでなく、音声を出せない環境のユーザーにも役立ちます。"
-    }
-  ];
-
-  let currentQuestion = 0;
-  let score = 0;
-  let answered = false;
-  let correctAnswers = [];
-
-  function shuffleArray(array) {
-    const shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled;
-  }
-
-  function renderQuestion() {
-    const quiz = quizData[currentQuestion];
-    const shuffledOptions = shuffleArray(quiz.options);
-    
-    // 正解インデックスを記録
-    correctAnswers[currentQuestion] = shuffledOptions.findIndex(opt => opt.correct);
-
-    const questionHTML = `
-      <div class="question-counter">Q${currentQuestion + 1}/${quizData.length}</div>
-      <div class="question">${quiz.question}</div>
-      <div class="options" id="optionsContainer">
-        ${shuffledOptions.map((opt, idx) => `
-          <label class="option" onclick="selectOption(${idx})">
-            <input type="radio" name="answer" value="${idx}">
-            <span>${opt.text}</span>
-          </label>
-        `).join('')}
-      </div>
-      <button class="submit-btn" onclick="submitAnswer()">回答する</button>
-    `;
-    
-    document.getElementById('quizContent').innerHTML = questionHTML;
-    updateProgress();
-  }
-
-  function selectOption(idx) {
-    document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-    document.querySelectorAll('.option')[idx].classList.add('selected');
-    document.querySelector(`input[value="${idx}"]`).checked = true;
-  }
-
-  function submitAnswer() {
-    if (!document.querySelector('input[name="answer"]:checked')) {
-      alert('回答を選択してください');
-      return;
-    }
-
-    answered = true;
-    const selectedIdx = parseInt(document.querySelector('input[name="answer"]:checked').value);
-    const quiz = quizData[currentQuestion];
-    const shuffledOptions = shuffleArray(quiz.options);
-    const isCorrect = shuffledOptions[selectedIdx].correct;
-
-    if (isCorrect) {
-      score++;
-      document.querySelectorAll('.option')[selectedIdx].classList.add('correct');
-      document.querySelector('.feedback').innerHTML = `
-        <div class="feedback-title">✅ 正解です！</div>
-        <div>${quiz.explanation}</div>
-      `;
-    } else {
-      const correctIdx = correctAnswers[currentQuestion];
-      document.querySelectorAll('.option')[selectedIdx].classList.add('incorrect');
-      document.querySelectorAll('.option')[correctIdx].classList.add('correct');
-      document.querySelector('.feedback').innerHTML = `
-        <div class="feedback-title">❌ 残念、不正解です</div>
-        <div>${quiz.explanation}</div>
-      `;
-    }
-
-    document.querySelector('.feedback').classList.add('show', isCorrect ? 'correct' : 'incorrect');
-    document.querySelector('.submit-btn').style.display = 'none';
-
-    setTimeout(() => {
-      if (currentQuestion < quizData.length - 1) {
-        currentQuestion++;
-        answered = false;
-        renderQuestion();
-        document.querySelector('.feedback').classList.remove('show', 'correct', 'incorrect');
-      } else {
-        showScore();
+  <script>
+    const quizData = [
+      {
+        question: "行動経済学における『アンカリング効果』とは何ですか？",
+        options: [
+          { text: "最初に提示された情報が判断に大きく影響する現象", correct: true },
+          { text: "ユーザーがデフォルト設定のまま選択肢を受け入れる傾向", correct: false },
+          { text: "同じ情報でも提示方法によって受け止め方が変わる現象", correct: false },
+          { text: "自分の信念に合った情報を探し、合わない情報を無視する傾向", correct: false }
+        ],
+        explanation: "アンカリング効果は、最初に提示された情報（アンカー）がその後の判断に大きく影響する現象です。例えば、価格表示で元値を大きく表示することで、割引値が安く感じられます。"
+      },
+      {
+        question: "認知心理学で『認知負荷』を最小化するために、UIデザインで推奨されることは？",
+        options: [
+          { text: "できるだけ多くの情報を1画面に表示する", correct: false },
+          { text: "シンプルで段階的なプロセス設計を行う", correct: true },
+          { text: "複雑な機能を前面に出して見栄えを良くする", correct: false },
+          { text: "ユーザーの判断を最小限にするため選択肢を1つだけ提供する", correct: false }
+        ],
+        explanation: "認知負荷は、ユーザーが一度に処理できる情報量には限界があるという概念です。シンプルで段階的な設計により、ユーザーストレスを減らし、理解しやすいインターフェースが実現できます。"
+      },
+      {
+        question: "メンタルモデルとは何ですか？",
+        options: [
+          { text: "ユーザーが持つ『システムはこう動く』という心的モデル", correct: true },
+          { text: "デザイナーが設計時に想定する理想的なユーザー像", correct: false },
+          { text: "ユーザーのファッションやブランド選択に関する知識", correct: false },
+          { text: "心理学的なパーソナリティタイプの分類方法", correct: false }
+        ],
+        explanation: "メンタルモデルはユーザーが持つ心的モデルで、『このシステムはこう動く』という予測を表します。設計がメンタルモデルと一致していれば、直感的に理解できます。"
+      },
+      {
+        question: "作業記憶（短期記憶）の容量に関する一般的な限界は？",
+        options: [
+          { text: "3±1個の情報", correct: false },
+          { text: "7±2個の情報", correct: true },
+          { text: "15±5個の情報", correct: false },
+          { text: "制限なし、訓練で無制限に保持可能", correct: false }
+        ],
+        explanation: "人間の短期記憶は一般的に7±2個の情報しか保持できません。ナビゲーションメニューは7個程度に限定するなど、この制限を考慮した設計が重要です。"
+      },
+      {
+        question: "ゲシュタルト心理学の『近接性』原則とは？",
+        options: [
+          { text: "似た色や形の要素を一つのグループとして認識すること", correct: false },
+          { text: "近い要素は一緒のグループと無意識に認識すること", correct: true },
+          { text: "ユーザーが画面の中央に注目する傾向", correct: false },
+          { text: "ユーザーが複数の要素の平均値を判断基準とする傾向", correct: false }
+        ],
+        explanation: "近接性の原則では、物理的に近い要素は、無意識に一つのグループとして認識されます。UIデザインでは、関連する要素をグループ化することで、視覚的な統一感を作ります。"
+      },
+      {
+        question: "グローバルなUXデザインにおいて、文化人類学の知見が重要な理由は？",
+        options: [
+          { text: "すべての文化で同じUIが最適だから", correct: false },
+          { text: "ユーザーの行動は文化的背景に大きく影響されるから", correct: true },
+          { text: "文化は技術進化に影響しないから", correct: false },
+          { text: "西洋のデザイン原則が普遍的だから", correct: false }
+        ],
+        explanation: "ユーザーの行動は、その文化的背景に大きく影響されます。同じUIでも、文化によって解釈が異なることがあり、グローバルなUXデザインでは文化的差異を考慮することが不可欠です。"
+      },
+      {
+        question: "人間工学（エルゴノミクス）がUXデザインで重要な理由は？",
+        options: [
+          { text: "人間の身体的特性を考慮した設計ができるから", correct: true },
+          { text: "経済コストを削減できるから", correct: false },
+          { text: "デザインを美しくしてくれるから", correct: false },
+          { text: "技術的な問題を解決するから", correct: false }
+        ],
+        explanation: "人間工学は、人間の身体的特性を考慮した設計を研究します。スマートフォンのボタンサイズやWebサイトのテキストサイズなど、人間の能力に合わせた設計が重要です。"
+      },
+      {
+        question: "ISO 9241-11で定義されるユーザビリティの3軸は？",
+        options: [
+          { text: "速度、コスト、美しさ", correct: false },
+          { text: "有効性、効率性、満足度", correct: true },
+          { text: "機能性、安全性、経済性", correct: false },
+          { text: "アクセシビリティ、可視性、操作性", correct: false }
+        ],
+        explanation: "ISO 9241-11では、ユーザビリティを『有効性』『効率性』『満足度』の3軸で定義しています。これらすべてを達成するには、心理学、人間工学、認知科学の知識が必要です。"
+      },
+      {
+        question: "WCAG 2.1の4つの基本原則として正しくないものはどれですか？",
+        options: [
+          { text: "認識可能性（Perceivable）", correct: false },
+          { text: "操作可能性（Operable）", correct: false },
+          { text: "効率性（Efficiency）", correct: true },
+          { text: "堅牢性（Robust）", correct: false }
+        ],
+        explanation: "WCAG 2.1の4つの基本原則は『認識可能性』『操作可能性』『理解可能性』『堅牢性』です。『効率性』はこの4原則に含まれていません。"
+      },
+      {
+        question: "包摂的設計（インクルーシブデザイン）の哲学について、正しいものは？",
+        options: [
+          { text: "障害者専用の特別な設計を作ること", correct: false },
+          { text: "障害者対応と思われるアクセシビリティ対応は、実は全ユーザーの体験を向上させる", correct: true },
+          { text: "健常者向けに最適化してから障害者向けに調整する", correct: false },
+          { text: "アクセシビリティはコストが高いので優先度を下げる", correct: false }
+        ],
+        explanation: "包摂的設計では、一見障害者向けと思われるアクセシビリティ対応が、実は全ユーザーに利益をもたらすことを認識しています。例えば、動画のキャプションは聴覚障害者だけでなく、音声を出せない環境のユーザーにも役立ちます。"
       }
-    }, 2000);
-  }
+    ];
 
-  function updateProgress() {
-    const progress = ((currentQuestion + 1) / quizData.length) * 100;
-    document.getElementById('progressBar').style.width = progress + '%';
-  }
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+    let correctAnswers = [];
 
-  function showScore() {
-    const percentage = Math.round((score / quizData.length) * 100);
-    const passMessage = percentage === 100 
-      ? '🎉 素晴らしい！完璧な正解です！'
-      : percentage >= 80
-      ? '✅ よく理解できていますね！'
-      : percentage >= 60
-      ? '📚 もう一度資料を確認しましょう'
-      : '❌ 資料をもう一度確認してください';
-
-    let navButtons = '';
-    if (percentage === 100) {
-      navButtons = `
-        <div class="nav-buttons">
-          <a href="w6_ux.html" class="btn btn-primary">✅ W6へ進む</a>
-          <a href="w5_ux.html" class="btn btn-secondary">📖 W5資料を確認</a>
-          <a href="index.html" class="btn btn-secondary">🏠 トップに戻る</a>
-        </div>
-      `;
-    } else if (percentage >= 80) {
-      navButtons = `
-        <div class="nav-buttons">
-          <a href="w6_ux.html" class="btn btn-primary">✅ W6へ進む</a>
-          <a href="w5_ux.html" class="btn btn-secondary">📖 W5資料を確認</a>
-          <a href="w5_ux_q.html" class="btn btn-secondary">🔄 もう一度挑戦</a>
-          <a href="index.html" class="btn btn-secondary">🏠 トップに戻る</a>
-        </div>
-      `;
-    } else {
-      navButtons = `
-        <div class="nav-buttons">
-          <a href="w5_ux.html" class="btn btn-primary">📖 W5資料を確認</a>
-          <a href="w5_ux_q.html" class="btn btn-secondary">🔄 もう一度挑戦</a>
-          <a href="index.html" class="btn btn-secondary">🏠 トップに戻る</a>
-        </div>
-      `;
+    function shuffleArray(array) {
+      const shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
     }
 
-    const scoreHTML = `
-      <div>
-        <div class="score-display">${percentage}%</div>
-        <div class="score-message">${passMessage}</div>
-        <div class="score-message">正解数: ${score}/${quizData.length}</div>
-        ${navButtons}
-      </div>
-    `;
+    function renderQuestion() {
+      const quiz = quizData[currentQuestion];
+      const shuffledOptions = shuffleArray(quiz.options);
 
-    document.getElementById('quizContent').innerHTML = '';
-    document.getElementById('scoreSection').innerHTML = scoreHTML;
-    document.getElementById('scoreSection').classList.add('show');
-    document.getElementById('progressBar').style.width = '100%';
-  }
+      correctAnswers[currentQuestion] = shuffledOptions.findIndex(opt => opt.correct);
 
-  // 初期化
-  document.querySelector('.feedback').classList.add('show');
-  document.querySelector('.feedback').innerHTML = '';
-  renderQuestion();
-</script>
+      const questionHTML = `
+        <div class="question-counter">Q${currentQuestion + 1}/${quizData.length}</div>
+        <div class="question">${quiz.question}</div>
+        <div class="options" id="optionsContainer">
+          ${shuffledOptions.map((opt, idx) => `
+            <label class="option" onclick="selectOption(${idx})">
+              <input type="radio" name="answer" value="${idx}">
+              <span>${opt.text}</span>
+            </label>
+          `).join('')}
+        </div>
+        <button class="submit-btn" onclick="submitAnswer()">回答する</button>
+      `;
+
+      document.getElementById('quizContent').innerHTML = questionHTML;
+      document.getElementById('feedback').innerHTML = '';
+      document.getElementById('feedback').classList.remove('show', 'correct', 'incorrect');
+      updateProgress();
+    }
+
+    function selectOption(idx) {
+      document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+      document.querySelectorAll('.option')[idx].classList.add('selected');
+      document.querySelector(`input[value="${idx}"]`).checked = true;
+    }
+
+    function submitAnswer() {
+      if (!document.querySelector('input[name="answer"]:checked')) {
+        alert('回答を選択してください');
+        return;
+      }
+
+      answered = true;
+      const selectedIdx = parseInt(document.querySelector('input[name="answer"]:checked').value);
+      const quiz = quizData[currentQuestion];
+      const isCorrect = quiz.options[correctAnswers[currentQuestion]].correct === quizData[currentQuestion].options.find(opt => opt.text === quiz.options[correctAnswers[currentQuestion]].text).correct;
+      
+      const actualCorrect = quiz.options[selectedIdx].correct;
+
+      if (actualCorrect) {
+        score++;
+        document.querySelectorAll('.option')[selectedIdx].classList.add('correct');
+        document.getElementById('feedback').innerHTML = `
+          <div class="feedback-title">✅ 正解です！</div>
+          <div>${quiz.explanation}</div>
+        `;
+        document.getElementById('feedback').classList.add('show', 'correct');
+      } else {
+        const correctIdx = correctAnswers[currentQuestion];
+        document.querySelectorAll('.option')[selectedIdx].classList.add('incorrect');
+        document.querySelectorAll('.option')[correctIdx].classList.add('correct');
+        document.getElementById('feedback').innerHTML = `
+          <div class="feedback-title">❌ 残念、不正解です</div>
+          <div>${quiz.explanation}</div>
+        `;
+        document.getElementById('feedback').classList.add('show', 'incorrect');
+      }
+
+      document.querySelector('.submit-btn').style.display = 'none';
+
+      setTimeout(() => {
+        if (currentQuestion < quizData.length - 1) {
+          currentQuestion++;
+          answered = false;
+          renderQuestion();
+        } else {
+          showScore();
+        }
+      }, 2000);
+    }
+
+    function updateProgress() {
+      const progress = ((currentQuestion + 1) / quizData.length) * 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+    }
+
+    function showScore() {
+      const percentage = Math.round((score / quizData.length) * 100);
+      const passMessage = percentage === 100
+        ? '🎉 素晴らしい！完璧な正解です！'
+        : percentage >= 80
+          ? '✅ よく理解できていますね！'
+          : percentage >= 60
+            ? '📚 もう一度資料を確認しましょう'
+            : '❌ 資料をもう一度確認してください';
+
+      let navButtons = '';
+      if (percentage === 100) {
+        navButtons = `
+          <div class="nav-buttons">
+            <a href="w6_ux.html" class="btn btn-primary">✅ W6へ進む</a>
+            <a href="w5_ux.html" class="btn btn-secondary">📖 W5資料を確認</a>
+            <a href="index.html" class="btn btn-secondary">🏠 トップに戻る</a>
+          </div>
+        `;
+      } else if (percentage >= 80) {
+        navButtons = `
+          <div class="nav-buttons">
+            <a href="w6_ux.html" class="btn btn-primary">✅ W6へ進む</a>
+            <a href="w5_ux.html" class="btn btn-secondary">📖 W5資料を確認</a>
+            <a href="w5_ux_q.html" class="btn btn-secondary">🔄 もう一度挑戦</a>
+            <a href="index.html" class="btn btn-secondary">🏠 トップに戻る</a>
+          </div>
+        `;
+      } else {
+        navButtons = `
+          <div class="nav-buttons">
+            <a href="w5_ux.html" class="btn btn-primary">📖 W5資料を確認</a>
+            <a href="w5_ux_q.html" class="btn btn-secondary">🔄 もう一度挑戦</a>
+            <a href="index.html" class="btn btn-secondary">🏠 トップに戻る</a>
+          </div>
+        `;
+      }
+
+      const scoreHTML = `
+        <div>
+          <div class="score-display">${percentage}%</div>
+          <div class="score-message">${passMessage}</div>
+          <div class="score-message">正解数: ${score}/${quizData.length}</div>
+          ${navButtons}
+        </div>
+      `;
+
+      document.getElementById('quizContent').innerHTML = '';
+      document.getElementById('scoreSection').innerHTML = scoreHTML;
+      document.getElementById('scoreSection').classList.add('show');
+      document.getElementById('progressBar').style.width = '100%';
+    }
+
+    // 初期化
+    renderQuestion();
+  </script>
 </body>
 </html>
