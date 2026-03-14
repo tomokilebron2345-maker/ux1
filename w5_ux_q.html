@@ -37,22 +37,55 @@
         .header h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
+            font-weight: 700;
         }
         
-        .week-badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.3);
-            padding: 8px 16px;
-            border-radius: 20px;
+        .header p {
             font-size: 1.1em;
-            margin-bottom: 15px;
+            opacity: 0.9;
         }
         
-        .progress-info {
+        .back-link {
+            color: white;
+            text-decoration: none;
+            font-size: 0.95em;
+            display: inline-block;
+            margin-bottom: 15px;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+        
+        .back-link:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .progress-bar-container {
             background: rgba(0,0,0,0.1);
             padding: 15px 30px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: white;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-text {
+            color: white;
             text-align: center;
-            font-size: 1.1em;
+            font-size: 0.95em;
         }
         
         .content {
@@ -63,7 +96,7 @@
             margin-bottom: 30px;
         }
         
-        .question {
+        .question-box {
             background: #f5f7fa;
             padding: 25px;
             margin-bottom: 20px;
@@ -71,21 +104,18 @@
             border-radius: 8px;
         }
         
-        .question h3 {
+        .question-box h3 {
             color: #667eea;
             margin-bottom: 15px;
-            font-size: 1.2em;
-        }
-        
-        .question p {
-            margin-bottom: 20px;
-            color: #333;
+            font-size: 1.1em;
+            font-weight: 600;
         }
         
         .options {
             display: flex;
             flex-direction: column;
             gap: 10px;
+            margin-bottom: 20px;
         }
         
         .option {
@@ -105,40 +135,47 @@
         .option input[type="radio"] {
             margin-right: 10px;
             cursor: pointer;
+            accent-color: #667eea;
         }
         
         .option label {
             cursor: pointer;
             display: flex;
             align-items: center;
+            width: 100%;
         }
         
         .option.correct {
             background: #d4edda;
             border-color: #28a745;
+            border-width: 3px;
         }
         
         .option.incorrect {
             background: #f8d7da;
             border-color: #dc3545;
+            border-width: 3px;
         }
         
         .option.selected-correct {
             background: #d4edda;
             border-color: #28a745;
-            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.3);
+            border-width: 3px;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
         }
         
         .option.selected-incorrect {
             background: #f8d7da;
             border-color: #dc3545;
-            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.3);
+            border-width: 3px;
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.2);
         }
         
         .feedback {
             margin-top: 15px;
             padding: 15px;
             border-radius: 8px;
+            border-left: 4px solid;
             display: none;
         }
         
@@ -148,35 +185,43 @@
         
         .feedback.correct {
             background: #d4edda;
-            border-left: 4px solid #28a745;
+            border-color: #28a745;
             color: #155724;
         }
         
         .feedback.incorrect {
             background: #f8d7da;
-            border-left: 4px solid #dc3545;
+            border-color: #dc3545;
             color: #721c24;
         }
         
         .feedback strong {
             display: block;
             margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
         }
         
         .submit-btn {
+            flex: 1;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 15px 40px;
+            padding: 14px;
             border: none;
             border-radius: 8px;
-            font-size: 1.1em;
+            font-size: 1em;
+            font-weight: 600;
             cursor: pointer;
-            margin-top: 20px;
             transition: transform 0.2s;
         }
         
-        .submit-btn:hover {
-            transform: scale(1.05);
+        .submit-btn:hover:not(:disabled) {
+            transform: scale(1.02);
         }
         
         .submit-btn:disabled {
@@ -185,38 +230,46 @@
         }
         
         .score-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px;
-            text-align: center;
-            margin-top: 40px;
-            border-radius: 8px;
             display: none;
+            text-align: center;
+            padding: 60px 30px;
         }
         
         .score-section.show {
             display: block;
         }
         
-        .score-number {
-            font-size: 3em;
-            font-weight: bold;
+        .score-title {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .score-display {
+            font-size: 4em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin: 20px 0;
         }
         
         .score-message {
-            font-size: 1.3em;
-            margin-bottom: 20px;
+            font-size: 1.2em;
+            color: #333;
+            margin: 20px 0;
+            font-weight: 600;
         }
         
-        .nav-buttons {
+        .score-buttons {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            margin-top: 20px;
+            margin-top: 30px;
         }
         
-        .nav-btn {
+        .score-btn {
             padding: 12px 30px;
             border: none;
             border-radius: 8px;
@@ -228,26 +281,27 @@
             transition: transform 0.2s;
         }
         
-        .nav-btn-primary {
-            background: white;
-            color: #667eea;
-        }
-        
-        .nav-btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
+        .score-btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            border: 2px solid white;
         }
         
-        .nav-btn:hover {
-            transform: scale(1.05);
+        .score-btn-secondary {
+            background: #f5f5f5;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        
+        .score-btn:hover {
+            transform: scale(1.02);
         }
         
         .footer {
             background: #f8f9fa;
-            padding: 30px;
+            padding: 20px 30px;
             text-align: center;
             color: #666;
+            font-size: 0.9em;
             border-top: 1px solid #e0e0e0;
         }
         
@@ -260,8 +314,8 @@
                 padding: 20px;
             }
             
-            .question {
-                padding: 15px;
+            .score-display {
+                font-size: 2.5em;
             }
         }
     </style>
@@ -269,26 +323,33 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="week-badge">🧠 W5 クイズ</div>
-            <h1>ユーザー心理と包摂性</h1>
-        </div>
-        <div class="progress-info">
-            <span id="progress">問題 1/10</span>
+            <a href="index.html" class="back-link">← トップに戻る</a>
+            <h1>W5: クイズ</h1>
+            <p>ユーザー心理と包摂性 - 理解度チェック</p>
         </div>
         
-        <div class="content" id="quizContent">
-            <!-- Questions will be inserted here -->
+        <div class="progress-bar-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">問題 1/10</div>
         </div>
         
-        <div class="score-section" id="scoreSection">
-            <h2>🎉 クイズ完了！</h2>
-            <div class="score-number"><span id="scoreValue">0</span>/<span id="totalQuestions">10</span></div>
-            <div class="score-message" id="scoreMessage"></div>
-            <div class="nav-buttons" id="navButtons"></div>
+        <div class="content">
+            <div class="quiz-container" id="quizContainer">
+                <!-- Quiz will be rendered here -->
+            </div>
+            
+            <div class="score-section" id="scoreSection">
+                <div class="score-title">🎉 クイズ完了！</div>
+                <div class="score-display" id="scoreDisplay">0/10</div>
+                <div class="score-message" id="scoreMessage"></div>
+                <div class="score-buttons" id="scoreButtons"></div>
+            </div>
         </div>
         
         <div class="footer">
-            <p>📚 UX学習プログラム Week 5/7 クイズ</p>
+            📚 UX学習プログラム Week 5/7 クイズ
         </div>
     </div>
     
@@ -400,51 +461,39 @@
         let score = 0;
         let answered = false;
         
-        function initQuiz() {
-            renderQuestion();
-        }
-        
         function renderQuestion() {
-            const container = document.getElementById('quizContent');
             const question = quizData[currentQuestion];
+            const progress = ((currentQuestion + 1) / quizData.length) * 100;
             
-            let html = `
-                <div class="quiz-container">
-                    <div class="question">
-                        <h3>Q${currentQuestion + 1}. ${question.question}</h3>
-                        <div class="options" id="optionsContainer">
-            `;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `問題 ${currentQuestion + 1}/${quizData.length}`;
             
-            question.options.forEach((option, index) => {
-                html += `
-                    <div class="option" id="option-${index}">
+            let optionsHTML = '';
+            question.options.forEach((option, idx) => {
+                optionsHTML += `
+                    <div class="option" id="option-${idx}">
                         <label>
-                            <input type="radio" name="answer" value="${index}" onchange="selectOption(${index})">
+                            <input type="radio" name="answer" value="${idx}">
                             ${option.text}
                         </label>
                     </div>
                 `;
             });
             
-            html += `
-                        </div>
-                        <div class="feedback" id="feedback"></div>
+            const html = `
+                <div class="question-box">
+                    <h3>Q${currentQuestion + 1}. ${question.question}</h3>
+                    <div class="options">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback" id="feedback"></div>
+                    <div class="button-group">
                         <button class="submit-btn" id="submitBtn" onclick="submitAnswer()">回答する</button>
                     </div>
                 </div>
             `;
             
-            container.innerHTML = html;
-            updateProgress();
-        }
-        
-        function selectOption(index) {
-            const options = document.querySelectorAll('.option input[type="radio"]');
-            options.forEach((opt, i) => {
-                if (i === index) {
-                    opt.checked = true;
-                }
-            });
+            document.getElementById('quizContainer').innerHTML = html;
         }
         
         function submitAnswer() {
@@ -494,21 +543,14 @@
             }
         }
         
-        function updateProgress() {
-            document.getElementById('progress').textContent = `問題 ${currentQuestion + 1}/${quizData.length}`;
-        }
-        
         function showScore() {
-            document.getElementById('quizContent').style.display = 'none';
-            const scoreSection = document.getElementById('scoreSection');
-            scoreSection.classList.add('show');
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('scoreSection').classList.add('show');
             
-            document.getElementById('scoreValue').textContent = score;
-            document.getElementById('totalQuestions').textContent = quizData.length;
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('scoreDisplay').textContent = `${score}/${quizData.length}`;
             
-            const percentage = (score / quizData.length) * 100;
             let message = '';
-            
             if (percentage === 100) {
                 message = '🌟 完璧です！ユーザー心理と包摂性について完全に理解できています。';
             } else if (percentage >= 80) {
@@ -521,34 +563,34 @@
             
             document.getElementById('scoreMessage').textContent = message;
             
-            // Add navigation buttons
-            let navHTML = '';
+            let buttonsHTML = '';
             if (percentage === 100) {
-                navHTML = `
-                    <a href="w6_ux.html" class="nav-btn nav-btn-primary">✅ W6へ進む</a>
-                    <a href="w5_ux.html" class="nav-btn nav-btn-secondary">📖 W5資料を確認</a>
-                    <a href="index.html" class="nav-btn nav-btn-secondary">🏠 トップに戻る</a>
+                buttonsHTML = `
+                    <a href="w6_ux.html" class="score-btn score-btn-primary">✅ W6へ進む</a>
+                    <a href="w5_ux.html" class="score-btn score-btn-secondary">📖 W5資料を確認</a>
+                    <a href="index.html" class="score-btn score-btn-secondary">🏠 トップに戻る</a>
                 `;
             } else if (percentage >= 80) {
-                navHTML = `
-                    <a href="w6_ux.html" class="nav-btn nav-btn-primary">✅ W6へ進む</a>
-                    <a href="w5_ux.html" class="nav-btn nav-btn-secondary">📖 W5資料を確認</a>
-                    <a href="w5_ux_q.html" class="nav-btn nav-btn-secondary">🔄 もう一度挑戦</a>
-                    <a href="index.html" class="nav-btn nav-btn-secondary">🏠 トップに戻る</a>
+                buttonsHTML = `
+                    <a href="w6_ux.html" class="score-btn score-btn-primary">✅ W6へ進む</a>
+                    <a href="w5_ux.html" class="score-btn score-btn-secondary">📖 W5資料を確認</a>
+                    <a href="w5_ux_q.html" class="score-btn score-btn-secondary">🔄 もう一度挑戦</a>
+                    <a href="index.html" class="score-btn score-btn-secondary">🏠 トップに戻る</a>
                 `;
             } else {
-                navHTML = `
-                    <a href="w5_ux.html" class="nav-btn nav-btn-primary">📖 W5資料を確認</a>
-                    <a href="w5_ux_q.html" class="nav-btn nav-btn-secondary">🔄 もう一度挑戦</a>
-                    <a href="index.html" class="nav-btn nav-btn-secondary">🏠 トップに戻る</a>
+                buttonsHTML = `
+                    <a href="w5_ux.html" class="score-btn score-btn-primary">📖 W5資料を確認</a>
+                    <a href="w5_ux_q.html" class="score-btn score-btn-secondary">🔄 もう一度挑戦</a>
+                    <a href="index.html" class="score-btn score-btn-secondary">🏠 トップに戻る</a>
                 `;
             }
             
-            document.getElementById('navButtons').innerHTML = navHTML;
+            document.getElementById('scoreButtons').innerHTML = buttonsHTML;
+            document.getElementById('progressFill').style.width = '100%';
         }
         
-        // Initialize quiz
-        initQuiz();
+        // Initialize
+        renderQuestion();
     </script>
 </body>
 </html>
