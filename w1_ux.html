@@ -3,248 +3,609 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>W1: UXとは - 7週間UX学習プログラム</title>
+    <title>W1: UXとは + UXが重視される背景</title>
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);min-height:100vh;padding:20px}
-        .container{max-width:900px;margin:0 auto;background:#fff;border-radius:15px;box-shadow:0 10px 40px rgba(0,0,0,.2);overflow:hidden}
-        .header{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:50px 40px;text-align:center}
-        .header h1{font-size:2.5em;margin-bottom:10px}
-        .header p{font-size:1.1em;opacity:.9}
-        .progress{background:#e0e0e0;height:6px}
-        .progress-bar{background:#10b981;height:100%;width:14.28%}
-        .content{padding:50px 40px}
-        .back-link{display:inline-block;margin-bottom:20px;color:#667eea;text-decoration:none;font-weight:bold;transition:.3s}
-        .back-link:hover{text-decoration:underline}
-        .section{margin-bottom:50px}
-        .section h2{color:#667eea;font-size:2em;margin-bottom:20px;border-bottom:3px solid #667eea;padding-bottom:10px}
-        .section h3{color:#764ba2;font-size:1.3em;margin:30px 0 15px 0}
-        .section p{color:#666;line-height:1.8;font-size:1em;margin-bottom:15px}
-        .tip-box{background:#e0e7ff;padding:20px;border-left:4px solid #667eea;border-radius:8px;margin:20px 0}
-        .tip-box strong{color:#667eea}
-        .keyword-list{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0}
-        .keyword{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:8px 16px;border-radius:20px;font-size:.9em;font-weight:bold}
-        .table{width:100%;border-collapse:collapse;margin:20px 0}
-        .table th{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;padding:15px;text-align:left}
-        .table td{border-bottom:1px solid #ddd;padding:15px}
-        .table tr:hover{background:#f9f9f9}
-        .case-study{background:linear-gradient(135deg,#f0fdf4 0%,#dbeafe 100%);padding:25px;border-radius:12px;border-left:5px solid #10b981;margin:20px 0}
-        .case-study h4{color:#059669;font-size:1.1em;margin-bottom:10px}
-        .case-study p{color:#333;line-height:1.8;font-size:.95em}
-        .case-study .company{font-weight:bold;color:#10b981;margin-bottom:5px}
-        .checklist{background:#f9f9f9;padding:20px;border-radius:8px;margin:20px 0}
-        .checklist li{margin:10px 0;line-height:1.6}
-        .summary-box{background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);padding:25px;border-radius:12px;margin:30px 0;border-left:5px solid #f59e0b}
-        .summary-box h3{color:#d97706;margin-bottom:15px;font-size:1.2em}
-        .summary-box ol{margin-left:20px}
-        .summary-box li{margin:10px 0;color:#333;line-height:1.8}
-        .buttons{display:flex;gap:15px;justify-content:center;margin-top:40px;flex-wrap:wrap}
-        .btn{padding:12px 30px;border:none;border-radius:8px;font-size:1em;font-weight:bold;cursor:pointer;transition:.3s;text-decoration:none;display:inline-block}
-        .btn-quiz{background:linear-gradient(135deg,#10b981 0%,#059669 100%);color:#fff}
-        .btn-quiz:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(16,185,129,.4)}
-        .btn-home{background:#667eea;color:#fff}
-        .btn-home:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(102,126,234,.4)}
-        .footer{background:#f8f9fa;padding:25px 40px;text-align:center;color:#666;border-top:1px solid #e0e0e0;margin-top:40px}
-        @media(max-width:768px){.content{padding:30px 20px}.header{padding:30px 20px}.header h1{font-size:1.8em}.section h2{font-size:1.5em}.buttons{flex-direction:column}.btn{width:100%}}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.8;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .week-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 14%;
+            animation: slideRight 0.8s ease-out;
+        }
+        
+        @keyframes slideRight {
+            from { width: 0; }
+            to { width: 14%; }
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .section h2 {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .section h3 {
+            font-size: 1.4em;
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .definition-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .definition-card:hover {
+            transform: translateX(5px);
+        }
+        
+        .definition-card strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+        
+        .honeycomb-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+            align-items: center;
+            justify-items: center;
+        }
+        
+        .honeycomb-item {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        
+        .honeycomb-item:hover {
+            transform: scale(1.1);
+        }
+        
+        .honeycomb-item.center {
+            grid-column: 2;
+            grid-row: 2;
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(135deg, #f4b942 0%, #f59e0b 100%);
+            font-size: 1.1em;
+            box-shadow: 0 5px 20px rgba(244, 185, 66, 0.4);
+        }
+        
+        .tip-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-left: 4px solid #ff9500;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .tip-box h4 {
+            color: #ff6b00;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .tip-box h4:before {
+            content: "💡 ";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .comparison-table tr:hover {
+            background: #f9f9f9;
+        }
+        
+        .keyword-box {
+            background: linear-gradient(135deg, #e0e7ff 0%, #f3e7e9 100%);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .keyword-box h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .keyword-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .keyword-tag {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .keyword-tag:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .summary-box {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            border-left: 4px solid #4ade80;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .summary-box h4 {
+            color: #22863a;
+            margin-bottom: 10px;
+        }
+        
+        .checklist {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .checklist li {
+            padding: 10px;
+            margin: 8px 0;
+            background: white;
+            border-left: 3px solid #667eea;
+            border-radius: 4px;
+        }
+        
+        .checklist li:before {
+            content: "☐ ";
+            margin-right: 10px;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .next-week {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .honeycomb-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .comparison-table {
+                font-size: 0.9em;
+            }
+            
+            .comparison-table th, .comparison-table td {
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <body>
-<div class="container">
-<div class="header">
-<h1>W1: UXとは</h1>
-<p>UXの定義、背景、基礎概念を理解する</p>
-</div>
-<div class="progress"><div class="progress-bar"></div></div>
-<div class="content">
-<a href="index.html" class="back-link">← トップに戻る</a>
-
-<div class="section">
-<h2>🎯 このWeekの学習目標</h2>
-<p>このWeekを終えた後、あなたは以下ができるようになります：</p>
-<ul style="margin-left:20px;color:#666;line-height:1.8">
-<li>UXの定義と範囲を正確に説明できる</li>
-<li>UIとUXの関係を理解できる</li>
-<li>UXが重視される背景を説明できる</li>
-<li>実際の製品例でUXを分析できる</li>
-</ul>
-</div>
-
-<div class="section">
-<h2>1️⃣ UXとは何か</h2>
-<p>UX（User Experience）とは、ユーザーが製品やサービスを利用する際に得られるあらゆる体験です。これには以下が含まれます：</p>
-<div class="tip-box">
-<strong>📌 重要：</strong>UXはデザインだけではなく、製品やサービスとの相互作用全体から生まれるユーザーの感情や満足度を指します。
-</div>
-<h3>UXハニカムの7つの要素</h3>
-<p>Don Normanが提唱した、良いUXに必要な7つの要素：</p>
-<div class="keyword-list">
-<span class="keyword">🎯 有用性（Useful）</span>
-<span class="keyword">🔧 使いやすさ（Usable）</span>
-<span class="keyword">😍 望ましさ（Desirable）</span>
-<span class="keyword">🔍 見つけやすさ（Findable）</span>
-<span class="keyword">💪 信頼性（Credible）</span>
-<span class="keyword">♿ アクセス可能性（Accessible）</span>
-<span class="keyword">💰 価値（Valuable）</span>
-</div>
-</div>
-
-<div class="section">
-<h2>2️⃣ UIとUXの違い</h2>
-<table class="table">
-<tr>
-<th>要素</th>
-<th>UI（ユーザーインターフェース）</th>
-<th>UX（ユーザーエクスペリエンス）</th>
-</tr>
-<tr>
-<td>範囲</td>
-<td>ボタン、メニュー、色などの見た目</td>
-<td>製品やサービス全体の体験</td>
-</tr>
-<tr>
-<td>焦点</td>
-<td>ビジュアルと操作性</td>
-<td>ユーザーの感情と満足度</td>
-</tr>
-<tr>
-<td>例</td>
-<td>Figmaでデザインしたボタン</td>
-<td>ユーザーがアプリを使って感じる喜び</td>
-</tr>
-<tr>
-<td>評価指標</td>
-<td>美しさ、一貫性</td>
-<td>満足度、完了率、NPS</td>
-</tr>
-</table>
-</div>
-
-<div class="section">
-<h2>3️⃣ UXが重視される背景</h2>
-<p>なぜ今、企業はUXに投資するのでしょうか？その理由：</p>
-<div class="tip-box">
-<strong>📊 市場の飽和：</strong>同じような機能の製品が多く、差別化が難しくなりました。</div>
-<div class="tip-box">
-<strong>📱 テクノロジーの進化：</strong>スマートフォンの普及により、ユーザーの期待が高まりました。</div>
-<div class="tip-box">
-<strong>💡 ユーザー中心の思考：</strong>企業が利益追求だけでなく、ユーザー満足度を重視する傾向が強まりました。</div>
-</div>
-</div>
-
-<div class="section">
-<h2>🌟 実例で学ぶ：UXの実践</h2>
-
-<div class="case-study">
-<div class="company">📱 Apple - iPhone</div>
-<h4>UXの成功例</h4>
-<p><strong>背景：</strong>2007年にiPhoneが発売された当時、スマートフォンは複雑で使いにくいデバイスでした。</p>
-<p><strong>UXの工夫：</strong></p>
-<ul style="margin:10px 0 10px 20px">
-<li>直感的なタッチインターフェース</li>
-<li>シンプルなホームボタン設計</li>
-<li>ユーザーリサーチに基づいた機能選定</li>
-<li>継続的な改善と反復デザイン</li>
-</ul>
-<p><strong>結果：</strong>スマートフォン市場を創造し、業界標準となりました。</p>
-</div>
-
-<div class="case-study">
-<div class="company">🔍 Google - シンプル検索</div>
-<h4>UXの成功例</h4>
-<p><strong>背景：</strong>1990年代の検索エンジンは複雑で、多くの広告で埋め尽くされていました。</p>
-<p><strong>UXの工夫：</strong></p>
-<ul style="margin:10px 0 10px 20px">
-<li>シンプルで洗練されたトップページ</li>
-<li>関連性の高い検索結果</li>
-<li>高速な読み込み時間</li>
-<li>ユーザーニーズに合わせた継続改善</li>
-</ul>
-<p><strong>結果：</strong>ユーザーの信頼を獲得し、世界最大の検索エンジンになりました。</p>
-</div>
-
-<div class="case-study">
-<div class="company">🏷️ Amazon - ワンクリック購入</div>
-<h4>UXの成功例</h4>
-<p><strong>背景：</strong>オンライン購入は複数のステップが必要で、ユーザーは途中で離脱することが多かったです。</p>
-<p><strong>UXの工夫：</strong></p>
-<ul style="margin:10px 0 10px 20px">
-<li>ワンクリック購入機能</li>
-<li>簡潔なチェックアウトプロセス</li>
-<li>個人化された推奨商品</li>
-<li>購入履歴に基づいた体験最適化</li>
-</ul>
-<p><strong>結果：</strong>購入完了率が大幅に向上し、e-commerce市場をリード。</p>
-</div>
-
-<div class="case-study">
-<div class="company">🚕 Uber - 移動の簡素化</div>
-<h4>UXの成功例</h4>
-<p><strong>背景：</strong>タクシー乗車は複雑で、支払いや待機時間が不透明でした。</p>
-<p><strong>UXの工夫：</strong></p>
-<ul style="margin:10px 0 10px 20px">
-<li>数タップで車を呼べるシンプルなUI</li>
-<li>リアルタイムの到着時間表示</li>
-<li>事前に料金が確定</li>
-<li>評価システムによる信頼構築</li>
-</ul>
-<p><strong>結果：</strong>タクシー業界に革新をもたらし、グローバル企業に成長。</p>
-</div>
-
-</div>
-
-<div class="section">
-<h2>📚 重要キーワード</h2>
-<div class="keyword-list">
-<span class="keyword">Customer Journey</span>
-<span class="keyword">User Research</span>
-<span class="keyword">Persona</span>
-<span class="keyword">Empathy Map</span>
-<span class="keyword">Design Thinking</span>
-<span class="keyword">Iteration</span>
-<span class="keyword">User Testing</span>
-<span class="keyword">NPS</span>
-</div>
-</div>
-
-<div class="section">
-<h2>✅ このWeekの学習チェックリスト</h2>
-<div class="checklist">
-<ul>
-<li>☑ UXの定義を3語以上で説明できる</li>
-<li>☑ UXハニカムの7要素をすべて言える</li>
-<li>☑ UIとUXの違いを具体例で説明できる</li>
-<li>☑ 実例（Apple、Google等）のUX工夫を説明できる</li>
-<li>☑ W1のクイズで80点以上取得</li>
-</ul>
-</div>
-</div>
-
-<div class="summary-box">
-<h3>📌 このWeekのまとめ（5つのポイント）</h3>
-<ol>
-<li><strong>UXはデザインだけではない：</strong>ユーザーが得る全体的な体験を指し、感情や満足度を含む</li>
-<li><strong>UIはUXの一部：</strong>UXを構成する重要な要素ですが、すべてではない</li>
-<li><strong>7つの要素が必要：</strong>有用性、使いやすさ、望ましさなど、良いUXには複数の要素が必要</li>
-<li><strong>市場での差別化：</strong>機能差が少なくなった今、UXが企業の競争力になっている</li>
-<li><strong>実例から学ぶ：</strong>Apple、Google、Amazonなどの成功企業はUXを最優先にしている</li>
-</ol>
-</div>
-
-<div class="section">
-<h2>🚀 次のWeekへ</h2>
-<p><strong>W2：UXデザイン戦略</strong>では、実際のUXデザインの進め方、デザイン手法、ビジネス成長への活用を学びます。</p>
-</div>
-
-<div class="buttons">
-<a href="w1_ux_q.html" class="btn btn-quiz">✅ W1クイズに挑戦</a>
-<a href="index.html" class="btn btn-home">🏠 トップに戻る</a>
-</div>
-
-</div>
-<div class="footer">
-<p>📚 UX学習プログラム - W1/7</p>
-<p style="font-size:0.9em;margin-top:10px;color:#999;">各週で実例を学ぶことで、理論と実践の橋渡しをしています。</p>
-</div>
-</div>
+    <div class="container">
+        <div class="header">
+            <div class="week-badge">📚 1週目</div>
+            <h1>UXとは + UXが重視される背景</h1>
+            <p style="font-size: 1.1em; margin-top: 15px;">デジタル社会でUXが重要視される理由を理解する</p>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        
+        <div class="content">
+            <!-- ミッション -->
+            <section class="section">
+                <h2>🎯 この週のミッション</h2>
+                <p>UXの定義を正しく理解し、UI・DX・CXなど混同されやすい用語との違いを説明できるようになることです。また、デジタル技術の進展とビジネスモデルの変化がどのようにUXの重要性を高めているのかを理解します。</p>
+            </section>
+            
+            <!-- UXとは -->
+            <section class="section">
+                <h2>📖 UXとは</h2>
+                <p>UX（User Experience）は単なるユーザビリティ（使いやすさ）ではなく、ユーザーが製品やサービスとの全てのインタラクションを通じて得る総合的な体験を指します。</p>
+                
+                <h3>代表的なUXの定義</h3>
+                
+                <div class="definition-card">
+                    <strong>ISO 9241-11による定義</strong>
+                    「製品、システムまたはサービスを使用した場合に得られた知覚と反応」
+                </div>
+                
+                <div class="definition-card">
+                    <strong>Nielsen & Normanによる定義</strong>
+                    「webサイトの様々な側面に関連する、実際のユーザーの全ての経験」
+                </div>
+                
+                <div class="definition-card">
+                    <strong>UXPA（UX Professionals Association）による定義</strong>
+                    「ユーザーが製品またはサービスと相互作用するあらゆる側面に関連する、知覚、感情、そして反応」
+                </div>
+                
+                <h3>UXの構成要素：ハニカム構造（7つの要素）</h3>
+                <p>Don Normanが提唱した「UXのハニカム構造」は、優れたUXに必要な7つの要素を表現しています。中央の「価値」を軸に、その周りに6つの要素が配置されます。</p>
+                
+                <div class="honeycomb-container">
+                    <div class="honeycomb-item">
+                        <span>🔍</span><br>見つけやすさ
+                    </div>
+                    <div class="honeycomb-item">
+                        <span>⚙️</span><br>使いやすさ
+                    </div>
+                    <div class="honeycomb-item">
+                        <span>♿</span><br>アクセシビリティ
+                    </div>
+                    <div class="honeycomb-item">
+                        <span>✨</span><br>望ましさ
+                    </div>
+                    <div class="honeycomb-item center">
+                        <span>💎</span><br>価値
+                    </div>
+                    <div class="honeycomb-item">
+                        <span>🛡️</span><br>信頼性
+                    </div>
+                    <div class="honeycomb-item">
+                        <span>📊</span><br>有用性
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <h4>覚えやすいコツ</h4>
+                    <p>「UXは7つの要素でできている」と覚えましょう。中央の「価値」が全ての中心であり、周りの6つの要素がそれを支えています。各要素がバランスよく実装されることで初めて優れたUXが生まれます。</p>
+                </div>
+            </section>
+            
+            <!-- UXと混同されやすい語句 -->
+            <section class="section">
+                <h2>🔀 UXと混同されやすい語句</h2>
+                <p>UXと似た言葉がありますが、それぞれ異なる概念です。正しく理解することが重要です。</p>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>用語</th>
+                            <th>定義</th>
+                            <th>UXとの関係性</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>UI</strong><br>(User Interface)</td>
+                            <td>画面上のボタン、アイコン、レイアウトなど、ユーザーが直接目にする視覚的なインターフェース</td>
+                            <td>UXの一部。良いUIが必ずしも良いUXを保証しない</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DX</strong><br>(Digital Transformation)</td>
+                            <td>デジタル技術を活用して、ビジネスプロセスや企業文化を根本的に変革すること</td>
+                            <td>企業視点の変革。UXはユーザー視点</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CX</strong><br>(Customer Experience)</td>
+                            <td>顧客が企業・ブランドと関わるあらゆる場面での体験（購買前後を含む全接点）</td>
+                            <td>CXはより広い概念。UXはデジタル製品やサービスに限定されることが多い</td>
+                        </tr>
+                        <tr>
+                            <td><strong>EX</strong><br>(Employee Experience)</td>
+                            <td>従業員が職場環境やツールとの関わりで得る体験</td>
+                            <td>組織内部の体験。UXは外部ユーザー向け</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ユーザビリティ</strong></td>
+                            <td>製品やサービスがどれだけ使いやすいか、効率的かという単一の属性</td>
+                            <td>UXの構成要素の一つ。UXはより広い感情や満足度を包含</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="tip-box">
+                    <h4>覚えやすいコツ</h4>
+                    <p>「UX ≠ UI」と覚えましょう。UIは見た目、UXは全体的な感情や満足度です。良いデザインでも使いにくければUXは悪く、不格好でも使いやすければUXは良い場合もあります。</p>
+                </div>
+            </section>
+            
+            <!-- UXが重視される背景 -->
+            <section class="section">
+                <h2>📈 UXが重視される背景</h2>
+                
+                <h3>1. ビジネス環境の変化</h3>
+                <p>近年のビジネス環境は劇的に変わりました：</p>
+                
+                <div class="definition-card">
+                    <strong>顧客接点の多様化</strong>
+                    従来は店舗やコールセンターが主でしたが、今はWebサイト、スマートフォンアプリ、SNS、チャットボット、IoTデバイスなど、複数のチャネルを通じてユーザーと接触します。
+                </div>
+                
+                <div class="definition-card">
+                    <strong>業務オペレーションの変化</strong>
+                    OMO（Online Merges with Offline）やD2C（Direct to Consumer）モデルの普及により、顧客データ活用が競争力の源となっています。
+                </div>
+                
+                <div class="definition-card">
+                    <strong>ビジネスモデルの変化：売り切り型から継続課金型へ</strong>
+                    従来の売り切り型（1回の取引で完結）から、サブスクリプション型への転換が進んでいます。
+                </div>
+                
+                <div class="tip-box">
+                    <h4>数字で理解する例</h4>
+                    <p>100人の顧客に対して、売り切り型なら「1,000円 × 100人 = 100,000円」ですが、サブスクリプション型なら「1,000円 × 12ヶ月 × 100人 = 1,200,000円」になります。これが「12倍の魔法」です。継続課金型では、ユーザーの満足度（UX）が直結します。</p>
+                </div>
+                
+                <h3>2. テクノロジーの進展</h3>
+                <p>デジタル技術の急速な進化がUX設計を複雑にし、同時に重要にしています：</p>
+                
+                <div class="definition-card">
+                    <strong>ビッグデータ・AI・機械学習</strong>
+                    膨大なユーザー行動データを分析し、個別のニーズに合わせたパーソナライズされた体験を提供することが可能になりました。
+                </div>
+                
+                <div class="definition-card">
+                    <strong>ID統合とデータリテラシー</strong>
+                    複数のデバイス・チャネルを横断したユーザー行動を追跡・分析し、一貫したUXを実現できます。
+                </div>
+                
+                <div class="definition-card">
+                    <strong>プラットフォームビジネス</strong>
+                    Amazonなどのプラットフォームでは、UXの優劣が売上に直結するため、継続的なUX改善が必須となっています。
+                </div>
+                
+                <div class="tip-box">
+                    <h4>覚えやすいコツ</h4>
+                    <p>「データがUXを支える時代」と覚えましょう。テクノロジーにより、ユーザー行動を詳細に把握し、その場その場で最適な体験を提供することが当たり前になりました。</p>
+                </div>
+            </section>
+            
+            <!-- UXデザインの概要 -->
+            <section class="section">
+                <h2>🎨 UXデザインの概要</h2>
+                <p>UXデザインとは、ユーザーの潜在ニーズを発見し、それを満たす製品やサービスを段階的に設計・改善するプロセスです。</p>
+                
+                <h3>UXデザインの基本的な考え方</h3>
+                <ul class="checklist">
+                    <li>ユーザー中心設計：ユーザーのニーズを最優先に考える</li>
+                    <li>全体体験の設計：個別の機能ではなく、全体的な流れを設計</li>
+                    <li>データ駆動：仮説をデータで検証する</li>
+                    <li>継続的改善：リリース後も常に改善し続ける</li>
+                </ul>
+                
+                <h3>UXデザインのプロセス</h3>
+                <p><strong>リサーチ → 要件定義 → 設計 → 評価 → 改善</strong> という循環的なプロセスを回します。</p>
+                
+                <h3>UXデザイナーに求められるスキル</h3>
+                <div class="definition-card">
+                    <strong>1. ユーザーリサーチ</strong><br>
+                    定性的・定量的なリサーチを通じて、ユーザーの潜在ニーズを発見する能力
+                </div>
+                
+                <div class="definition-card">
+                    <strong>2. ビジネス構築</strong><br>
+                    UXの改善がビジネス成果につながるよう、ビジネスモデルを理解し、設計する能力
+                </div>
+                
+                <div class="definition-card">
+                    <strong>3. 世界観体現</strong><br>
+                    ブランドや製品の価値観を、ビジュアルやインタラクションを通じて表現する能力
+                </div>
+                
+                <div class="definition-card">
+                    <strong>4. グロースチーム運用</strong><br>
+                    デザイナー、エンジニア、ビジネスメンバーなど、異なる職種のメンバーと協働し、素早く改善サイクルを回す能力
+                </div>
+                
+                <div class="definition-card">
+                    <strong>5. 分析・仮説検証</strong><br>
+                    データを分析し、改善の優先順位を判断し、仮説を検証する能力
+                </div>
+            </section>
+            
+            <!-- 重要ワード -->
+            <section class="section">
+                <h2>🔑 重要ワード</h2>
+                <div class="keyword-box">
+                    <h4>W1で学んだ重要な言葉（14個）</h4>
+                    <div class="keyword-list">
+                        <span class="keyword-tag">UX</span>
+                        <span class="keyword-tag">ISO定義</span>
+                        <span class="keyword-tag">Nielsen&Norman定義</span>
+                        <span class="keyword-tag">UXPA定義</span>
+                        <span class="keyword-tag">ハニカム構造</span>
+                        <span class="keyword-tag">価値</span>
+                        <span class="keyword-tag">UI</span>
+                        <span class="keyword-tag">DX</span>
+                        <span class="keyword-tag">CX</span>
+                        <span class="keyword-tag">EX</span>
+                        <span class="keyword-tag">OMO</span>
+                        <span class="keyword-tag">D2C</span>
+                        <span class="keyword-tag">プラットフォームビジネス</span>
+                        <span class="keyword-tag">ビッグデータ</span>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- チェックリスト -->
+            <section class="section">
+                <h2>✅ W1の学習チェックリスト</h2>
+                <ul class="checklist">
+                    <li>UXの3つの主要な定義（ISO、Nielsen&Norman、UXPA）を説明できる</li>
+                    <li>UXのハニカム構造の7つの要素を挙げることができる</li>
+                    <li>UI、DX、CX、EXの違いを説明できる</li>
+                    <li>なぜUXが重視されるようになったのか、3つの理由を述べられる</li>
+                    <li>売り切り型からサブスクリプション型への変化を説明できる</li>
+                    <li>ビッグデータ、AI、ID統合がUXに与える影響を理解している</li>
+                    <li>UXデザイナーに求められる5つのスキルを挙げられる</li>
+                </ul>
+            </section>
+            
+            <!-- サマリー -->
+            <section class="section">
+                <div class="summary-box">
+                    <h4>📌 W1のまとめ（5つの要点）</h4>
+                    <ol style="margin-left: 20px;">
+                        <li><strong>UXは総合体験</strong> — ユーザビリティ（使いやすさ）だけでなく、感情や満足度を含む全体的な体験を指す</li>
+                        <li><strong>UI ≠ UX</strong> — UIは視覚的インターフェース、UXは全体的な感情・満足度。UXはUIを包含する広い概念</li>
+                        <li><strong>DX・CX・EXは異なる</strong> — UXはユーザー向け、DXは企業変革、CXは顧客全接点、EXは従業員体験</li>
+                        <li><strong>ビジネスモデルの変化が重要</strong> — サブスクリプション型では継続的な顧客満足度（UX）が直結する</li>
+                        <li><strong>データ時代のUX</strong> — ビッグデータとAIにより、個別のニーズに合わせたパーソナライズされた体験が実現可能に</li>
+                    </ol>
+                </div>
+            </section>
+            
+            <!-- 次週予告 -->
+            <section class="section">
+                <div class="next-week">
+                    <p>次週（W2）は「UXデザイン + UXグロース + UXインテリジェンス」を学びます。<br>
+                    UXの戦略的な活用方法を理解しましょう！</p>
+                </div>
+            </section>
+        </div>
+        
+        <div class="footer">
+            <p>📚 UX学習プログラム Week 1/7</p>
+            <p style="margin-top: 10px; color: #999; font-size: 0.9em;">最終更新: 2026年3月</p>
+        </div>
+    </div>
 </body>
 </html>
