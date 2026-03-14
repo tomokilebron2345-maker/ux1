@@ -23,7 +23,6 @@
             overflow: hidden;
         }
 
-        /* ─── Header ─── */
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #fff;
@@ -47,7 +46,6 @@
         }
         .back-link:hover { background: rgba(255,255,255,0.3); }
 
-        /* ─── Progress ─── */
         .progress {
             background: #e0e0e0;
             height: 6px;
@@ -61,10 +59,8 @@
             width: 0%;
         }
 
-        /* ─── Content ─── */
         .content { padding: 40px; }
 
-        /* ─── Quiz Question ─── */
         .quiz-question {
             margin-bottom: 30px;
             animation: fadeIn .5s ease-out;
@@ -83,7 +79,6 @@
             line-height: 1.6;
         }
 
-        /* ─── Options ─── */
         .options { display: grid; gap: 12px; }
 
         .option {
@@ -106,7 +101,6 @@
             accent-color: #667eea;
         }
 
-        /* ─── Explanation ─── */
         .explanation {
             background: #f3f4f6;
             padding: 20px;
@@ -128,7 +122,6 @@
 
         .explanation p { color: #666; line-height: 1.8; }
 
-        /* ─── Correct Feedback Badge ─── */
         .correct-feedback {
             background: #d1fae5;
             border: 2px solid #10b981;
@@ -141,7 +134,6 @@
             animation: slideDown .3s ease-out;
         }
 
-        /* ─── Buttons ─── */
         .buttons {
             display: flex;
             gap: 15px;
@@ -180,7 +172,6 @@
             box-shadow: 0 5px 15px rgba(16,185,129,.4);
         }
 
-        /* ─── Score Section ─── */
         .score-section {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #fff;
@@ -205,7 +196,6 @@
         .score-number  { font-size: 4em; font-weight: bold; margin: 15px 0; }
         .score-message { font-size: 1.3em; margin-top: 15px; line-height: 1.8; white-space: pre-line; }
 
-        /* ─── Nav Buttons ─── */
         .nav-buttons {
             display: flex;
             gap: 15px;
@@ -230,7 +220,6 @@
             box-shadow: 0 5px 15px rgba(16,185,129,.4);
         }
 
-        /* ─── Footer ─── */
         .footer {
             background: #f8f9fa;
             padding: 20px 30px;
@@ -240,7 +229,6 @@
             border-top: 1px solid #e0e0e0;
         }
 
-        /* ─── Responsive ─── */
         @media (max-width: 600px) {
             .content       { padding: 20px; }
             .header h1     { font-size: 1.5em; }
@@ -252,41 +240,30 @@
 <body>
 <div class="container">
 
-    <!-- ══════════ HEADER ══════════ -->
     <div class="header">
         <a href="w5_ux.html" class="back-link">← 学習ページに戻る</a>
         <h1>W5: クイズ</h1>
         <p>ユーザー心理と包摂性 — 理解度チェック</p>
     </div>
 
-    <!-- ══════════ PROGRESS ══════════ -->
     <div class="progress">
         <div class="progress-bar" id="progressBar"></div>
     </div>
 
-    <!-- ══════════ CONTENT ══════════ -->
     <div class="content">
-
-        <!-- Score Section -->
         <div class="score-section" id="scoreSection">
             <div class="score-title">クイズ完了！🎉</div>
             <div class="score-number" id="scoreNumber">0%</div>
             <div class="score-message" id="scoreMessage"></div>
             <div class="nav-buttons" id="navButtons"></div>
         </div>
-
-        <!-- Quiz Content -->
         <div id="quizContent"></div>
-
     </div>
 
     <div class="footer">📚 UX学習プログラム Week 5/7 クイズ</div>
 </div>
 
 <script>
-/* ═══════════════════════════════════════
-   QUIZ DATA  (10問)
-═══════════════════════════════════════ */
 const quizData = [
     {
         question: "行動経済学における『アンカリング効果』とは何ですか？",
@@ -321,10 +298,10 @@ const quizData = [
     {
         question: "作業記憶（短期記憶）の容量に関する一般的な限界は？",
         options: [
-            { text: "3±1個の情報",               correct: false },
-            { text: "7±2個の情報",               correct: true  },
-            { text: "15±5個の情報",              correct: false },
-            { text: "制限なし、訓練で無制限に保持可能", correct: false }
+            { text: "3±1個の情報",                       correct: false },
+            { text: "7±2個の情報",                       correct: true  },
+            { text: "15±5個の情報",                      correct: false },
+            { text: "制限なし、訓練で無制限に保持可能",   correct: false }
         ],
         explanation: "人間の短期記憶は一般的に7±2個の情報しか保持できません。ナビゲーションメニューを7個程度に限定するなど、この制限を考慮した設計が重要です。"
     },
@@ -381,10 +358,10 @@ const quizData = [
     {
         question: "包摂的設計（インクルーシブデザイン）の哲学について、正しいものは？",
         options: [
-            { text: "障害者専用の特別な設計を作ること",                                         correct: false },
+            { text: "障害者専用の特別な設計を作ること",                                             correct: false },
             { text: "障害者対応と思われるアクセシビリティ対応は、実は全ユーザーの体験を向上させる", correct: true  },
-            { text: "健常者向けに最適化してから障害者向けに調整する",                           correct: false },
-            { text: "アクセシビリティはコストが高いので優先度を下げる",                         correct: false }
+            { text: "健常者向けに最適化してから障害者向けに調整する",                               correct: false },
+            { text: "アクセシビリティはコストが高いので優先度を下げる",                             correct: false }
         ],
         explanation: "包摂的設計では、一見障害者向けと思われるアクセシビリティ対応が実は全ユーザーに利益をもたらすことを認識しています。例えば動画のキャプションは聴覚障害者だけでなく、音声を出せない環境のユーザーにも役立ちます。"
     }
@@ -413,6 +390,7 @@ function renderQuestion() {
     const q        = quizData[currentQuestion];
     const shuffled = shuffleArray([...q.options]);
 
+    // ✅ シャッフル後の正解インデックスを記録
     correctAnswers[currentQuestion] = shuffled.findIndex(o => o.correct);
 
     const container = document.getElementById('quizContent');
@@ -448,10 +426,14 @@ function submitAnswer() {
     const selected = document.querySelector('input[name="answer"]:checked');
     if (!selected) { alert('選択肢を選んでください'); return; }
 
+    // ✅ 現在の問題データを最初に取得（TDZエラーを防ぐ）
+    const q         = quizData[currentQuestion];
     const answerIdx = parseInt(selected.value);
     const isCorrect = answerIdx === correctAnswers[currentQuestion];
+
     if (isCorrect) score++;
 
+    // ✅ 選択肢の色付け＆無効化
     document.querySelectorAll('.option').forEach((el, idx) => {
         el.classList.remove('selected');
         if (idx === correctAnswers[currentQuestion]) {
@@ -463,13 +445,11 @@ function submitAnswer() {
         if (radio) radio.disabled = true;
     });
 
+    // ✅ 解説を表示
     document.getElementById('explanation').classList.add('show');
     document.getElementById('explanationText').textContent = q.explanation;
 
-    // explanationText のためにローカル変数 q を参照
-    const q = quizData[currentQuestion];
-    document.getElementById('explanationText').textContent = q.explanation;
-
+    // ✅ 正解バッジを表示
     if (isCorrect) {
         const badge = document.createElement('div');
         badge.className = 'correct-feedback';
@@ -477,6 +457,7 @@ function submitAnswer() {
         document.querySelector('.quiz-question').appendChild(badge);
     }
 
+    // ✅ 回答ボタンを非表示にして次へボタンを追加
     document.getElementById('submitBtn').style.display = 'none';
 
     const nextBtn = document.createElement('button');
