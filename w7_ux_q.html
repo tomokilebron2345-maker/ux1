@@ -3,559 +3,594 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>W7: クイズ - ユーザーモデリング + UXデザイン具現化 + UXデザイン評価 + UX運用・グロース</title>
+    <title>W7: クイズ - UXデザイン具現化 + 評価 + 運用・グロース</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             padding: 20px;
-            line-height: 1.8;
         }
-        
+
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,.2);
             overflow: hidden;
         }
-        
+
+        /* ─── Header ─── */
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px 30px;
-            text-align: center;
-        }
-        
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        
-        .week-badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.3);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 1.1em;
-            margin-bottom: 15px;
-        }
-        
-        .progress-info {
-            background: rgba(0,0,0,0.1);
-            padding: 15px 30px;
-            text-align: center;
-            font-size: 1.1em;
-        }
-        
-        .content {
+            color: #fff;
             padding: 40px;
+            text-align: center;
         }
-        
-        .quiz-container {
+
+        .header h1 { font-size: 2em; margin-bottom: 10px; }
+        .header p  { opacity: .9; font-size: 1.1em; }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+        .back-link:hover { background: rgba(255,255,255,0.3); }
+
+        /* ─── Progress ─── */
+        .progress {
+            background: #e0e0e0;
+            height: 6px;
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            transition: .3s ease;
+            width: 0%;
+        }
+
+        /* ─── Content ─── */
+        .content { padding: 40px; }
+
+        /* ─── Quiz Question ─── */
+        .quiz-question {
             margin-bottom: 30px;
+            animation: fadeIn .5s ease-out;
         }
-        
-        .question {
-            background: #f5f7fa;
-            padding: 25px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-            border-radius: 8px;
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
-        
-        .question h3 {
-            color: #667eea;
-            margin-bottom: 15px;
+
+        .question-text {
             font-size: 1.2em;
-        }
-        
-        .question p {
-            margin-bottom: 20px;
+            font-weight: bold;
             color: #333;
+            margin-bottom: 20px;
+            line-height: 1.6;
         }
-        
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
+
+        /* ─── Options ─── */
+        .options { display: grid; gap: 12px; }
+
         .option {
             padding: 15px;
-            background: white;
             border: 2px solid #ddd;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: .3s ease;
+            background: #f9f9f9;
         }
-        
-        .option:hover {
-            border-color: #667eea;
-            background: #f0f4ff;
-        }
-        
-        .option input[type="radio"] {
+
+        .option:hover     { border-color: #667eea; background: #f0f4ff; }
+        .option.selected  { border-color: #667eea; background: #e8eeff; }
+        .option.correct   { border-color: #10b981; background: #d1fae5; }
+        .option.incorrect { border-color: #ef4444; background: #fee2e2; }
+
+        .option input {
             margin-right: 10px;
             cursor: pointer;
+            accent-color: #667eea;
         }
-        
-        .option label {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
+
+        /* ─── Explanation ─── */
+        .explanation {
+            background: #f3f4f6;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid #667eea;
+            display: none;
         }
-        
-        .option.correct {
-            background: #d4edda;
-            border-color: #28a745;
+
+        .explanation.show {
+            display: block;
+            animation: slideDown .3s ease-out;
         }
-        
-        .option.incorrect {
-            background: #f8d7da;
-            border-color: #dc3545;
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-6px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
-        
-        .option.selected-correct {
-            background: #d4edda;
-            border-color: #28a745;
-            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.3);
-        }
-        
-        .option.selected-incorrect {
-            background: #f8d7da;
-            border-color: #dc3545;
-            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.3);
-        }
-        
-        .feedback {
-            margin-top: 15px;
+
+        .explanation p { color: #666; line-height: 1.8; }
+
+        /* ─── Correct Feedback Badge ─── */
+        .correct-feedback {
+            background: #d1fae5;
+            border: 2px solid #10b981;
+            color: #059669;
             padding: 15px;
             border-radius: 8px;
-            display: none;
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: center;
+            animation: slideDown .3s ease-out;
         }
-        
-        .feedback.show {
-            display: block;
+
+        /* ─── Buttons ─── */
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
-        
-        .feedback.correct {
-            background: #d4edda;
-            border-left: 4px solid #28a745;
-            color: #155724;
-        }
-        
-        .feedback.incorrect {
-            background: #f8d7da;
-            border-left: 4px solid #dc3545;
-            color: #721c24;
-        }
-        
-        .feedback strong {
-            display: block;
-            margin-bottom: 8px;
-        }
-        
-        .submit-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px 40px;
+
+        button {
+            padding: 12px 30px;
             border: none;
             border-radius: 8px;
-            font-size: 1.1em;
+            font-size: 1em;
+            font-weight: bold;
             cursor: pointer;
-            margin-top: 20px;
-            transition: transform 0.2s;
+            transition: .3s ease;
         }
-        
-        .submit-btn:hover {
-            transform: scale(1.05);
+
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
         }
-        
-        .submit-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102,126,234,.4);
         }
-        
+
+        .btn-next {
+            background: #10b981;
+            color: #fff;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16,185,129,.4);
+        }
+
+        /* ─── Score Section ─── */
         .score-section {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            color: #fff;
             padding: 40px;
+            border-radius: 15px;
             text-align: center;
-            margin-top: 40px;
-            border-radius: 8px;
+            margin-bottom: 30px;
             display: none;
         }
-        
+
         .score-section.show {
             display: block;
+            animation: slideUp .5s ease-out;
         }
-        
-        .score-number {
-            font-size: 3em;
-            font-weight: bold;
-            margin: 20px 0;
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
-        
-        .score-message {
-            font-size: 1.3em;
-            margin-bottom: 20px;
+
+        .score-title   { font-size: 1.8em; margin-bottom: 10px; }
+        .score-number  { font-size: 4em; font-weight: bold; margin: 15px 0; }
+        .score-message { font-size: 1.3em; margin-top: 15px; line-height: 1.8; white-space: pre-line; }
+
+        /* ─── Nav Buttons ─── */
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 25px;
+            flex-wrap: wrap;
         }
-        
-        .reset-btn {
-            background: white;
-            color: #667eea;
-            padding: 15px 40px;
-            border: none;
+
+        .nav-link {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #fff;
+            text-decoration: none;
             border-radius: 8px;
-            font-size: 1.1em;
             font-weight: bold;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: transform 0.2s;
+            transition: .3s ease;
         }
-        
-        .reset-btn:hover {
-            transform: scale(1.05);
+
+        .nav-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16,185,129,.4);
         }
-        
+
+        /* ─── Footer ─── */
         .footer {
             background: #f8f9fa;
-            padding: 30px;
+            padding: 20px 30px;
             text-align: center;
             color: #666;
+            font-size: 0.9em;
             border-top: 1px solid #e0e0e0;
         }
-        
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8em;
-            }
-            
-            .content {
-                padding: 20px;
-            }
-            
-            .question {
-                padding: 15px;
-            }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 600px) {
+            .content       { padding: 20px; }
+            .header h1     { font-size: 1.5em; }
+            .question-text { font-size: 1.1em; }
+            .score-number  { font-size: 3em; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="week-badge">🎯 W7 クイズ（最終週）</div>
-            <h1>ユーザーモデリング + UXデザイン具現化<br>+ UXデザイン評価 + UX運用・グロース</h1>
-        </div>
-        <div class="progress-info">
-            <span id="progress">問題 1/14</span>
-        </div>
-        
-        <div class="content" id="quizContent">
-            <!-- Questions will be inserted here -->
-        </div>
-        
-        <div class="score-section" id="scoreSection">
-            <h2>🎉 クイズ完了！</h2>
-            <div class="score-number"><span id="scoreValue">0</span>/<span id="totalQuestions">14</span></div>
-            <div class="score-message" id="scoreMessage"></div>
-            <button class="reset-btn" onclick="resetQuiz()">もう一度やる</button>
-        </div>
-        
-        <div class="footer">
-            <p>📚 UX学習プログラム Week 7/7 - 最終週 クイズ</p>
-        </div>
+<div class="container">
+
+    <!-- ══════════ HEADER ══════════ -->
+    <div class="header">
+        <a href="w7_ux.html" class="back-link">← 学習ページに戻る</a>
+        <h1>W7: クイズ（最終週）</h1>
+        <p>UXデザイン具現化 + 評価 + 運用・グロース — 理解度チェック</p>
     </div>
-    
-    <script>
-        const quizData = [
-            {
-                question: "複数ペルソナを持つことの利点として最も正しいのはどれですか？",
-                options: [
-                    { text: "1つのペルソナで全てのユーザーニーズに対応できる", correct: false },
-                    { text: "異なるニーズに対応でき、スケーラブルなUXを実現できる", correct: true },
-                    { text: "設計が複雑になるだけで、メリットはない", correct: false },
-                    { text: "ペルソナの数だけマーケティング戦略が増える", correct: false }
-                ],
-                explanation: "複数のペルソナを持つことで、異なるユーザーセグメントのニーズに対応し、より広くスケーラブルなUXを実現できます。"
-            },
-            {
-                question: "ユーザーセグメンテーションの『ジョブ・ベースド』セグメンテーションについて、最も正しいのはどれですか？",
-                options: [
-                    { text: "ユーザーの職業による分類", correct: false },
-                    { text: "ユーザーが解決したい課題に基づくセグメンテーション", correct: true },
-                    { text: "ユーザーの年齢による分類", correct: false },
-                    { text: "ユーザーの購買履歴による分類", correct: false }
-                ],
-                explanation: "ジョブ・ベースドセグメンテーションは、『移動が必要だから』『学習したいから』など、ユーザーが達成したい目的（ジョブ）に基づくセグメンテーション方法です。"
-            },
-            {
-                question: "ワイヤーフレームとプロトタイプの違いについて、最も正しいのはどれですか？",
-                options: [
-                    { text: "ワイヤーフレームはハイファイ、プロトタイプはローファイである", correct: false },
-                    { text: "ワイヤーフレームはページレイアウトと機能を簡潔に表現し、プロトタイプは段階的に詳細化される", correct: true },
-                    { text: "ワイヤーフレームは最終デザイン、プロトタイプは試験版である", correct: false },
-                    { text: "両者は同じものである", correct: false }
-                ],
-                explanation: "ワイヤーフレームはレイアウトと機能を簡潔に表現する段階であり、プロトタイプはローファイからハイファイまで、段階的に詳細化されたバージョンです。"
-            },
-            {
-                question: "UXライティングにおける『マイクロコピー』とは何ですか？",
-                options: [
-                    { text: "長めのヘルプテキスト", correct: false },
-                    { text: "『送信』『キャンセル』といったボタン上の短いテキスト", correct: true },
-                    { text: "チュートリアルのコンテンツ", correct: false },
-                    { text: "エラーメッセージ全般", correct: false }
-                ],
-                explanation: "マイクロコピーは、UI上の短いテキスト要素（ボタンラベル、プレースホルダーテキストなど）を指します。シンプルだが、ユーザー体験に大きな影響を与えます。"
-            },
-            {
-                question: "ユーザーテストの『思考発話法』について、最も正しいのはどれですか？",
-                options: [
-                    { text: "ユーザーが静かにタスクを完了させ、完了後に回顧する", correct: false },
-                    { text: "ユーザーが考えていることを声に出してもらいながら、タスクを実行させる", correct: true },
-                    { text: "研究者がユーザーに指示を与える", correct: false },
-                    { text: "複数のユーザーでグループディスカッションを行う", correct: false }
-                ],
-                explanation: "思考発話法は、ユーザーの頭の中で何が起こっているかをリアルタイムで把握できます。ユーザーが考えていることを声に出してもらうことで、直感的なフィードバックが得られます。"
-            },
-            {
-                question: "ユーザーテストにおける『インフォームドコンセント』の意義として最も正しいのはどれですか？",
-                options: [
-                    { text: "テスト結果を事前に知らせること", correct: false },
-                    { text: "テスト参加者に研究の目的と個人情報の利用方法を説明し、同意を得ること", correct: true },
-                    { text: "テスト参加者に報酬を提供すること", correct: false },
-                    { text: "テスト結果を後で共有すること", correct: false }
-                ],
-                explanation: "インフォームドコンセントは、倫理的で透明性のあるユーザーテストの実施を確保するための重要なプロセスです。"
-            },
-            {
-                question: "エキスパートレビューの『ヒューリスティック評価』について、最も正しいのはどれですか？",
-                options: [
-                    { text: "チェックリストに基づいてデザインを評価する", correct: false },
-                    { text: "10個のユーザビリティ原則に基づいてデザインを評価する", correct: true },
-                    { text: "ユーザーの意見を聞く方法", correct: false },
-                    { text: "機械的に実施する自動評価", correct: false }
-                ],
-                explanation: "ヒューリスティック評価は、ニールセンの10個のユーザビリティ原則（可視性、ユーザーとシステムのマッチなど）に基づいてデザインを評価する方法です。"
-            },
-            {
-                question: "DevOpsとDesignOpsの関係について、最も正しいのはどれですか？",
-                options: [
-                    { text: "DevOpsとDesignOpsは競合する概念である", correct: false },
-                    { text: "DevOpsは開発と運用の統合、DesignOpsはデザイナーの生産性向上と品質保証。両者は相補的に機能する", correct: true },
-                    { text: "DesignOpsはDevOpsの一部である", correct: false },
-                    { text: "両者は同じ概念である", correct: false }
-                ],
-                explanation: "DevOpsは開発と運用を統合し、DesignOpsはデザインプロセスを最適化します。両者が協働することで、より高速で高品質なUX改善が可能になります。"
-            },
-            {
-                question: "グロースチームに必要な機能として挙げられていないのはどれですか？",
-                options: [
-                    { text: "分析・仮説検証", correct: false },
-                    { text: "施策実行", correct: false },
-                    { text: "長期的な戦略計画", correct: true },
-                    { text: "測定・学習", correct: false }
-                ],
-                explanation: "グロースチームは、短期的な改善を素早く実行することに特化しています。長期的な戦略計画よりも、迅速な実験と学習を優先します。"
-            },
-            {
-                question: "トップダウン型UXグロース活動の特徴として最も正しいのはどれですか？",
-                options: [
-                    { text: "経営層がUXを重視し、全社的にUX改善を推進する。大規模な変革が可能", correct: true },
-                    { text: "現場のチームが小さな改善を積み重ねていく", correct: false },
-                    { text: "UX部門だけで実施される", correct: false },
-                    { text: "迅速で柔軟だが、組織全体への波及に時間がかかる", correct: false }
-                ],
-                explanation: "トップダウン型は、経営層がUXの重要性を認識し、全社的に推進することで、大規模な変革が可能になります。"
-            },
-            {
-                question: "『測定→学習→改善』のサイクルを回し続けることの重要性について、最も正しいのはどれですか？",
-                options: [
-                    { text: "一度設計したら、改善は不要である", correct: false },
-                    { text: "ユーザーフィードバックと行動データをもとに、継続的に改善することで、より良いUXを実現できる", correct: true },
-                    { text: "改善は品質低下につながる", correct: false },
-                    { text: "測定は最後に1回だけ行う", correct: false }
-                ],
-                explanation: "UX運用の本質は、継続的な改善サイクルです。ユーザーからのフィードバックと行動データを組み合わせることで、常により良い体験を提供できます。"
-            },
-            {
-                question: "UX人材育成における『スキルマップ』の役割として最も正しいのはどれですか？",
-                options: [
-                    { text: "ユーザーのスキルレベルを把握する", correct: false },
-                    { text: "各メンバーの強みと成長領域を可視化し、段階的な学習計画を立てる", correct: true },
-                    { text: "給与決定の基準となる", correct: false },
-                    { text: "チームメンバーの評価を行う", correct: false }
-                ],
-                explanation: "スキルマップは、組織内の各UX人材の現在のスキルレベルと今後の成長領域を可視化し、効果的な人材育成計画を立てるツールです。"
-            },
-            {
-                question: "7週間のUX学習全体を通じて、最も重要な考え方は何ですか？",
-                options: [
-                    { text: "UXは美しいデザインを作ることである", correct: false },
-                    { text: "UXはユーザーを深く理解し、ビジネス価値と調和させながら、継続的に改善するプロセスである", correct: true },
-                    { text: "UXは技術的な実装だけが重要である", correct: false },
-                    { text: "UXはユーザーテストだけで完成する", correct: false }
-                ],
-                explanation: "UXは単なる美しいデザインや技術的実装ではなく、ユーザーの深い理解、ビジネス目標の達成、そして継続的な改善という、包括的で反復的なプロセスです。"
-            },
-            {
-                question: "今後のUXデザイナーとしてのあるべき姿について、最も重要なのはどれですか？",
-                options: [
-                    { text: "常に最新のツールやトレンドを追う", correct: false },
-                    { text: "ユーザーとビジネスの両面の価値を理解し、複雑な問題を創造的かつ実行的に解決できる人材", correct: true },
-                    { text: "一度完璧な設計をすれば、改善は不要", correct: false },
-                    { text: "デザイナーだけで、他部門との協働は不要", correct: false }
-                ],
-                explanation: "優れたUXデザイナーは、ユーザーのニーズを深く理解し、ビジネス価値も考慮し、デザイナーとしての専門知識と、異職種との協働スキルを持つ人材です。"
-            }
-        ];
-        
-        let currentQuestion = 0;
-        let score = 0;
-        let answered = false;
-        
-        function initQuiz() {
-            renderQuestion();
+
+    <!-- ══════════ PROGRESS ══════════ -->
+    <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- ══════════ CONTENT ══════════ -->
+    <div class="content">
+
+        <div class="score-section" id="scoreSection">
+            <div class="score-title">クイズ完了！🎉</div>
+            <div class="score-number" id="scoreNumber">0%</div>
+            <div class="score-message" id="scoreMessage"></div>
+            <div class="nav-buttons" id="navButtons"></div>
+        </div>
+
+        <div id="quizContent"></div>
+
+    </div>
+
+    <div class="footer">📚 UX学習プログラム Week 7/7 — 最終週 クイズ</div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════
+   QUIZ DATA  (14問)
+═══════════════════════════════════════ */
+const quizData = [
+    {
+        question: "複数ペルソナを持つことの利点として最も正しいのはどれですか？",
+        options: [
+            { text: "1つのペルソナで全てのユーザーニーズに対応できる",           correct: false },
+            { text: "異なるニーズに対応でき、スケーラブルなUXを実現できる",       correct: true  },
+            { text: "設計が複雑になるだけで、メリットはない",                     correct: false },
+            { text: "ペルソナの数だけマーケティング戦略が増える",                 correct: false }
+        ],
+        explanation: "複数のペルソナを持つことで、異なるユーザーセグメントのニーズに対応し、より広くスケーラブルなUXを実現できます。"
+    },
+    {
+        question: "ユーザーセグメンテーションの『ジョブ・ベースド』セグメンテーションについて、最も正しいのはどれですか？",
+        options: [
+            { text: "ユーザーの職業による分類",                               correct: false },
+            { text: "ユーザーが解決したい課題に基づくセグメンテーション",       correct: true  },
+            { text: "ユーザーの年齢による分類",                               correct: false },
+            { text: "ユーザーの購買履歴による分類",                           correct: false }
+        ],
+        explanation: "ジョブ・ベースドセグメンテーションは、『移動が必要だから』『学習したいから』など、ユーザーが達成したい目的（ジョブ）に基づくセグメンテーション方法です。"
+    },
+    {
+        question: "ワイヤーフレームとプロトタイプの違いについて、最も正しいのはどれですか？",
+        options: [
+            { text: "ワイヤーフレームはハイファイ、プロトタイプはローファイである",                                           correct: false },
+            { text: "ワイヤーフレームはページレイアウトと機能を簡潔に表現し、プロトタイプは段階的に詳細化される",             correct: true  },
+            { text: "ワイヤーフレームは最終デザイン、プロトタイプは試験版である",                                             correct: false },
+            { text: "両者は同じものである",                                                                                   correct: false }
+        ],
+        explanation: "ワイヤーフレームはレイアウトと機能を簡潔に表現する段階であり、プロトタイプはローファイからハイファイまで、段階的に詳細化されたバージョンです。"
+    },
+    {
+        question: "UXライティングにおける『マイクロコピー』とは何ですか？",
+        options: [
+            { text: "長めのヘルプテキスト",                       correct: false },
+            { text: "『送信』『キャンセル』といったボタン上の短いテキスト", correct: true  },
+            { text: "チュートリアルのコンテンツ",                 correct: false },
+            { text: "エラーメッセージ全般",                       correct: false }
+        ],
+        explanation: "マイクロコピーは、UI上の短いテキスト要素（ボタンラベル、プレースホルダーテキストなど）を指します。シンプルだが、ユーザー体験に大きな影響を与えます。"
+    },
+    {
+        question: "ユーザーテストの『思考発話法』について、最も正しいのはどれですか？",
+        options: [
+            { text: "ユーザーが静かにタスクを完了させ、完了後に回顧する",               correct: false },
+            { text: "ユーザーが考えていることを声に出してもらいながら、タスクを実行させる", correct: true  },
+            { text: "研究者がユーザーに指示を与える",                                   correct: false },
+            { text: "複数のユーザーでグループディスカッションを行う",                   correct: false }
+        ],
+        explanation: "思考発話法は、ユーザーの頭の中で何が起こっているかをリアルタイムで把握できます。ユーザーが考えていることを声に出してもらうことで、直感的なフィードバックが得られます。"
+    },
+    {
+        question: "ユーザーテストにおける『インフォームドコンセント』の意義として最も正しいのはどれですか？",
+        options: [
+            { text: "テスト結果を事前に知らせること",                                                   correct: false },
+            { text: "テスト参加者に研究の目的と個人情報の利用方法を説明し、同意を得ること",             correct: true  },
+            { text: "テスト参加者に報酬を提供すること",                                                 correct: false },
+            { text: "テスト結果を後で共有すること",                                                     correct: false }
+        ],
+        explanation: "インフォームドコンセントは、倫理的で透明性のあるユーザーテストの実施を確保するための重要なプロセスです。"
+    },
+    {
+        question: "エキスパートレビューの『ヒューリスティック評価』について、最も正しいのはどれですか？",
+        options: [
+            { text: "チェックリストに基づいてデザインを評価する",       correct: false },
+            { text: "10個のユーザビリティ原則に基づいてデザインを評価する", correct: true  },
+            { text: "ユーザーの意見を聞く方法",                         correct: false },
+            { text: "機械的に実施する自動評価",                         correct: false }
+        ],
+        explanation: "ヒューリスティック評価は、ニールセンの10個のユーザビリティ原則（可視性、ユーザーとシステムのマッチなど）に基づいてデザインを評価する方法です。"
+    },
+    {
+        question: "『認知的ウォークスルー』について、最も正しいのはどれですか？",
+        options: [
+            { text: "チェックリストに基づいて機械的に評価する",                               correct: false },
+            { text: "ユーザーの視点に立って、ステップバイステップでUIを評価する",             correct: true  },
+            { text: "複数の専門家が同時にデザインを評価する",                                 correct: false },
+            { text: "ユーザーに実際に操作してもらう方法",                                     correct: false }
+        ],
+        explanation: "認知的ウォークスルーは、評価者がユーザーの立場に立ち、実際の操作手順をステップごとに追いながらUIを評価する手法です。ユーザーの心理を考慮した深い評価が可能です。"
+    },
+    {
+        question: "DevOpsとDesignOpsの関係について、最も正しいのはどれですか？",
+        options: [
+            { text: "DevOpsとDesignOpsは競合する概念である",                                                               correct: false },
+            { text: "DevOpsは開発と運用の統合、DesignOpsはデザイナーの生産性向上と品質保証。両者は相補的に機能する",       correct: true  },
+            { text: "DesignOpsはDevOpsの一部である",                                                                       correct: false },
+            { text: "両者は同じ概念である",                                                                               correct: false }
+        ],
+        explanation: "DevOpsは開発と運用を統合し、DesignOpsはデザインプロセスを最適化します。両者が協働することで、より高速で高品質なUX改善が可能になります。"
+    },
+    {
+        question: "グロースチームに必要な機能として挙げられていないのはどれですか？",
+        options: [
+            { text: "分析・仮説検証",       correct: false },
+            { text: "施策実行",             correct: false },
+            { text: "長期的な戦略計画",     correct: true  },
+            { text: "測定・学習",           correct: false }
+        ],
+        explanation: "グロースチームは、短期的な改善を素早く実行することに特化しています。長期的な戦略計画よりも、迅速な実験と学習を優先します。"
+    },
+    {
+        question: "トップダウン型UXグロース活動の特徴として最も正しいのはどれですか？",
+        options: [
+            { text: "経営層がUXを重視し、全社的にUX改善を推進する。大規模な変革が可能",     correct: true  },
+            { text: "現場のチームが小さな改善を積み重ねていく",                             correct: false },
+            { text: "UX部門だけで実施される",                                               correct: false },
+            { text: "迅速で柔軟だが、組織全体への波及に時間がかかる",                       correct: false }
+        ],
+        explanation: "トップダウン型は、経営層がUXの重要性を認識し、全社的に推進することで、大規模な変革が可能になります。"
+    },
+    {
+        question: "『測定→学習→改善』のサイクルを回し続けることの重要性について、最も正しいのはどれですか？",
+        options: [
+            { text: "一度設計したら、改善は不要である",                                                                   correct: false },
+            { text: "ユーザーフィードバックと行動データをもとに、継続的に改善することで、より良いUXを実現できる",         correct: true  },
+            { text: "改善は品質低下につながる",                                                                           correct: false },
+            { text: "測定は最後に1回だけ行う",                                                                           correct: false }
+        ],
+        explanation: "UX運用の本質は継続的な改善サイクルです。ユーザーからのフィードバックと行動データを組み合わせることで、常により良い体験を提供できます。"
+    },
+    {
+        question: "7週間のUX学習全体を通じて、最も重要な考え方は何ですか？",
+        options: [
+            { text: "UXは美しいデザインを作ることである",                                                                                 correct: false },
+            { text: "UXはユーザーを深く理解し、ビジネス価値と調和させながら、継続的に改善するプロセスである",                           correct: true  },
+            { text: "UXは技術的な実装だけが重要である",                                                                                   correct: false },
+            { text: "UXはユーザーテストだけで完成する",                                                                                   correct: false }
+        ],
+        explanation: "UXは単なる美しいデザインや技術的実装ではなく、ユーザーの深い理解・ビジネス目標の達成・継続的な改善という、包括的で反復的なプロセスです。"
+    },
+    {
+        question: "今後のUXデザイナーとしてのあるべき姿について、最も重要なのはどれですか？",
+        options: [
+            { text: "常に最新のツールやトレンドを追う",                                                                                       correct: false },
+            { text: "ユーザーとビジネスの両面の価値を理解し、複雑な問題を創造的かつ実行的に解決できる人材",                               correct: true  },
+            { text: "一度完璧な設計をすれば、改善は不要",                                                                                     correct: false },
+            { text: "デザイナーだけで、他部門との協働は不要",                                                                                 correct: false }
+        ],
+        explanation: "優れたUXデザイナーは、ユーザーのニーズを深く理解し、ビジネス価値も考慮しながら、デザインの専門知識と異職種との協働スキルを持つ人材です。"
+    }
+];
+
+/* ═══════════════════════════════════════
+   ENGINE
+═══════════════════════════════════════ */
+function shuffleArray(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
+let currentQuestion = 0;
+let score = 0;
+let correctAnswers = [];
+
+/* ── 問題を描画 ── */
+function renderQuestion() {
+    if (currentQuestion >= quizData.length) { showScore(); return; }
+
+    // ✅ 現在の問題データを先頭で取得
+    const q        = quizData[currentQuestion];
+    const shuffled = shuffleArray([...q.options]);
+
+    correctAnswers[currentQuestion] = shuffled.findIndex(o => o.correct);
+
+    const container = document.getElementById('quizContent');
+    container.innerHTML = `
+        <div class="quiz-question">
+            <div class="question-text">Q${currentQuestion + 1}/${quizData.length}: ${q.question}</div>
+            <div class="options" id="options"></div>
+            <div class="explanation" id="explanation">
+                <p id="explanationText"></p>
+            </div>
+            <div class="buttons">
+                <button class="btn-submit" id="submitBtn" onclick="submitAnswer()">回答する</button>
+            </div>
+        </div>`;
+
+    const optionsEl = document.getElementById('options');
+    shuffled.forEach((opt, idx) => {
+        const label = document.createElement('label');
+        label.className = 'option';
+        label.innerHTML = `<input type="radio" name="answer" value="${idx}"> ${opt.text}`;
+        label.addEventListener('click', () => {
+            document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+            label.classList.add('selected');
+        });
+        optionsEl.appendChild(label);
+    });
+
+    updateProgress();
+}
+
+/* ── 回答を判定 ── */
+function submitAnswer() {
+    const selected = document.querySelector('input[name="answer"]:checked');
+    if (!selected) { alert('選択肢を選んでください'); return; }
+
+    // ✅ 現在の問題データを先頭で取得（TDZエラーを防ぐ）
+    const q         = quizData[currentQuestion];
+    const answerIdx = parseInt(selected.value);
+    const isCorrect = answerIdx === correctAnswers[currentQuestion];
+
+    if (isCorrect) score++;
+
+    // ✅ 選択肢の色付け＆無効化
+    document.querySelectorAll('.option').forEach((el, idx) => {
+        el.classList.remove('selected');
+        if (idx === correctAnswers[currentQuestion]) {
+            el.classList.add('correct');
+        } else if (idx === answerIdx && !isCorrect) {
+            el.classList.add('incorrect');
         }
-        
-        function renderQuestion() {
-            const container = document.getElementById('quizContent');
-            const question = quizData[currentQuestion];
-            
-            let html = `
-                <div class="quiz-container">
-                    <div class="question">
-                        <h3>Q${currentQuestion + 1}. ${question.question}</h3>
-                        <div class="options" id="optionsContainer">
-            `;
-            
-            question.options.forEach((option, index) => {
-                html += `
-                    <div class="option" id="option-${index}">
-                        <label>
-                            <input type="radio" name="answer" value="${index}" onchange="selectOption(${index})">
-                            ${option.text}
-                        </label>
-                    </div>
-                `;
-            });
-            
-            html += `
-                        </div>
-                        <div class="feedback" id="feedback"></div>
-                        <button class="submit-btn" id="submitBtn" onclick="submitAnswer()">回答する</button>
-                    </div>
-                </div>
-            `;
-            
-            container.innerHTML = html;
-            updateProgress();
-        }
-        
-        function selectOption(index) {
-            const options = document.querySelectorAll('.option input[type="radio"]');
-            options.forEach((opt, i) => {
-                if (i === index) {
-                    opt.checked = true;
-                }
-            });
-        }
-        
-        function submitAnswer() {
-            if (answered) return;
-            
-            const selected = document.querySelector('input[name="answer"]:checked');
-            if (!selected) {
-                alert('選択してください');
-                return;
-            }
-            
-            answered = true;
-            const answerIndex = parseInt(selected.value);
-            const question = quizData[currentQuestion];
-            const isCorrect = question.options[answerIndex].correct;
-            
-            if (isCorrect) {
-                score++;
-                document.getElementById(`option-${answerIndex}`).classList.add('selected-correct');
-            } else {
-                document.getElementById(`option-${answerIndex}`).classList.add('selected-incorrect');
-                const correctIndex = question.options.findIndex(opt => opt.correct);
-                document.getElementById(`option-${correctIndex}`).classList.add('correct');
-            }
-            
-            const feedback = document.getElementById('feedback');
-            feedback.classList.add('show');
-            feedback.classList.add(isCorrect ? 'correct' : 'incorrect');
-            feedback.innerHTML = `
-                <strong>${isCorrect ? '✓ 正解です！' : '✗ 不正解です'}</strong>
-                ${question.explanation}
-            `;
-            
-            const btn = document.getElementById('submitBtn');
-            btn.textContent = currentQuestion === quizData.length - 1 ? '完了' : '次へ';
-            btn.onclick = nextQuestion;
-        }
-        
-        function nextQuestion() {
-            currentQuestion++;
-            answered = false;
-            
-            if (currentQuestion >= quizData.length) {
-                showScore();
-            } else {
-                renderQuestion();
-            }
-        }
-        
-        function updateProgress() {
-            document.getElementById('progress').textContent = `問題 ${currentQuestion + 1}/${quizData.length}`;
-        }
-        
-        function showScore() {
-            document.getElementById('quizContent').style.display = 'none';
-            const scoreSection = document.getElementById('scoreSection');
-            scoreSection.classList.add('show');
-            
-            document.getElementById('scoreValue').textContent = score;
-            document.getElementById('totalQuestions').textContent = quizData.length;
-            
-            let message = '';
-            const percentage = (score / quizData.length) * 100;
-            
-            if (percentage === 100) {
-                message = '🌟 完璧です！UX全体を完全に習得しました。実践的なプロジェクトで活躍してください！';
-            } else if (percentage >= 80) {
-                message = '👏 よくできました！UX設計から評価、運用までの全体像を理解しています。';
-            } else if (percentage >= 60) {
-                message = '📚 基本は理解できています。W1～W6の内容を復習して、理解を深めましょう。';
-            } else {
-                message = '🔍 もう一度全体を見直して、UXの全体サイクルを理解しましょう。';
-            }
-            
-            document.getElementById('scoreMessage').textContent = message;
-        }
-        
-        function resetQuiz() {
-            currentQuestion = 0;
-            score = 0;
-            answered = false;
-            document.getElementById('quizContent').style.display = 'block';
-            document.getElementById('scoreSection').classList.remove('show');
-            renderQuestion();
-        }
-        
-        // Initialize quiz
-        initQuiz();
-    </script>
+        const radio = el.querySelector('input');
+        if (radio) radio.disabled = true;
+    });
+
+    // ✅ 解説を表示
+    document.getElementById('explanation').classList.add('show');
+    document.getElementById('explanationText').textContent = q.explanation;
+
+    // ✅ 正解バッジを表示
+    if (isCorrect) {
+        const badge = document.createElement('div');
+        badge.className = 'correct-feedback';
+        badge.innerHTML = '✅ 正解です！';
+        document.querySelector('.quiz-question').appendChild(badge);
+    }
+
+    // ✅ 回答ボタンを非表示にして次へボタンを追加
+    document.getElementById('submitBtn').style.display = 'none';
+
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'btn-next';
+    nextBtn.textContent = currentQuestion === quizData.length - 1 ? '結果を見る' : '次の問題へ';
+    nextBtn.onclick = () => { currentQuestion++; renderQuestion(); };
+    document.querySelector('.buttons').appendChild(nextBtn);
+}
+
+/* ── プログレスバー更新 ── */
+function updateProgress() {
+    const pct = ((currentQuestion + 1) / quizData.length) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+}
+
+/* ── スコア画面 ── */
+function showScore() {
+    document.getElementById('quizContent').style.display = 'none';
+    document.getElementById('progressBar').style.width = '100%';
+
+    const pct = Math.round((score / quizData.length) * 100);
+    document.getElementById('scoreNumber').textContent = pct + '%';
+
+    let msg = '';
+    if (pct === 100) {
+        msg = '🎉 完璧です！\nUX全体サイクルを完全に習得しました！\n7週間の学習、本当におめでとうございます！';
+    } else if (pct >= 80) {
+        msg = '✨ 素晴らしい！\nUX設計から評価・運用まで、全体像を理解しています。\n7週間の学習お疲れさまでした！';
+    } else if (pct >= 60) {
+        msg = '👍 良好です！\n基本は理解できています。\nW1〜W6の内容も復習して、理解を深めましょう。';
+    } else {
+        msg = '📚 もう一度挑戦！\nW7の資料を確認して、\nUX全体のサイクルを整理しましょう。';
+    }
+    document.getElementById('scoreMessage').textContent = msg;
+
+    const navEl = document.getElementById('navButtons');
+    navEl.innerHTML = '';
+
+    const makeLink = (href, text) => {
+        const a = document.createElement('a');
+        a.className = 'nav-link';
+        a.href = href;
+        a.textContent = text;
+        return a;
+    };
+
+    const makeRestart = () => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-next';
+        btn.style.background = 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)';
+        btn.textContent = '🔄 もう一度挑戦';
+        btn.onclick = () => location.reload();
+        return btn;
+    };
+
+    if (pct === 100) {
+        navEl.appendChild(makeLink('index.html', '🏠 トップに戻る'));
+    } else if (pct >= 80) {
+        navEl.appendChild(makeLink('w7_ux.html', '📖 資料を確認'));
+        navEl.appendChild(makeRestart());
+        navEl.appendChild(makeLink('index.html', '🏠 トップに戻る'));
+    } else {
+        navEl.appendChild(makeLink('w7_ux.html', '📖 資料を確認'));
+        navEl.appendChild(makeRestart());
+        navEl.appendChild(makeLink('index.html', '🏠 トップに戻る'));
+    }
+
+    document.getElementById('scoreSection').classList.add('show');
+}
+
+/* ── 初期化 ── */
+renderQuestion();
+</script>
 </body>
 </html>
