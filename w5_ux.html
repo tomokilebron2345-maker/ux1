@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>W5: 行動経済学 + 認知心理学 + 文化人類学 + 人間工学 + ユーザビリティ + アクセシビリティ</title>
+    <title>W5: ユーザー心理と包摂性</title>
     <style>
         * {
             margin: 0;
@@ -25,6 +25,18 @@
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .header {
@@ -52,12 +64,20 @@
             width: 100%;
             height: 8px;
             background: #e0e0e0;
+            position: relative;
+            overflow: hidden;
         }
         
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            width: 70%;
+            width: 71.43%;
+            animation: slideRight 0.8s ease-out;
+        }
+        
+        @keyframes slideRight {
+            from { width: 0; }
+            to { width: 71.43%; }
         }
         
         .content {
@@ -66,6 +86,12 @@
         
         .section {
             margin-bottom: 50px;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
         .section h2 {
@@ -103,24 +129,6 @@
             font-size: 1.1em;
         }
         
-        .tip-box {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            border-left: 4px solid #ff9500;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
-        }
-        
-        .tip-box h4 {
-            color: #ff6b00;
-            margin-bottom: 10px;
-        }
-        
-        .tip-box h4:before {
-            content: "💡 ";
-            margin-right: 10px;
-        }
-        
         .comparison-table {
             width: 100%;
             border-collapse: collapse;
@@ -148,19 +156,25 @@
             background: #f9f9f9;
         }
         
-        .stage-box {
-            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+        .tip-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-left: 4px solid #ff9500;
             padding: 20px;
-            margin: 15px 0;
-            border-left: 4px solid #0284c7;
+            margin: 20px 0;
             border-radius: 8px;
         }
         
-        .stage-box strong {
-            color: #0284c7;
-            display: block;
-            margin-bottom: 8px;
-            font-size: 1.1em;
+        .tip-box h4 {
+            color: #ff6b00;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .tip-box h4:before {
+            content: "💡 ";
+            margin-right: 10px;
+            font-size: 1.2em;
         }
         
         .keyword-box {
@@ -230,12 +244,44 @@
             font-weight: bold;
         }
         
-        .footer {
-            background: #f8f9fa;
-            padding: 30px;
-            text-align: center;
-            color: #666;
-            border-top: 1px solid #e0e0e0;
+        .buttons-section {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-quiz {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+        
+        .btn-quiz:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16,185,129,0.4);
+        }
+        
+        .btn-home {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
         }
         
         .next-week {
@@ -248,6 +294,14 @@
             margin-top: 20px;
         }
         
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+        
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 1.8em;
@@ -256,6 +310,22 @@
             .content {
                 padding: 20px;
             }
+            
+            .comparison-table {
+                font-size: 0.9em;
+            }
+            
+            .comparison-table th, .comparison-table td {
+                padding: 10px;
+            }
+            
+            .buttons-section {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -263,8 +333,8 @@
     <div class="container">
         <div class="header">
             <div class="week-badge">📚 5週目</div>
-            <h1>行動経済学 + 認知心理学 + 文化人類学<br>+ 人間工学 + ユーザビリティ + アクセシビリティ</h1>
-            <p style="font-size: 1.1em; margin-top: 15px;">ユーザーの心理と身体特性を理解し、包摂的なUXを設計する</p>
+            <h1>ユーザー心理と包摂性</h1>
+            <p style="font-size: 1.1em; margin-top: 15px;">行動経済学、心理学、アクセシビリティで全員のための設計</p>
         </div>
         <div class="progress-bar">
             <div class="progress-fill"></div>
@@ -274,293 +344,178 @@
             <!-- ミッション -->
             <section class="section">
                 <h2>🎯 この週のミッション</h2>
-                <p>人間の意思決定メカニズムと心理、文化的背景、身体的特性を深く理解することで、より効果的で包摂的なUXを設計できるようになることです。これら複数の学問的視点を統合し、多様なユーザーのニーズに対応する設計能力を養います。</p>
+                <p>ユーザーの心理と行動メカニズムを理解し、それに基づいた設計を学びます。行動経済学、認知心理学、文化人類学などの学問領域を通じて、人間の本質的な行動パターンを把握します。さらに、すべてのユーザーを包括する設計（アクセシビリティ）の重要性を理解することが目標です。</p>
             </section>
             
             <!-- 行動経済学 -->
             <section class="section">
-                <h2>💰 行動経済学</h2>
-                <p>行動経済学は、人間の意思決定が必ずしも合理的ではないことを明らかにします。ユーザーが無意識にどのような判断をしているのかを理解することで、UXをより効果的に設計できます。</p>
+                <h2>💰 行動経済学とUXデザイン</h2>
+                <p>行動経済学は、人間の意思決定が常に合理的ではなく、様々なバイアス（偏り）に影響されることを研究する分野です。UXデザインでは、これらのバイアスを理解し、ユーザーにとってより良い選択を支援する設計が求められます。</p>
                 
-                <h3>行動経済学とは</h3>
+                <h3>主要なバイアスと設計への応用</h3>
+                
                 <div class="definition-card">
-                    <strong>定義</strong>
-                    「心理学と経済学を融合させた学問。人間の行動が完全には理性的ではなく、認知バイアスや感情に影響されることを明らかにする」
-                </div>
-                
-                <h3>行動経済学に基づく主要な理論</h3>
-                
-                <div class="stage-box">
-                    <strong>プロスペクト理論</strong>
-                    人間は利得より損失をより大きく感じる傾向がある。また、確実な利得より可能性のある大きな利得を好む傾向がある。
-                </div>
-                
-                <div class="stage-box">
                     <strong>アンカリング効果</strong>
-                    最初に提示された数字や情報が、その後の判断に大きな影響を与える。例：「定価10,000円から50%割引」と「5,000円」では、前者の方が安く感じられる。
+                    最初に提示された情報が判断に大きく影響する現象。例：価格表示時に、元値を大きく、割引値を強調することで購買意欲が高まります。
                 </div>
                 
-                <div class="stage-box">
-                    <strong>認知バイアス</strong>
-                    人間の判断は、無意識のうちに様々なバイアスに影響されている。確認バイアス（自分の仮説を支持する情報を集める傾向）、可用性バイアス（思い出しやすい情報を過大評価）など。
+                <div class="definition-card">
+                    <strong>デフォルト効果</strong>
+                    ユーザーがデフォルト（初期設定）のまま選択肢を受け入れる傾向。例：オプトイン（申し込み制）より、オプトアウト（解除制）の方が利用率が高くなります。
                 </div>
                 
-                <h3>行動経済学に基づくUXデザインプロセス</h3>
-                <ul class="checklist">
-                    <li><strong>ユーザー行動の観察</strong>：ユーザーが実際にどのような選択をしているか、その背景にある心理を理解する</li>
-                    <li><strong>バイアスの認識</strong>：ユーザーがどのようなバイアスに影響されやすいかを把握する</li>
-                    <li><strong>選択肢の設計</strong>：ユーザーの心理を考慮して、提示順序や表現方法を工夫する</li>
-                    <li><strong>損失回避の活用</strong>：ポジティブな側面だけでなく、失うことの重要性も伝える</li>
-                </ul>
+                <div class="definition-card">
+                    <strong>フレーミング効果</strong>
+                    同じ情報でも、提示方法によって受け止め方が変わる現象。例：「成功率90%」と「失敗率10%」は同じですが、受け止め方が異なります。
+                </div>
+                
+                <div class="definition-card">
+                    <strong>確認バイアス</strong>
+                    自分の信念に合った情報を探し、それに合わない情報を無視する傾向。例：検索結果を自分の意見に合わせてフィルタリングします。
+                </div>
                 
                 <div class="tip-box">
-                    <h4>覚えやすいコツ</h4>
-                    <p>「人間は理性的ではなく、バイアスと感情に影響される」と覚えましょう。ユーザーの非合理的な判断パターンを理解することで、より効果的なUXを設計できます。</p>
+                    <h4>倫理的な利用</h4>
+                    <p>バイアスを理解することは強力ですが、ユーザーを操作するために使用してはいけません。ユーザーの利益を最優先にしたUX設計が重要です。</p>
                 </div>
             </section>
             
             <!-- 認知心理学 -->
             <section class="section">
-                <h2>🧠 認知心理学</h2>
-                <p>認知心理学は、人間がどのように情報を認識し、処理し、記憶するかを研究する学問です。これはUXデザインに直接的に応用されます。</p>
+                <h2>🧠 認知心理学とUXデザイン</h2>
+                <p>認知心理学は、人間がどのように情報を処理し、学習し、記憶し、意思決定するのかを研究する分野です。UXデザインにおいて、認知プロセスを理解することは、直感的で分かりやすいインターフェースの設計に繋がります。</p>
                 
-                <h3>認知心理学とは</h3>
+                <h3>主要な認知概念と設計への応用</h3>
+                
                 <div class="definition-card">
-                    <strong>定義</strong>
-                    「人間の知覚、注意、記憶、思考、問題解決などの認知プロセスを研究する学問。UXデザインでユーザーの情報処理方法を理解するために重要」
+                    <strong>認知負荷（Cognitive Load）</strong>
+                    ユーザーが一度に処理できる情報量には限界があります。複雑すぎるUIは認知負荷を高め、ユーザーストレスを増加させます。シンプルで段階的な設計が効果的です。
                 </div>
                 
-                <h3>認知心理学の主要な法則</h3>
-                
-                <div class="stage-box">
-                    <strong>ヤコブの法則</strong>
-                    ユーザーは、他のサイトで見慣れた表現や操作方法を期待する。例：リンクは青い下線など。
+                <div class="definition-card">
+                    <strong>ゲシュタルト心理学の法則</strong>
+                    人間は、バラバラの要素を無意識に「まとまり」として知覚します。例：近接性（近い要素は一緒と認識）、類似性（似た要素を一つのグループと認識）を活用した設計が有効です。
                 </div>
                 
-                <div class="stage-box">
-                    <strong>ヒックの法則</strong>
-                    選択肢が多いほど、ユーザーの意思決定に要する時間が長くなる。情報過多は判断を遅延させる。
+                <div class="definition-card">
+                    <strong>メンタルモデル</strong>
+                    ユーザーが持つ「システムはこう動く」という心的モデル。設計がユーザーのメンタルモデルと一致していれば、直感的に理解できます。
                 </div>
                 
-                <div class="stage-box">
-                    <strong>認知負荷</strong>
-                    ユーザーの記憶容量は限定されている。複雑な操作や多数の選択肢は、認知負荷を増加させ、ユーザー体験を悪化させる。
+                <div class="definition-card">
+                    <strong>作業記憶の限界</strong>
+                    人間の短期記憶は7±2個の情報しか保持できません。ナビゲーションメニューは7個程度に限定するなど、この制限を考慮した設計が必要です。
                 </div>
-                
-                <div class="stage-box">
-                    <strong>美的ユーザビリティ</strong>
-                    美しいデザインは、ユーザーにポジティブな感情を生み、使いやすいという感覚を高める。
-                </div>
-                
-                <div class="stage-box">
-                    <strong>ドハティのしきい値</strong>
-                    コンピュータの応答時間が400ミリ秒以内の場合、ユーザーは即座に反応したと認識する。
-                </div>
-                
-                <h3>認知心理学に基づくUXデザイン</h3>
-                <ul class="checklist">
-                    <li><strong>シンプルさ</strong>：不要な情報を排除し、必要な情報を明確に</li>
-                    <li><strong>一貫性</strong>：同じ機能は同じ表現方法で表現する</li>
-                    <li><strong>段階的な情報提示</strong>：一度に全てを表示するのではなく、段階的に提示する</li>
-                    <li><strong>視覚的ヒエラルキー</strong>：重要な要素を目立たせ、優先順位を示す</li>
-                </ul>
                 
                 <div class="tip-box">
-                    <h4>覚えやすいコツ</h4>
-                    <p>「認知負荷を減らし、ユーザーの記憶と注意を効率的に使う」と覚えましょう。シンプルで予測可能なUXが、ユーザーのストレスを減らし、満足度を高めます。</p>
+                    <h4>ユーザーテストの重要性</h4>
+                    <p>心理学的知見は有用ですが、実際のユーザーテストでメンタルモデルを確認することが最も重要です。仮説を検証する過程で、より良い設計が生まれます。</p>
                 </div>
             </section>
             
-            <!-- 文化人類学 -->
+            <!-- 文化人類学と人間工学 -->
             <section class="section">
-                <h2>🌍 文化人類学</h2>
-                <p>文化人類学は、異なる文化背景を持つユーザーのニーズと価値観を理解するために重要です。グローバルなUXデザインには必須の視点です。</p>
+                <h2>🌍 文化人類学、人間工学、ユーザビリティ</h2>
                 
-                <h3>文化人類学とUXデザイン</h3>
+                <h3>文化人類学とUX</h3>
+                
                 <div class="definition-card">
-                    <strong>定義</strong>
-                    「人間の文化的背景、価値観、行動パターンを研究する学問。UXデザインにおいて、異なる文化を持つユーザーのニーズを理解するために重要」
+                    <strong>文化的文脈の理解</strong>
+                    ユーザーの行動は、その文化的背景に大きく影響されます。同じUIでも、文化によって解釈が異なる場合があります。グローバルなUXデザインでは、文化的差異を考慮することが不可欠です。
                 </div>
                 
-                <h3>文化的背景がUXに与える影響</h3>
-                <ul class="checklist">
-                    <li><strong>色彩の意味</strong>：色は文化によって異なる意味を持つ。例えば、白は欧米では清潔、東アジアでは悲しみを表すことがある</li>
-                    <li><strong>言語と表現</strong>：単なる翻訳では不足。文化的な表現や言い回しを理解する必要がある</li>
-                    <li><strong>行動パターン</strong>：ユーザーの行動習慣や優先順位は文化によって異なる</li>
-                    <li><strong>コミュニケーション方式</strong>：直接的か間接的か、個人主義か集団主義かで、UXの好みが変わる</li>
-                </ul>
+                <h3>人間工学とUX</h3>
                 
-                <div class="tip-box">
-                    <h4>覚えやすいコツ</h4>
-                    <p>「ローカライズではなくカルチュラライズ」と覚えましょう。言語を翻訳するだけでなく、文化的背景を理解し、その文化に適応したUXを設計することが重要です。</p>
-                </div>
-            </section>
-            
-            <!-- 人間工学 -->
-            <section class="section">
-                <h2>⚙️ 人間工学</h2>
-                <p>人間工学は、ユーザーの身体的特性と製品の相互作用を研究します。物理的で心地よいUXを実現するために重要です。</p>
-                
-                <h3>人間工学とは</h3>
                 <div class="definition-card">
-                    <strong>定義</strong>
-                    「人間の身体的・認知的特性を理解し、それに合わせた製品やシステムを設計する学問。快適で安全で効率的な相互作用を目指す」
+                    <strong>物理的インターフェース設計</strong>
+                    人間工学は、人間の身体的特性を考慮した設計を研究します。スマートフォンのボタンサイズ、Webサイトのテキストサイズなど、人間の能力に合わせた設計が重要です。
                 </div>
                 
-                <h3>人間工学の主要な原則</h3>
-                <ul class="checklist">
-                    <li><strong>人間特性の理解</strong>：身体寸法、動きの範囲、視野、聴覚特性などを把握</li>
-                    <li><strong>身体</strong>：ボタンのサイズ、配置、抵抗感など物理的な設計</li>
-                    <li><strong>知覚</strong>：見やすさ（コントラスト、フォントサイズ）、聞こえやすさなど</li>
-                    <li><strong>疲労軽減</strong>：長時間の使用に耐える設計（姿勢、反復動作など）</li>
-                </ul>
+                <h3>ユーザビリティとの統合</h3>
                 
-                <h3>デジタルUXでの人間工学の応用</h3>
-                <ul class="checklist">
-                    <li><strong>タッチサイズ</strong>：スマートフォンボタンは最小44×44px推奨</li>
-                    <li><strong>レイアウト</strong>：よく使う機能を到達しやすい位置に配置</li>
-                    <li><strong>テキスト</strong>：適切なフォントサイズと行間で読みやすさを確保</li>
-                    <li><strong>レスポンス</strong>：即座にフィードバックを提供し、ユーザーの期待を満たす</li>
-                </ul>
-            </section>
-            
-            <!-- ユーザビリティ -->
-            <section class="section">
-                <h2>✨ ユーザビリティ</h2>
-                <p>ユーザビリティは、製品がどれだけ使いやすいかを示す指標です。UXの重要な構成要素の一つです。</p>
-                
-                <h3>ユーザビリティとは</h3>
                 <div class="definition-card">
-                    <strong>ISO 9241-11による定義</strong>
-                    「特定の使用状況下で、ユーザーが特定のタスクを効果的に、効率的に、満足度をもって実行できる程度」
+                    <strong>ユーザビリティ評価基準</strong>
+                    ISO 9241-11では、ユーザビリティを「有効性」「効率性」「満足度」の3軸で定義しています。これらすべてを達成するには、心理学、人間工学、認知科学の知識が必要です。
                 </div>
-                
-                <h3>ユーザビリティの構成要素</h3>
-                
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>要素</th>
-                            <th>定義</th>
-                            <th>UXデザインでの応用</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>学習しやすさ</strong></td>
-                            <td>ユーザーが初めて使う時にどれだけ簡単に理解できるか</td>
-                            <td>直感的で予測可能なインターフェース設計</td>
-                        </tr>
-                        <tr>
-                            <td><strong>効率性</strong></td>
-                            <td>タスク完了までにどれだけ短時間で実行できるか</td>
-                            <td>ショートカットキーや高速操作方法の提供</td>
-                        </tr>
-                        <tr>
-                            <td><strong>記憶しやすさ</strong></td>
-                            <td>一時的に使用を中断した後、どれだけ簡単に再開できるか</td>
-                            <td>操作の一貫性、自動保存機能など</td>
-                        </tr>
-                        <tr>
-                            <td><strong>間違いにくさ</strong></td>
-                            <td>エラーが少なく、エラーからの回復が簡単か</td>
-                            <td>確認ダイアログ、取り消し機能の提供</td>
-                        </tr>
-                        <tr>
-                            <td><strong>主観的満足度</strong></td>
-                            <td>ユーザーが使っていて楽しいか、満足しているか</td>
-                            <td>美しいデザイン、ポジティブなフィードバック</td>
-                        </tr>
-                    </tbody>
-                </table>
-                
-                <h3>ユーザビリティ向上の視点</h3>
-                <ul class="checklist">
-                    <li><strong>フィードバック</strong>：ユーザーの行動に対して、即座に目に見える反応を示す</li>
-                    <li><strong>制約</strong>：不正な操作を防ぐため、できない操作は選択肢から除外する</li>
-                    <li><strong>マッピング</strong>：コントローラーと効果の関係が明確であること</li>
-                    <li><strong>習慣</strong>：ユーザーが既に知っている操作方法を活用する</li>
-                </ul>
             </section>
             
             <!-- アクセシビリティ -->
             <section class="section">
-                <h2>♿ アクセシビリティ</h2>
-                <p>アクセシビリティは、障害を持つユーザーを含む全てのユーザーが、製品やサービスにアクセスでき、使用できるようにすることです。現代のUXデザインにおいて必須です。</p>
+                <h2>♿ アクセシビリティと包摂的設計</h2>
+                <p>アクセシビリティは、障害を持つユーザーを含む、すべてのユーザーが製品やサービスを利用できることを意味します。これは一部のユーザーの特別な要望ではなく、すべてのユーザーのための基本的な設計原則です。</p>
                 
-                <h3>アクセシビリティとは</h3>
+                <h3>主要なアクセシビリティ対応</h3>
+                
                 <div class="definition-card">
-                    <strong>定義</strong>
-                    「年齢や能力に関わらず、全ての人が等しく製品やサービスを使用できるようにすること。障害者だけでなく、高齢者や一時的な制限を持つユーザーも含む」
+                    <strong>視覚障害対応</strong>
+                    スクリーンリーダーの対応、充分なコントラスト比、テキストの拡大機能など。これらは、高齢者や低視力ユーザーにも役立ちます。
                 </div>
                 
-                <h3>主要な障害タイプとUXデザインでの対応</h3>
-                
-                <div class="stage-box">
-                    <strong>視覚障害</strong>
-                    スクリーンリーダー対応、テキスト代替説明、高コントラスト、拡大機能の提供
+                <div class="definition-card">
+                    <strong>聴覚障害対応</strong>
+                    動画のキャプション、音声の字幕化、視覚的な警告。これらは、音声を出せない環境のユーザーにも役立ちます。
                 </div>
                 
-                <div class="stage-box">
-                    <strong>聴覚障害</strong>
-                    字幕やテキスト説明の提供、視覚的なフィードバック、手話ビデオの提供
+                <div class="definition-card">
+                    <strong>運動障害対応</strong>
+                    キーボード操作のみでの操作、ボタンサイズの最小化、マウス不要な設計。これらは、高齢者や怪我をしたユーザーにも役立ちます。
                 </div>
                 
-                <div class="stage-box">
-                    <strong>運動障害</strong>
-                    キーボード操作対応、大きなボタン、マウスを使わないナビゲーション
+                <div class="definition-card">
+                    <strong>認知障害対応</strong>
+                    シンプルで明確な言語、複雑なプロセスの段階化、エラーメッセージの明確化。これらは、すべてのユーザーの使いやすさを向上させます。
                 </div>
                 
-                <div class="stage-box">
-                    <strong>認知障害</strong>
-                    シンプルな言語、明確な構造、段階的な指示、エラー防止機構
-                </div>
-                
-                <h3>ウェブアクセシビリティのガイドライン（WCAG）</h3>
-                <ul class="checklist">
-                    <li><strong>知覚可能性（Perceivable）</strong>：情報が認識できる形で提示される</li>
-                    <li><strong>操作可能性（Operable）</strong>：ユーザーがインターフェースを操作できる</li>
-                    <li><strong>理解可能性（Understandable）</strong>：情報が理解しやすい</li>
-                    <li><strong>堅牢性（Robust）</strong>：様々な支援技術と互換性がある</li>
-                </ul>
+                <h3>包摂的設計の哲学</h3>
                 
                 <div class="tip-box">
-                    <h4>覚えやすいコツ</h4>
-                    <p>「アクセシビリティは少数派のための特別な機能ではなく、全員のためのデザイン」と覚えましょう。アクセシビリティ対応は、結果的に全てのユーザーにとって使いやすいUXを生み出します。</p>
+                    <h4>アクセシビリティ = ユーザビリティの向上</h4>
+                    <p>一見、障害者対応と思われるアクセシビリティ対応は、実は全ユーザーの体験を向上させます。スマートフォンの字幕機能は、聴覚障害者だけでなく、騒がしい環境のユーザーにも役立ちます。</p>
+                </div>
+                
+                <div class="definition-card">
+                    <strong>WCAG 2.1（Web Content Accessibility Guidelines）</strong>
+                    国際的に認められたWebアクセシビリティの基準。「認識可能性」「操作可能性」「理解可能性」「堅牢性」の4原則に基づいています。
                 </div>
             </section>
             
-            <!-- ユーザビリティとアクセシビリティの関係 -->
+            <!-- 統合的なアプローチ -->
             <section class="section">
-                <h2>🔗 ユーザビリティとアクセシビリティの関係</h2>
+                <h2>🎯 心理学とアクセシビリティの統合</h2>
                 
                 <table class="comparison-table">
                     <thead>
                         <tr>
-                            <th>観点</th>
-                            <th>ユーザビリティ</th>
-                            <th>アクセシビリティ</th>
+                            <th>領域</th>
+                            <th>主な知見</th>
+                            <th>UX設計への応用</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>焦点</strong></td>
-                            <td>製品の使いやすさ</td>
-                            <td>全員が使用できるか</td>
+                            <td><strong>行動経済学</strong></td>
+                            <td>人間の判断はバイアスに影響される</td>
+                            <td>倫理的なデフォルト設定、適切なフレーミング</td>
                         </tr>
                         <tr>
-                            <td><strong>対象ユーザー</strong></td>
-                            <td>一般的なユーザー</td>
-                            <td>障害者を含む全員</td>
+                            <td><strong>認知心理学</strong></td>
+                            <td>認知負荷には限界がある</td>
+                            <td>シンプルなUI、段階的なプロセス設計</td>
                         </tr>
                         <tr>
-                            <td><strong>評価方法</strong></td>
-                            <td>タスク完了時間、エラー数</td>
-                            <td>ガイドライン準拠、支援技術との互換性</td>
+                            <td><strong>文化人類学</strong></td>
+                            <td>行動は文化的背景に影響される</td>
+                            <td>ローカライズ、文化的配慮を含めた設計</td>
                         </tr>
                         <tr>
-                            <td><strong>関係性</strong></td>
-                            <td colspan="2">アクセシビリティはユーザビリティの基礎。全員が使用できることが、優れたユーザビリティの前提条件</td>
+                            <td><strong>人間工学</strong></td>
+                            <td>物理的制約が操作性に影響</td>
+                            <td>適切なボタンサイズ、テキストサイズ</td>
+                        </tr>
+                        <tr>
+                            <td><strong>アクセシビリティ</strong></td>
+                            <td>すべてのユーザーの利用を考慮</td>
+                            <td>WCAG 2.1対応、包摂的設計</td>
                         </tr>
                     </tbody>
                 </table>
@@ -570,23 +525,23 @@
             <section class="section">
                 <h2>🔑 重要ワード</h2>
                 <div class="keyword-box">
-                    <h4>W5で学んだ重要な言葉</h4>
+                    <h4>W5で学んだ重要な言葉（15個）</h4>
                     <div class="keyword-list">
                         <span class="keyword-tag">行動経済学</span>
-                        <span class="keyword-tag">プロスペクト理論</span>
                         <span class="keyword-tag">アンカリング効果</span>
-                        <span class="keyword-tag">認知バイアス</span>
+                        <span class="keyword-tag">デフォルト効果</span>
+                        <span class="keyword-tag">フレーミング効果</span>
                         <span class="keyword-tag">認知心理学</span>
-                        <span class="keyword-tag">ヤコブの法則</span>
-                        <span class="keyword-tag">ヒックの法則</span>
                         <span class="keyword-tag">認知負荷</span>
-                        <span class="keyword-tag">ドハティのしきい値</span>
+                        <span class="keyword-tag">メンタルモデル</span>
+                        <span class="keyword-tag">作業記憶</span>
                         <span class="keyword-tag">文化人類学</span>
-                        <span class="keyword-tag">カルチュラライズ</span>
                         <span class="keyword-tag">人間工学</span>
                         <span class="keyword-tag">ユーザビリティ</span>
                         <span class="keyword-tag">アクセシビリティ</span>
-                        <span class="keyword-tag">WCAG</span>
+                        <span class="keyword-tag">WCAG 2.1</span>
+                        <span class="keyword-tag">包摂的設計</span>
+                        <span class="keyword-tag">バイアス</span>
                     </div>
                 </div>
             </section>
@@ -595,14 +550,14 @@
             <section class="section">
                 <h2>✅ W5の学習チェックリスト</h2>
                 <ul class="checklist">
-                    <li>行動経済学の主要な理論（プロスペクト理論、アンカリング効果、認知バイアス）を説明できる</li>
-                    <li>認知心理学の法則（ヤコブ、ヒック、認知負荷）がUXに与える影響を述べられる</li>
-                    <li>文化的背景がUXに与える影響を理解している</li>
-                    <li>人間工学の基本原則を述べられる</li>
-                    <li>ユーザビリティの5つの構成要素を説明できる</li>
-                    <li>アクセシビリティの4つの原則（POUR）を述べられる</li>
-                    <li>ユーザビリティとアクセシビリティの関係を説明できる</li>
-                    <li>これら6つの学問がUXデザインにどのように統合されるかを理解している</li>
+                    <li>行動経済学の主要なバイアス（アンカリング、デフォルト、フレーミング）を説明できる</li>
+                    <li>認知負荷とメンタルモデルの概念を理解している</li>
+                    <li>ゲシュタルト心理学の法則をUI設計に応用できる</li>
+                    <li>作業記憶の限界を考慮した設計ができる</li>
+                    <li>文化的背景がユーザー行動に影響することを理解している</li>
+                    <li>人間工学的な観点からUI要素を評価できる</li>
+                    <li>アクセシビリティがすべてのユーザーの利益になることを理解している</li>
+                    <li>WCAG 2.1の基本原則（認識可能性、操作可能性、理解可能性、堅牢性）を説明できる</li>
                 </ul>
             </section>
             
@@ -611,11 +566,11 @@
                 <div class="summary-box">
                     <h4>📌 W5のまとめ（5つの要点）</h4>
                     <ol style="margin-left: 20px;">
-                        <li><strong>行動経済学：人間は非合理的</strong> — ユーザーの判断はバイアスと感情に影響される。この特性を理解して設計する</li>
-                        <li><strong>認知心理学：情報処理に制限がある</strong> — 認知負荷を減らし、シンプルで予測可能なUXが重要</li>
-                        <li><strong>文化人類学：文化的背景は多様</strong> — グローバルUXでは、言語翻訳ではなくカルチュラライズが必要</li>
-                        <li><strong>人間工学：身体特性を考慮</strong> — 快適で安全で効率的な相互作用を目指す設計が重要</li>
-                        <li><strong>ユーザビリティとアクセシビリティ：全員のデザイン</strong> — 包摂的設計により、全てのユーザーにとってアクセス可能で使いやすいUXが実現される</li>
+                        <li><strong>ユーザーは常に合理的ではない</strong> — 行動経済学を理解することで、ユーザーの真の行動パターンを予測できる</li>
+                        <li><strong>認知負荷を最小化する</strong> — 認知心理学に基づいたシンプルで段階的な設計が、ユーザー満足度を高める</li>
+                        <li><strong>文化と物理的制約を考慮する</strong> — 文化人類学と人間工学の知見は、グローバルなUX設計に不可欠</li>
+                        <li><strong>アクセシビリティは全員の利益</strong> — 障害者対応と思われるアクセシビリティは、すべてのユーザーの体験を向上させる</li>
+                        <li><strong>包摂的設計が新しいスタンダード</strong> — 誰もが使える設計こそが、最も価値のあるUX設計である</li>
                     </ol>
                 </div>
             </section>
@@ -624,7 +579,15 @@
             <section class="section">
                 <div class="next-week">
                     <p>次週（W6）は「UXリサーチ + ユーザー理解」を学びます。<br>
-                    定量調査、定性調査、行動データ分析を通じて、ユーザーを深く理解しましょう！</p>
+                    定量・定性調査とユーザーモデリングの実践を理解しましょう！</p>
+                </div>
+            </section>
+            
+            <!-- クイズボタン -->
+            <section class="section">
+                <div class="buttons-section">
+                    <a href="w5_ux_q.html" class="btn btn-quiz">✅ W5クイズに挑戦</a>
+                    <a href="index.html" class="btn btn-home">🏠 トップに戻る</a>
                 </div>
             </section>
         </div>
