@@ -13,63 +13,64 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
+            background: #f5f7fa;
             line-height: 1.8;
+            color: #333;
         }
         
         .container {
             max-width: 900px;
             margin: 0 auto;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             overflow: hidden;
         }
         
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 40px 30px;
+            padding: 50px 40px;
             text-align: center;
         }
         
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        
-        .week-badge {
+        .back-link {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
             display: inline-block;
-            background: rgba(255,255,255,0.3);
+            margin-bottom: 20px;
             padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 1.1em;
+            background: rgba(255,255,255,0.2);
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+        
+        .back-link:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        .header h1 {
+            font-size: 2.8em;
             margin-bottom: 15px;
+            font-weight: 700;
         }
         
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e0e0e0;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            width: 56%;
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
         }
         
         .content {
-            padding: 40px;
+            padding: 50px 40px;
         }
         
         .section {
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
         
         .section h2 {
-            font-size: 2em;
+            font-size: 1.8em;
             color: #667eea;
             margin-bottom: 20px;
             padding-bottom: 10px;
@@ -77,121 +78,68 @@
         }
         
         .section h3 {
-            font-size: 1.4em;
-            color: #764ba2;
+            font-size: 1.3em;
+            color: #333;
             margin-top: 25px;
             margin-bottom: 15px;
+            font-weight: 600;
         }
         
-        .definition-card {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        .section p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        .info-box {
+            background: #f5f7fa;
             padding: 20px;
-            margin: 15px 0;
             border-left: 4px solid #667eea;
             border-radius: 8px;
-            transition: transform 0.3s ease;
-        }
-        
-        .definition-card:hover {
-            transform: translateX(5px);
-        }
-        
-        .definition-card strong {
-            color: #667eea;
-            display: block;
-            margin-bottom: 8px;
-            font-size: 1.1em;
-        }
-        
-        .process-flow {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        
-        .flow-step {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            min-width: 100px;
-            font-weight: bold;
-            margin: 10px 5px;
-            flex: 1;
-            font-size: 0.9em;
-        }
-        
-        .flow-arrow {
-            color: #667eea;
-            font-size: 1.5em;
-            margin: 0 10px;
-        }
-        
-        .tip-box {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            border-left: 4px solid #ff9500;
-            padding: 20px;
             margin: 20px 0;
-            border-radius: 8px;
         }
         
-        .tip-box h4 {
-            color: #ff6b00;
-            margin-bottom: 10px;
+        .info-box strong {
+            color: #667eea;
         }
         
-        .tip-box h4:before {
-            content: "💡 ";
-            margin-right: 10px;
+        .highlight {
+            background: #fff9e6;
+            padding: 3px 6px;
+            border-radius: 3px;
+            color: #e8a200;
+            font-weight: 600;
         }
         
-        .comparison-table {
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            border-radius: 8px;
-            overflow: hidden;
         }
         
-        .comparison-table th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        table th {
+            background: #667eea;
             color: white;
             padding: 15px;
             text-align: left;
-            font-weight: bold;
+            font-weight: 600;
         }
         
-        .comparison-table td {
+        table td {
             padding: 15px;
             border-bottom: 1px solid #e0e0e0;
         }
         
-        .comparison-table tr:hover {
+        table tr:hover {
             background: #f9f9f9;
         }
         
-        .stage-box {
-            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-            padding: 20px;
-            margin: 15px 0;
-            border-left: 4px solid #0284c7;
-            border-radius: 8px;
-        }
-        
-        .stage-box strong {
-            color: #0284c7;
-            display: block;
-            margin-bottom: 8px;
-            font-size: 1.1em;
-        }
-        
         .keyword-box {
-            background: linear-gradient(135deg, #e0e7ff 0%, #f3e7e9 100%);
+            background: #f0f4ff;
             padding: 20px;
             border-radius: 8px;
             margin: 20px 0;
@@ -200,9 +148,10 @@
         .keyword-box h4 {
             color: #667eea;
             margin-bottom: 15px;
+            font-weight: 600;
         }
         
-        .keyword-list {
+        .keyword-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
@@ -212,98 +161,106 @@
             background: white;
             border: 2px solid #667eea;
             color: #667eea;
-            padding: 8px 15px;
+            padding: 8px 16px;
             border-radius: 20px;
             font-size: 0.9em;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        
-        .keyword-tag:hover {
-            background: #667eea;
-            color: white;
-        }
-        
-        .summary-box {
-            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
-            border-left: 4px solid #4ade80;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-        
-        .summary-box h4 {
-            color: #22863a;
-            margin-bottom: 10px;
+            font-weight: 600;
         }
         
         .checklist {
             list-style: none;
-            margin: 15px 0;
+            padding: 0;
         }
         
         .checklist li {
-            padding: 10px;
-            margin: 8px 0;
-            background: white;
-            border-left: 3px solid #667eea;
-            border-radius: 4px;
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            margin-bottom: 8px;
         }
         
         .checklist li:before {
-            content: "☐ ";
-            margin-right: 10px;
+            content: "☑";
+            position: absolute;
+            left: 0;
             color: #667eea;
             font-weight: bold;
         }
         
+        .summary-box {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .summary-box h3 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        
+        .summary-box ol {
+            padding-left: 25px;
+        }
+        
+        .summary-box li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+        
+        .footer-nav {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        
+        .btn-quiz {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-quiz:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-home {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #ddd;
+        }
+        
+        .btn-home:hover {
+            background: #f0f0f0;
+        }
+        
         .footer {
             background: #f8f9fa;
-            padding: 30px;
+            padding: 20px;
             text-align: center;
             color: #666;
+            font-size: 0.9em;
             border-top: 1px solid #e0e0e0;
         }
         
-        .next-week {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 1.2em;
-            margin-top: 20px;
-        }
-        
-        .pyramid {
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 8px;
-            border-left: 4px solid #d97706;
-        }
-        
-        .pyramid h4 {
-            color: #d97706;
-            margin-bottom: 15px;
-        }
-        
-        .pyramid-item {
-            margin: 10px 0;
-            padding: 10px;
-            background: white;
-            border-radius: 4px;
-            border-left: 3px solid #d97706;
-        }
-        
         @media (max-width: 768px) {
-            .process-flow {
-                flex-direction: column;
-            }
-            
-            .flow-arrow {
-                transform: rotate(90deg);
-                margin: 10px 0;
+            .header {
+                padding: 30px 20px;
             }
             
             .header h1 {
@@ -311,7 +268,11 @@
             }
             
             .content {
-                padding: 20px;
+                padding: 25px 20px;
+            }
+            
+            table {
+                font-size: 0.9em;
             }
         }
     </style>
@@ -319,323 +280,237 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="week-badge">📚 4週目</div>
-            <h1>アジャイル + リーン + パーパス</h1>
-            <p style="font-size: 1.1em; margin-top: 15px;">素早い開発と企業理念がUXに与える影響を理解する</p>
-        </div>
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
+            <a href="index.html" class="back-link">← トップに戻る</a>
+            <h1>🎯 W4: アジャイル + リーン + パーパス</h1>
+            <p>現代的な開発手法と企業の存在意義を理解する</p>
         </div>
         
         <div class="content">
-            <!-- ミッション -->
-            <section class="section">
-                <h2>🎯 この週のミッション</h2>
-                <p>アジャイル開発、リーン思考、そして企業のパーパス（目的）という3つの概念を理解し、これらがUX設計にどのように影響するかを学びます。素早い改善と企業理念の統合が、持続可能なUX実現の鍵であることを認識します。</p>
-            </section>
+            <!-- Mission Section -->
+            <div class="section">
+                <h2>📋 この週のミッション</h2>
+                <p>アジャイル開発とリーン思考の基本を理解し、急速に変わる市場環境下での効率的な開発プロセスを学びます。さらに、企業のパーパス（存在意義）がいかにUXデザインに影響するのかを理解することが目標です。</p>
+            </div>
             
-            <!-- アジャイル開発 -->
-            <section class="section">
-                <h2>⚡ アジャイル開発</h2>
-                <p>アジャイル開発とは、変化に対応できる柔軟なソフトウェア開発手法です。従来のウォーターフォール型との対比で理解する必要があります。</p>
+            <!-- Agile Section -->
+            <div class="section">
+                <h2>🔄 アジャイル開発</h2>
                 
-                <h3>アジャイル開発とは</h3>
-                <div class="definition-card">
-                    <strong>定義</strong>
-                    「変化する要件に対応することを重視し、継続的なフィードバックと改善を通じて、動作するソフトウェアを段階的に開発する手法」
+                <h3>アジャイルとは</h3>
+                <p>アジャイル（Agile）は「機敏な」という意味で、短期間のサイクルで段階的に製品を開発し、継続的に改善していく開発手法です。従来のウォーターフォール型と異なり、変化への対応に優れています。</p>
+                
+                <div class="info-box">
+                    <strong>ウォーターフォール型 vs アジャイル型</strong><br>
+                    ウォーターフォール型は計画 → 設計 → 実装 → テスト → リリースと順序立って進み、変更が困難です。一方、アジャイルはスプリント（1～4週間）単位で計画・実装・テスト・改善を繰り返し、柔軟に対応します。
                 </div>
                 
-                <h3>ウォーターフォール型 vs アジャイル型</h3>
-                
-                <table class="comparison-table">
+                <h3>スクラムの4つの儀式</h3>
+                <table>
                     <thead>
                         <tr>
-                            <th>観点</th>
-                            <th>ウォーターフォール型</th>
-                            <th>アジャイル型</th>
+                            <th>儀式</th>
+                            <th>目的</th>
+                            <th>参加者</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>要件定義</strong></td>
-                            <td>開始時に全て決定</td>
-                            <td>段階的に改善</td>
+                            <td><strong>スプリント計画</strong></td>
+                            <td>スプリント期間中に実装する機能を決定</td>
+                            <td>開発チーム全体</td>
                         </tr>
                         <tr>
-                            <td><strong>開発フロー</strong></td>
-                            <td>計画 → 設計 → 実装 → テスト → リリース</td>
-                            <td>スプリント（1～4週間）サイクルの反復</td>
+                            <td><strong>デイリースタンドアップ</strong></td>
+                            <td>毎日の進捗と課題を共有（15分）</td>
+                            <td>開発チーム</td>
                         </tr>
                         <tr>
-                            <td><strong>変更への対応</strong></td>
-                            <td>変更が困難</td>
-                            <td>変更に柔軟に対応</td>
+                            <td><strong>スプリントレビュー</strong></td>
+                            <td>完成した成果物をステークホルダーに提示</td>
+                            <td>全員</td>
                         </tr>
                         <tr>
-                            <td><strong>フィードバック</strong></td>
-                            <td>プロジェクト終盤で得られる</td>
-                            <td>各スプリント後に得られる</td>
-                        </tr>
-                        <tr>
-                            <td><strong>リスク</strong></td>
-                            <td>後期になって問題が発見される</td>
-                            <td>早期に問題が発見される</td>
+                            <td><strong>レトロスペクティブ</strong></td>
+                            <td>プロセスの改善点を洗い出し、次に活かす</td>
+                            <td>開発チーム</td>
                         </tr>
                     </tbody>
                 </table>
                 
-                <h3>アジャイル開発が必要とされる背景</h3>
-                <ul class="checklist">
-                    <li>市場環境の急速な変化</li>
-                    <li>ユーザーニーズの多様化と変動</li>
-                    <li>競合企業との差別化の必要性</li>
-                    <li>デジタル技術の急速な進化</li>
-                </ul>
-                
-                <h3>アジャイル開発の主要なプラクティス</h3>
-                
-                <div class="stage-box">
-                    <strong>スクラム</strong>
-                    アジャイル開発の最も一般的なフレームワーク。スプリント（1～4週間）という固定期間の中で、計画 → 実装 → レビュー → 改善を繰り返します。
-                </div>
-                
-                <div class="stage-box">
-                    <strong>スプリント</strong>
-                    2～4週間の開発サイクル。各スプリント終了時に動作するソフトウェアが完成します。
-                </div>
-                
-                <div class="stage-box">
-                    <strong>デイリースクラム</strong>
-                    毎日15分程度のミーティング。チームメンバーが進捗状況と課題を共有します。
-                </div>
-                
-                <div class="stage-box">
-                    <strong>レトロスペクティブ</strong>
-                    スプリント終了後に、チームが改善点を洗い出すミーティング。「何がうまくいったか」「何を改善すべきか」を議論します。
-                </div>
-                
-                <div class="tip-box">
-                    <h4>覚えやすいコツ</h4>
-                    <p>「アジャイル = 素早く、柔軟に、繰り返す」と覚えましょう。小さなサイクルで素早く開発し、フィードバックをもとに柔軟に改善することで、市場変化に対応できます。</p>
-                </div>
-            </section>
+                <h3>アジャイルが必要な背景</h3>
+                <p>市場環境が急速に変化し、ユーザーニーズが多様化している現在、最初に完璧な計画を立てることは困難です。アジャイルは、<span class="highlight">変化への対応</span>と<span class="highlight">素早いリリース</span>を優先し、ユーザーフィードバックを継続的に取り込みながら製品を進化させます。</p>
+            </div>
             
-            <!-- リーン開発 -->
-            <section class="section">
-                <h2>📊 リーン開発</h2>
-                <p>リーン開発とは、無駄を排除し、顧客価値を最大化することを目指す開発手法です。トヨタ生産方式から着想を得ています。</p>
+            <!-- Lean Section -->
+            <div class="section">
+                <h2>⚡ リーン開発</h2>
                 
-                <h3>リーン開発とは</h3>
-                <div class="definition-card">
-                    <strong>定義</strong>
-                    「顧客が本当に望む価値に焦点を当てながら、開発プロセスの無駄を徹底的に排除し、効率的に製品・サービスを提供する思考法」
+                <h3>リーンの基本概念</h3>
+                <p>リーン開発は、トヨタ生産方式から着想を得た開発手法です。顧客が本当に望む価値に焦点を当てながら、開発プロセスの<span class="highlight">無駄を排除</span>し、効率的に製品・サービスを提供することを目指します。</p>
+                
+                <div class="info-box">
+                    <strong>リーンの7つの原則</strong><br>
+                    1. 価値を定義する 2. 価値の流れを可視化する 3. 流れを作る 4. プルシステムを導入する 5. 完璧を求める 6. チーム全体で改善する 7. 無駄を排除する
                 </div>
                 
-                <h3>リーン開発が必要とされる背景</h3>
-                <ul class="checklist">
-                    <li>不確実な市場環境での意思決定</li>
-                    <li>限られたリソースの最大活用</li>
-                    <li>失敗を最小化しながら学習する必要性</li>
-                    <li>スタートアップなど初期段階での検証</li>
-                </ul>
+                <h3>MVP（最小実行可能製品）</h3>
+                <p>MVPは、必要最小限の機能を持ちながら、ユーザーのニーズを満たし、フィードバックを得られる製品です。完璧さより、<span class="highlight">素早いリリースと学習</span>を優先します。</p>
                 
-                <h3>リーンスタートアップ</h3>
-                <p>リーン開発を実践する代表的なアプローチが「リーンスタートアップ」です：</p>
+                <h3>Build-Measure-Learn サイクル</h3>
+                <p>リーンスタートアップでは、以下のサイクルを高速で回します：</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>段階</th>
+                            <th>内容</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Build（構築）</strong></td>
+                            <td>仮説に基づいてMVPを作成</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Measure（測定）</strong></td>
+                            <td>ユーザーの反応とデータを測定</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Learn（学習）</strong></td>
+                            <td>学習結果から仮説を検証し、次のアクションを決定</td>
+                        </tr>
+                    </tbody>
+                </table>
                 
-                <div class="stage-box">
-                    <strong>1. Build（構築）</strong>
-                    最小限の機能でMVP（最小実行可能製品）を作成します。完璧さより、素早いリリースを優先します。
-                </div>
-                
-                <div class="stage-box">
-                    <strong>2. Measure（測定）</strong>
-                    ユーザーの行動データと反応を収集し、仮説が正しいかを測定します。
-                </div>
-                
-                <div class="stage-box">
-                    <strong>3. Learn（学習）</strong>
-                    データから学び、次の改善方向を決めます。仮説が正しければスケール、違えば別の方向にピボット（方向転換）します。
-                </div>
-                
-                <div class="tip-box">
-                    <h4>覚えやすいコツ</h4>
-                    <p>「MVP（最小実行可能製品）を素早く作り、測定して、学ぶ」と覚えましょう。リーンの本質は、不確実性の中で素早く検証を繰り返すことです。</p>
-                </div>
-                
-                <h3>リーン開発の7つの無駄</h3>
-                <ul class="checklist">
-                    <li><strong>部分最適化</strong>：全体的な価値を見落とした部分的な最適化</li>
-                    <li><strong>情報の未伝達</strong>：チーム間のコミュニケーション不足</li>
-                    <li><strong>マルチタスク</strong>：複数のタスクを同時に処理することで効率が低下</li>
-                    <li><strong>手待ち</strong>：外部の承認や判断待ち</li>
-                    <li><strong>納期遅延</strong>：ユーザーの要求に対する対応遅延</li>
-                    <li><strong>プロセス不備</strong>：不正確なプロセスによるやり直し</li>
-                    <li><strong>品質問題</strong>：品質不足による修正作業</li>
-                </ul>
-            </section>
+                <h3>ピボット</h3>
+                <p>ピボットは、仮説が間違っていた時に、戦略や方向性を根本的に変えることです。失敗ではなく、<span class="highlight">学習の結果の意思決定</span>です。Instagramが写真共有アプリに、TwitterがPodcastingプラットフォームからスタートするなど、多くの成功企業がピボットを経験しています。</p>
+            </div>
             
-            <!-- パーパス -->
-            <section class="section">
-                <h2>🎯 パーパス（企業の目的）</h2>
-                <p>パーパスとは、企業が社会に対して果たす根本的な目的や役割を指します。単なる利益追求ではなく、社会への貢献を指し示します。</p>
+            <!-- Purpose Section -->
+            <div class="section">
+                <h2>🎯 パーパス（企業の存在意義）</h2>
                 
                 <h3>パーパスとは</h3>
-                <div class="definition-card">
-                    <strong>定義</strong>
-                    「企業が営利活動を通じて社会に実現したい価値や、解決したい社会課題。企業の存在意義そのもの」
-                </div>
+                <p>パーパスは、企業が営利活動を通じて社会に実現したい価値や、解決したい社会課題を示します。単なる利益追求ではなく、<span class="highlight">企業の存在意義そのもの</span>です。</p>
                 
                 <h3>パーパスの3層構造</h3>
-                
-                <div class="pyramid">
-                    <h4>企業の目的の3層</h4>
-                    <div class="pyramid-item">
-                        <strong style="color: #d97706;">ミッション</strong><br>
-                        企業が何をするのか。現在の事業領域と活動内容を表現する
-                    </div>
-                    <div class="pyramid-item">
-                        <strong style="color: #d97706;">ビジョン</strong><br>
-                        企業がどうなりたいのか。将来のあるべき姿を表現する
-                    </div>
-                    <div class="pyramid-item">
-                        <strong style="color: #d97706;">バリュー（価値観）</strong><br>
-                        企業がいかにして達成するのか。大切にする原則や姿勢を表現する
-                    </div>
-                </div>
-                
-                <h3>企業経営にパーパスが必要とされる背景</h3>
-                <ul class="checklist">
-                    <li><strong>社員のモチベーション向上</strong>：単なる給与より、やりがいが重要</li>
-                    <li><strong>顧客ロイヤルティ向上</strong>：共通の価値観を持つ企業への信頼が高まる</li>
-                    <li><strong>人材採用と育成</strong>：パーパスに共感する優秀な人材が集まりやすい</li>
-                    <li><strong>社会への説明責任</strong>：企業活動の正当性を示す</li>
-                    <li><strong>長期的な経営基盤の構築</strong>：短期的な利益より、持続可能性を重視</li>
-                </ul>
-                
-                <h3>UXとパーパスの関係</h3>
-                <p>優れたUXは、企業のパーパスを実現する手段です。企業が何を目指しているのか、その理念がUX設計に反映されることで、ユーザーにとって意味のある体験が生まれます。</p>
-                
-                <div class="definition-card">
-                    <strong>例：アップル</strong>
-                    パーパス：「人とテクノロジーの交差点に立つ」<br>
-                    これが、シンプルで美しいデザイン、直感的なUIというUX哲学に反映されています。
-                </div>
-                
-                <div class="tip-box">
-                    <h4>覚えやすいコツ</h4>
-                    <p>「パーパス = 企業の存在意義。UX = その理念を具現化する手段」と覚えましょう。社会への貢献という企業目的が明確であれば、UX設計の判断もブレなくなります。</p>
-                </div>
-            </section>
-            
-            <!-- アジャイル、リーン、パーパスの統合 -->
-            <section class="section">
-                <h2>🔗 アジャイル、リーン、パーパスの統合</h2>
-                
-                <table class="comparison-table">
+                <table>
                     <thead>
                         <tr>
-                            <th>観点</th>
-                            <th>アジャイル</th>
-                            <th>リーン</th>
-                            <th>パーパス</th>
+                            <th>要素</th>
+                            <th>定義</th>
+                            <th>例</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>焦点</strong></td>
-                            <td>素早い開発サイクル</td>
-                            <td>無駄の排除</td>
-                            <td>企業の存在意義</td>
+                            <td><strong>ミッション</strong></td>
+                            <td>現在の活動内容：何をするか</td>
+                            <td>良質な教育を提供する</td>
                         </tr>
                         <tr>
-                            <td><strong>タイムスケール</strong></td>
-                            <td>短期（スプリント単位）</td>
-                            <td>短期（MVP検証）</td>
-                            <td>長期（企業の根本目的）</td>
+                            <td><strong>ビジョン</strong></td>
+                            <td>将来のあるべき姿：どうなりたいか</td>
+                            <td>すべての人が学べる社会</td>
                         </tr>
                         <tr>
-                            <td><strong>意思決定</strong></td>
-                            <td>フィードバックをもとに</td>
-                            <td>データをもとに</td>
-                            <td>理念をもとに</td>
-                        </tr>
-                        <tr>
-                            <td><strong>UXへの影響</strong></td>
-                            <td>継続的改善が可能</td>
-                            <td>最小限の機能で価値最大化</td>
-                            <td>設計の判断軸が明確</td>
+                            <td><strong>バリュー</strong></td>
+                            <td>大切にする原則や姿勢：いかにしてか</td>
+                            <td>透明性、革新、ユーザー第一</td>
                         </tr>
                     </tbody>
                 </table>
                 
-                <p>これら3つの要素は相互に補完関係にあります。パーパスが方向性を示し、リーンが無駄を排除しながら方向を定め、アジャイルがそれを素早く実現します。</p>
-            </section>
+                <h3>パーパスが重要な理由</h3>
+                <ul class="checklist">
+                    <li>社員のモチベーション向上と一体感の醸成</li>
+                    <li>顧客ロイヤルティの向上（共感と信頼）</li>
+                    <li>人材採用と育成の差別化</li>
+                    <li>社会への説明責任と透明性</li>
+                    <li>持続可能な経営基盤の構築</li>
+                </ul>
+            </div>
             
-            <!-- 重要ワード -->
-            <section class="section">
-                <h2>🔑 重要ワード</h2>
-                <div class="keyword-box">
-                    <h4>W4で学んだ重要な言葉</h4>
-                    <div class="keyword-list">
-                        <span class="keyword-tag">アジャイル</span>
-                        <span class="keyword-tag">ウォーターフォール</span>
-                        <span class="keyword-tag">スクラム</span>
-                        <span class="keyword-tag">スプリント</span>
-                        <span class="keyword-tag">レビュー</span>
-                        <span class="keyword-tag">レトロスペクティブ</span>
-                        <span class="keyword-tag">リーン開発</span>
-                        <span class="keyword-tag">リーンスタートアップ</span>
-                        <span class="keyword-tag">MVP</span>
-                        <span class="keyword-tag">ピボット</span>
-                        <span class="keyword-tag">パーパス</span>
-                        <span class="keyword-tag">ミッション</span>
-                        <span class="keyword-tag">ビジョン</span>
-                        <span class="keyword-tag">バリュー</span>
-                    </div>
+            <!-- UX and Purpose Section -->
+            <div class="section">
+                <h2>🤝 UXとパーパスの統合</h2>
+                
+                <p>優れたUXは、企業のパーパスを実現する手段です。企業理念がUX設計に反映されることで、ユーザーにとって<span class="highlight">意味のある体験</span>が生まれます。</p>
+                
+                <div class="info-box">
+                    <strong>例：Airbnbのパーパス</strong><br>
+                    パーパス：「世界中の人々が、どこにいても『ホーム』と感じられる社会を実現する」<br>
+                    UX実装：シンプルで信頼できるプラットフォーム、ホストとゲストのコミュニティ、安心と透明性の提供
                 </div>
-            </section>
+                
+                <p>パーパスが明確であれば、UX設計の判断軸もブレなくなります。新機能の優先順位、デザイン決定、ユーザー満足度の測定基準がすべてパーパスに基づき、一貫性のある体験が実現されます。</p>
+            </div>
             
-            <!-- チェックリスト -->
-            <section class="section">
-                <h2>✅ W4の学習チェックリスト</h2>
+            <!-- Keywords Section -->
+            <div class="keyword-box">
+                <h4>🔑 W4の重要ワード（15個）</h4>
+                <div class="keyword-tags">
+                    <span class="keyword-tag">アジャイル</span>
+                    <span class="keyword-tag">スクラム</span>
+                    <span class="keyword-tag">スプリント</span>
+                    <span class="keyword-tag">レトロスペクティブ</span>
+                    <span class="keyword-tag">リーン開発</span>
+                    <span class="keyword-tag">MVP</span>
+                    <span class="keyword-tag">ピボット</span>
+                    <span class="keyword-tag">Build-Measure-Learn</span>
+                    <span class="keyword-tag">パーパス</span>
+                    <span class="keyword-tag">ミッション</span>
+                    <span class="keyword-tag">ビジョン</span>
+                    <span class="keyword-tag">バリュー</span>
+                    <span class="keyword-tag">存在意義</span>
+                    <span class="keyword-tag">変化への対応</span>
+                    <span class="keyword-tag">無駄の排除</span>
+                </div>
+            </div>
+            
+            <!-- Checklist Section -->
+            <div class="section">
+                <h2>✅ 学習チェックリスト</h2>
                 <ul class="checklist">
                     <li>アジャイル開発とウォーターフォール型の違いを説明できる</li>
-                    <li>スクラムの主要要素（スプリント、デイリースクラム、レトロスペクティブ）を述べられる</li>
-                    <li>リーン開発の基本概念と7つの無駄を理解している</li>
-                    <li>リーンスタートアップのBuild → Measure → Learnサイクルを説明できる</li>
-                    <li>MVPの定義と、なぜ完璧さより素早さが重要かを理解している</li>
-                    <li>パーパスの定義と、ミッション・ビジョン・バリューの関係を説明できる</li>
-                    <li>企業経営にパーパスが必要な理由を述べられる</li>
-                    <li>アジャイル、リーン、パーパスがどのように統合されるかを理解している</li>
+                    <li>スクラムの4つの儀式と目的を理解している</li>
+                    <li>市場変化とアジャイルの必要性を関連付けられる</li>
+                    <li>リーン開発の基本概念と7つの原則を理解している</li>
+                    <li>MVPの意味と役割を説明できる</li>
+                    <li>Build-Measure-Learnサイクルを実装できる</li>
+                    <li>ピボットが失敗ではなく学習であることを理解している</li>
+                    <li>パーパスの定義と3層構造を説明できる</li>
+                    <li>パーパスが企業経営に与える影響を述べられる</li>
+                    <li>UXとパーパスの関係性を理解している</li>
                 </ul>
-            </section>
+            </div>
             
-            <!-- サマリー -->
-            <section class="section">
-                <div class="summary-box">
-                    <h4>📌 W4のまとめ（5つの要点）</h4>
-                    <ol style="margin-left: 20px;">
-                        <li><strong>アジャイルは素早い改善プロセス</strong> — スプリントサイクルで短期間に段階的に開発し、フィードバックをもとに改善する</li>
-                        <li><strong>リーンは無駄の排除と価値最大化</strong> — MVPを素早く作り、測定して学び、ピボットを含め柔軟に方向転換する</li>
-                        <li><strong>パーパスは企業の存在意義</strong> — 利益だけでなく、社会への貢献という根本目的を定義し、全ての判断の軸とする</li>
-                        <li><strong>3つの要素の統合が重要</strong> — パーパスが方向性を示し、リーンが効率を、アジャイルが速度を実現する</li>
-                        <li><strong>UX実現の現代的な枠組み</strong> — これら3つの要素がなければ、現代社会での競争的で持続可能なUX実現は難しい</li>
-                    </ol>
-                </div>
-            </section>
+            <!-- Summary Section -->
+            <div class="summary-box">
+                <h3>📌 W4のまとめ（5つの要点）</h3>
+                <ol>
+                    <li><strong>アジャイルは変化への対応</strong> — 短期サイクルで段階的に改善し、市場変化に柔軟に対応する開発手法</li>
+                    <li><strong>リーンは無駄の排除</strong> — 顧客価値に焦点を当てながら、開発プロセスの無駄を徹底的に排除する思想</li>
+                    <li><strong>MVPと高速学習</strong> — 完璧さより素早いリリースを優先し、ユーザーフィードバックから学習を繰り返す</li>
+                    <li><strong>パーパスは企業の羅針盤</strong> — 明確なパーパスがあれば、社員、顧客、投資家への一貫したメッセージを発信できる</li>
+                    <li><strong>UXはパーパスの実現手段</strong> — 企業理念がUX設計に反映されることで、ユーザーにとって意味のある体験が生まれる</li>
+                </ol>
+            </div>
             
-            <!-- 次週予告 -->
-            <section class="section">
-                <div class="next-week">
-                    <p>次週（W5）は「行動経済学 + 認知心理学 + 文化人類学」を学びます。<br>
-                    ユーザーの行動心理を理解して、より効果的なUXを設計しましょう！</p>
-                </div>
-            </section>
+            <!-- Next Week Preview -->
+            <div class="section" style="background: #f9f9f9; padding: 20px; border-radius: 8px;">
+                <h3>🚀 次週（W5）の予告</h3>
+                <p>W5は「UXリサーチ + ユーザー理解」を学びます。定量・定性調査の手法とユーザーモデリング（ペルソナ、カスタマージャーニー）の実践を理解しましょう。</p>
+            </div>
+            
+            <!-- Footer Navigation -->
+            <div class="footer-nav">
+                <a href="w4_ux_q.html" class="btn btn-quiz">✅ W4クイズに挑戦</a>
+                <a href="index.html" class="btn btn-home">🏠 トップに戻る</a>
+            </div>
         </div>
         
         <div class="footer">
-            <p>📚 UX学習プログラム Week 4/7</p>
-            <p style="margin-top: 10px; color: #999; font-size: 0.9em;">最終更新: 2026年3月</p>
+            📚 UX学習プログラム Week 4/7 資料
         </div>
     </div>
 </body>
