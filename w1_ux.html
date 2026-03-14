@@ -129,45 +129,67 @@
             font-size: 1.1em;
         }
         
-        .honeycomb-container {
+        .honeycomb-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
-            margin: 30px 0;
-            align-items: center;
-            justify-items: center;
+            margin: 40px 0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .honeycomb-item {
-            width: 120px;
-            height: 120px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
+            border-radius: 12px;
+            padding: 20px;
+            color: white;
+            text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: white;
-            text-align: center;
-            font-weight: bold;
-            padding: 10px;
+            min-height: 140px;
             transition: transform 0.3s ease;
             cursor: pointer;
-            font-size: 0.9em;
+            font-weight: bold;
         }
         
         .honeycomb-item:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
         }
         
         .honeycomb-item.center {
-            grid-column: 2;
-            grid-row: 2;
-            width: 140px;
-            height: 140px;
+            grid-column: 1 / -1;
             background: linear-gradient(135deg, #f4b942 0%, #f59e0b 100%);
-            font-size: 1.1em;
+            font-size: 1.2em;
+            min-height: 120px;
             box-shadow: 0 5px 20px rgba(244, 185, 66, 0.4);
+        }
+        
+        .honeycomb-icon {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+        
+        .honeycomb-title {
+            font-size: 0.95em;
+            margin-bottom: 5px;
+        }
+        
+        .honeycomb-description {
+            font-size: 0.8em;
+            opacity: 0.95;
+            line-height: 1.4;
+        }
+        
+        .honeycomb-item.center .honeycomb-icon {
+            font-size: 2.5em;
+        }
+        
+        .honeycomb-item.center .honeycomb-title {
+            font-size: 1.1em;
         }
         
         .tip-box {
@@ -304,7 +326,7 @@
         }
         
         @media (max-width: 768px) {
-            .honeycomb-container {
+            .honeycomb-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
             
@@ -367,35 +389,49 @@
                 </div>
                 
                 <h3>UXの構成要素：ハニカム構造（7つの要素）</h3>
-                <p>Don Normanが提唱した「UXのハニカム構造」は、優れたUXに必要な7つの要素を表現しています。中央の「価値」を軸に、その周りに6つの要素が配置されます。</p>
+                <p>Don Normanが2004年に提唱した「UXのハニカム構造」は、優れたUXに必要な7つの要素を表現しています。中央の「価値」を軸に、その周りに6つの要素が配置されます。</p>
                 
-                <div class="honeycomb-container">
+                <div class="honeycomb-grid">
                     <div class="honeycomb-item">
-                        <span>🔍</span><br>見つけやすさ
+                        <div class="honeycomb-icon">💰</div>
+                        <div class="honeycomb-title">有用性</div>
+                        <div class="honeycomb-description">ユーザーが必要とする機能や価値を提供できているか</div>
                     </div>
                     <div class="honeycomb-item">
-                        <span>⚙️</span><br>使いやすさ
+                        <div class="honeycomb-icon">⚙️</div>
+                        <div class="honeycomb-title">使いやすさ</div>
+                        <div class="honeycomb-description">操作が簡単で効率的に目的を達成できるか</div>
                     </div>
                     <div class="honeycomb-item">
-                        <span>♿</span><br>アクセシビリティ
+                        <div class="honeycomb-icon">♿</div>
+                        <div class="honeycomb-title">アクセシビリティ</div>
+                        <div class="honeycomb-description">障害者を含むすべてのユーザーが利用できるか</div>
                     </div>
                     <div class="honeycomb-item">
-                        <span>✨</span><br>望ましさ
+                        <div class="honeycomb-icon">🔍</div>
+                        <div class="honeycomb-title">見つけやすさ</div>
+                        <div class="honeycomb-description">ユーザーが必要な情報・機能を簡単に見つけられるか</div>
                     </div>
                     <div class="honeycomb-item center">
-                        <span>💎</span><br>価値
+                        <div class="honeycomb-icon">💎</div>
+                        <div class="honeycomb-title">価値</div>
+                        <div class="honeycomb-description">すべての要素の中心 — ユーザーと企業の双方にとって価値がある</div>
                     </div>
                     <div class="honeycomb-item">
-                        <span>🛡️</span><br>信頼性
+                        <div class="honeycomb-icon">✨</div>
+                        <div class="honeycomb-title">望ましさ</div>
+                        <div class="honeycomb-description">デザイン・ブランド・感情的な魅力を感じるか</div>
                     </div>
                     <div class="honeycomb-item">
-                        <span>📊</span><br>有用性
+                        <div class="honeycomb-icon">🛡️</div>
+                        <div class="honeycomb-title">信頼性</div>
+                        <div class="honeycomb-description">ユーザーが安心して利用できるか、信頼できるか</div>
                     </div>
                 </div>
                 
                 <div class="tip-box">
                     <h4>覚えやすいコツ</h4>
-                    <p>「UXは7つの要素でできている」と覚えましょう。中央の「価値」が全ての中心であり、周りの6つの要素がそれを支えています。各要素がバランスよく実装されることで初めて優れたUXが生まれます。</p>
+                    <p>「UXは7つの要素でできている」と覚えましょう。中央の「価値」が全ての中心であり、周りの6つの要素がそれを支えています。各要素がバランスよく実装されることで初めて優れたUXが生まれます。ハニカムの形は、各要素が相互に関連し、支え合っていることを表現しています。</p>
                 </div>
             </section>
             
