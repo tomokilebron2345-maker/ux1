@@ -307,12 +307,44 @@
             font-weight: bold;
         }
         
-        .footer {
-            background: #f8f9fa;
-            padding: 30px;
-            text-align: center;
-            color: #666;
-            border-top: 1px solid #e0e0e0;
+        .buttons-section {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-quiz {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+        
+        .btn-quiz:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16,185,129,0.4);
+        }
+        
+        .btn-home {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
         }
         
         .next-week {
@@ -323,6 +355,14 @@
             text-align: center;
             font-size: 1.2em;
             margin-top: 20px;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
         }
         
         @media (max-width: 768px) {
@@ -344,6 +384,14 @@
             
             .comparison-table th, .comparison-table td {
                 padding: 10px;
+            }
+            
+            .buttons-section {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
             }
         }
     </style>
@@ -403,9 +451,9 @@
                         <div class="honeycomb-description">操作が簡単で効率的に目的を達成できるか</div>
                     </div>
                     <div class="honeycomb-item">
-                        <div class="honeycomb-icon">♿</div>
-                        <div class="honeycomb-title">アクセシビリティ</div>
-                        <div class="honeycomb-description">障害者を含むすべてのユーザーが利用できるか</div>
+                        <div class="honeycomb-icon">😊</div>
+                        <div class="honeycomb-title">好ましさ</div>
+                        <div class="honeycomb-description">デザイン・ブランド・感情的な魅力を感じるか</div>
                     </div>
                     <div class="honeycomb-item">
                         <div class="honeycomb-icon">🔍</div>
@@ -418,9 +466,9 @@
                         <div class="honeycomb-description">すべての要素の中心 — ユーザーと企業の双方にとって価値がある</div>
                     </div>
                     <div class="honeycomb-item">
-                        <div class="honeycomb-icon">✨</div>
-                        <div class="honeycomb-title">望ましさ</div>
-                        <div class="honeycomb-description">デザイン・ブランド・感情的な魅力を感じるか</div>
+                        <div class="honeycomb-icon">♿</div>
+                        <div class="honeycomb-title">アクセス性</div>
+                        <div class="honeycomb-description">障害者を含むすべてのユーザーが利用できるか</div>
                     </div>
                     <div class="honeycomb-item">
                         <div class="honeycomb-icon">🛡️</div>
@@ -634,6 +682,14 @@
                 <div class="next-week">
                     <p>次週（W2）は「UXデザイン + UXグロース + UXインテリジェンス」を学びます。<br>
                     UXの戦略的な活用方法を理解しましょう！</p>
+                </div>
+            </section>
+            
+            <!-- クイズボタン -->
+            <section class="section">
+                <div class="buttons-section">
+                    <a href="w1_ux_q.html" class="btn btn-quiz">✅ W1クイズに挑戦</a>
+                    <a href="index.html" class="btn btn-home">🏠 トップに戻る</a>
                 </div>
             </section>
         </div>
