@@ -3,21 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>W7: ユーザーモデリング + UXデザイン具現化 + UXデザイン評価 + UX運用・グロース</title>
+    <title>W7: UXデザイン具現化 + 評価 + 運用・グロース</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 20px;
             line-height: 1.8;
         }
-        
+
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -25,20 +21,24 @@
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             overflow: hidden;
+            animation: slideUp 0.6s ease-out;
         }
-        
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ─── Header ─── */
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 40px 30px;
             text-align: center;
         }
-        
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        
+
+        .header h1 { font-size: 2.2em; margin-bottom: 10px; line-height: 1.4; }
+
         .week-badge {
             display: inline-block;
             background: rgba(255,255,255,0.3);
@@ -47,27 +47,39 @@
             font-size: 1.1em;
             margin-bottom: 15px;
         }
-        
+
+        /* ─── Progress Bar ─── */
         .progress-bar {
             width: 100%;
             height: 8px;
             background: #e0e0e0;
         }
-        
+
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
             width: 100%;
+            animation: slideRight 0.8s ease-out;
         }
-        
-        .content {
-            padding: 40px;
+
+        @keyframes slideRight {
+            from { width: 0; }
+            to   { width: 100%; }
         }
-        
+
+        /* ─── Content ─── */
+        .content { padding: 40px; }
+
         .section {
             margin-bottom: 50px;
+            animation: fadeIn 0.8s ease-out;
         }
-        
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
         .section h2 {
             font-size: 2em;
             color: #667eea;
@@ -75,14 +87,15 @@
             padding-bottom: 10px;
             border-bottom: 3px solid #667eea;
         }
-        
+
         .section h3 {
             font-size: 1.4em;
             color: #764ba2;
             margin-top: 25px;
             margin-bottom: 15px;
         }
-        
+
+        /* ─── Definition Card ─── */
         .definition-card {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             padding: 20px;
@@ -91,18 +104,36 @@
             border-radius: 8px;
             transition: transform 0.3s ease;
         }
-        
-        .definition-card:hover {
-            transform: translateX(5px);
-        }
-        
+
+        .definition-card:hover { transform: translateX(5px); }
+
         .definition-card strong {
             color: #667eea;
             display: block;
             margin-bottom: 8px;
             font-size: 1.1em;
         }
-        
+
+        /* ─── Stage Box ─── */
+        .stage-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #0284c7;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .stage-box:hover { transform: translateX(5px); }
+
+        .stage-box strong {
+            color: #0284c7;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        /* ─── Tip Box ─── */
         .tip-box {
             background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
             border-left: 4px solid #ff9500;
@@ -110,17 +141,11 @@
             margin: 20px 0;
             border-radius: 8px;
         }
-        
-        .tip-box h4 {
-            color: #ff6b00;
-            margin-bottom: 10px;
-        }
-        
-        .tip-box h4:before {
-            content: "💡 ";
-            margin-right: 10px;
-        }
-        
+
+        .tip-box h4 { color: #ff6b00; margin-bottom: 10px; }
+        .tip-box h4:before { content: "💡 "; margin-right: 10px; }
+
+        /* ─── Comparison Table ─── */
         .comparison-table {
             width: 100%;
             border-collapse: collapse;
@@ -130,7 +155,7 @@
             border-radius: 8px;
             overflow: hidden;
         }
-        
+
         .comparison-table th {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -138,49 +163,21 @@
             text-align: left;
             font-weight: bold;
         }
-        
-        .comparison-table td {
-            padding: 15px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .comparison-table tr:hover {
-            background: #f9f9f9;
-        }
-        
-        .stage-box {
-            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-            padding: 20px;
-            margin: 15px 0;
-            border-left: 4px solid #0284c7;
-            border-radius: 8px;
-        }
-        
-        .stage-box strong {
-            color: #0284c7;
-            display: block;
-            margin-bottom: 8px;
-            font-size: 1.1em;
-        }
-        
+
+        .comparison-table td { padding: 15px; border-bottom: 1px solid #e0e0e0; }
+        .comparison-table tr:hover { background: #f9f9f9; }
+
+        /* ─── Keyword Box ─── */
         .keyword-box {
             background: linear-gradient(135deg, #e0e7ff 0%, #f3e7e9 100%);
             padding: 20px;
             border-radius: 8px;
             margin: 20px 0;
         }
-        
-        .keyword-box h4 {
-            color: #667eea;
-            margin-bottom: 15px;
-        }
-        
-        .keyword-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
+
+        .keyword-box h4 { color: #667eea; margin-bottom: 15px; }
+        .keyword-list { display: flex; flex-wrap: wrap; gap: 10px; }
+
         .keyword-tag {
             background: white;
             border: 2px solid #667eea;
@@ -191,12 +188,10 @@
             font-weight: bold;
             transition: all 0.3s ease;
         }
-        
-        .keyword-tag:hover {
-            background: #667eea;
-            color: white;
-        }
-        
+
+        .keyword-tag:hover { background: #667eea; color: white; }
+
+        /* ─── Summary Box ─── */
         .summary-box {
             background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
             border-left: 4px solid #4ade80;
@@ -204,17 +199,12 @@
             border-radius: 8px;
             margin: 20px 0;
         }
-        
-        .summary-box h4 {
-            color: #22863a;
-            margin-bottom: 10px;
-        }
-        
-        .checklist {
-            list-style: none;
-            margin: 15px 0;
-        }
-        
+
+        .summary-box h4 { color: #22863a; margin-bottom: 10px; }
+
+        /* ─── Checklist ─── */
+        .checklist { list-style: none; margin: 15px 0; }
+
         .checklist li {
             padding: 10px;
             margin: 8px 0;
@@ -222,14 +212,82 @@
             border-left: 3px solid #667eea;
             border-radius: 4px;
         }
-        
+
         .checklist li:before {
             content: "☐ ";
             margin-right: 10px;
             color: #667eea;
             font-weight: bold;
         }
-        
+
+        /* ─── Completion Box ─── */
+        .completion-box {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+
+        .completion-box h3 {
+            color: white;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        /* ─── Highlight ─── */
+        .hl {
+            background: #fff9e6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #e8a200;
+            font-weight: 600;
+        }
+
+        /* ─── Buttons ─── */
+        .buttons-section {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-quiz {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-quiz:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16,185,129,0.4);
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
+        }
+
+        /* ─── Footer ─── */
         .footer {
             background: #f8f9fa;
             padding: 30px;
@@ -237,384 +295,386 @@
             color: #666;
             border-top: 1px solid #e0e0e0;
         }
-        
-        .completion-box {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 1.2em;
-            margin-top: 20px;
-        }
-        
-        .completion-box h3 {
-            color: white;
-            font-size: 1.8em;
-            margin-bottom: 15px;
-        }
-        
+
+        /* ─── Responsive ─── */
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8em;
-            }
-            
-            .content {
-                padding: 20px;
-            }
+            .header h1    { font-size: 1.6em; }
+            .content      { padding: 20px; }
+            .comparison-table { font-size: 0.9em; }
+            .comparison-table th,
+            .comparison-table td { padding: 10px; }
+            .buttons-section { flex-direction: column; }
+            .btn { width: 100%; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="week-badge">📚 7週目 - 最終週</div>
-            <h1>ユーザーモデリング + UXデザイン具現化<br>+ UXデザイン評価 + UX運用・グロース</h1>
-            <p style="font-size: 1.1em; margin-top: 15px;">UX全体サイクルの統合と実践的運用を理解する</p>
-        </div>
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
-        </div>
-        
-        <div class="content">
-            <!-- ミッション -->
-            <section class="section">
-                <h2>🎯 この週のミッション</h2>
-                <p>W1～W6で学んだ知識を統合し、UX全体のライフサイクル（リサーチから設計、評価、改善、運用まで）を理解します。実際のプロジェクトでいかにして継続的にUXを改善し、ビジネス成果につなげるかを学びます。</p>
-            </section>
-            
-            <!-- 高度なユーザーモデリング -->
-            <section class="section">
-                <h2>👥 高度なユーザーモデリング</h2>
-                
-                <h3>複数のペルソナ管理と優先順位付け</h3>
-                <div class="definition-card">
-                    <strong>複数ペルソナの必要性</strong>
-                    実務では、1つの製品に対して複数のペルソナが存在することが多い。例：ECサイトには、新規ユーザー、リピーター、管理者など複数のペルソナがいる。
-                </div>
-                
-                <h3>ユーザーセグメンテーション</h3>
-                <ul class="checklist">
-                    <li><strong>デモグラフィック</strong>：年齢、性別、収入など人口統計的属性</li>
-                    <li><strong>サイコグラフィック</strong>：価値観、ライフスタイル、興味関心</li>
-                    <li><strong>ビヘイビアル</strong>：購買行動、利用頻度、ロイヤルティ</li>
-                    <li><strong>ジョブ・ベースド</strong>：ユーザーが解決したい課題に基づくセグメンテーション</li>
-                </ul>
-                
-                <div class="tip-box">
-                    <h4>覚えやすいコツ</h4>
-                    <p>「複数のペルソナを持つことで、異なるニーズに対応し、スケーラブルなUXを実現できる」と覚えましょう。</p>
-                </div>
-            </section>
-            
-            <!-- UXデザイン具現化 -->
-            <section class="section">
-                <h2>🎨 UXデザイン具現化</h2>
-                <p>ユーザー要求をもとに、実装可能な設計に落とし込むプロセスです。</p>
-                
-                <h3>アイデア創出のプロセス</h3>
-                
-                <div class="stage-box">
-                    <strong>発想法とブレインストーミング</strong>
-                    多くのアイデアを生み出す。質より量を優先し、批判なく自由に発想する。
-                </div>
-                
-                <div class="stage-box">
-                    <strong>カードソート</strong>
-                    ユーザーが情報をどのように分類・整理すると思うかを、カードを使って調査する。情報設計に活かす。
-                </div>
-                
-                <div class="stage-box">
-                    <strong>特性要因図</strong>
-                    問題の原因を体系的に整理する図。「なぜ？」を繰り返し、根本原因を追求する。
-                </div>
-                
-                <div class="stage-box">
-                    <strong>シナリオライティング</strong>
-                    ペルソナが製品を使用する場面を、物語形式で記述する。文脈に基づくニーズを発見。
-                </div>
-                
-                <h3>情報設計とプロトタイピング</h3>
-                
-                <div class="stage-box">
-                    <strong>Information Architecture（IA）</strong>
-                    ユーザーに情報を正しく伝達するための構造設計。ワイヤーフレームやサイトマップで可視化。
-                </div>
-                
-                <div class="stage-box">
-                    <strong>ワイヤーフレーム</strong>
-                    ページレイアウトと機能を簡潔に表現。詳細なビジュアルデザインの前段階。
-                </div>
-                
-                <div class="stage-box">
-                    <strong>プロトタイプ</strong>
-                    ローファイ（紙やホワイトボード）からハイファイ（動作可能）まで、段階的に詳細化。
-                </div>
-                
-                <h3>UXライティング</h3>
-                <div class="definition-card">
-                    <strong>定義</strong>
-                    「ユーザーにわかりやすく情報を伝えるライティング。ボタンラベルやエラーメッセージなど、UI上の全てのテキストが対象」
-                </div>
-                
-                <ul class="checklist">
-                    <li><strong>マイクロコピー</strong>：「送信」「キャンセル」といったボタン上の短いテキスト</li>
-                    <li><strong>コンテンツ設計</strong>：ヘルプテキストやチュートリアルなどの教育的なコンテンツ</li>
-                    <li><strong>エラーハンドリング</strong>：わかりやすいエラーメッセージで、ユーザーをサポート</li>
-                </ul>
-            </section>
-            
-            <!-- UXデザイン評価 -->
-            <section class="section">
-                <h2>✅ UXデザイン評価</h2>
-                <p>設計したUXが、実際にユーザーの期待を満たしているかを評価します。</p>
-                
-                <h3>ユーザーテスト</h3>
-                
-                <div class="definition-card">
-                    <strong>定義</strong>
-                    「プロトタイプやデザイン案をユーザーに提示し、フィードバックを得る評価方法。定性的な洞察が得られる」
-                </div>
-                
-                <h3>ユーザーテストの手法</h3>
-                
-                <div class="stage-box">
-                    <strong>思考発話法</strong>
-                    ユーザーが考えていることを声に出してもらいながら、タスクを実行させる。リアルタイムの課題発見。
-                </div>
-                
-                <div class="stage-box">
-                    <strong>回顧法</strong>
-                    タスク実行後、ユーザーに行動や感情を回顧してもらう。思考発話より準備が簡単。
-                </div>
-                
-                <div class="stage-box">
-                    <strong>ユーザビリティラボ</strong>
-                    専門の実験室で、アイ・トラッキングなどの計測機器を用いた評価。定量的なデータが得られる。
-                </div>
-                
-                <h3>ユーザーテストの実施時の注意点</h3>
-                <ul class="checklist">
-                    <li><strong>個人情報保護</strong>：インフォームドコンセントを得て、データを適切に管理</li>
-                    <li><strong>サンプル数</strong>：通常5～8人のテストで、主要な課題の80%が発見される</li>
-                    <li><strong>タスク設計</strong>：ユーザーを誘導しない、自然なタスク設計</li>
-                    <li><strong>環境設定</strong>：実際の使用環境に近い環境でテストを実施</li>
-                </ul>
-                
-                <h3>エキスパートレビュー</h3>
-                
-                <div class="definition-card">
-                    <strong>定義</strong>
-                    「UX専門家がデザイン案を評価する方法。ユーザーテストより準備が簡単で、迅速に改善点を発見できる」
-                </div>
-                
-                <h3>エキスパートレビューの手法</h3>
-                
-                <div class="stage-box">
-                    <strong>インスペクション</strong>
-                    チェックリストに基づいてデザインを評価する。システム的で、見落としが少ない。
-                </div>
-                
-                <div class="stage-box">
-                    <strong>ヒューリスティック評価</strong>
-                    10個のユーザビリティ原則に基づいてデザインを評価。直感的だが、経験に依存する。
-                </div>
-                
-                <div class="stage-box">
-                    <strong>認知的ウォークスルー</strong>
-                    ユーザーの視点に立って、ステップバイステップでUIを評価する。ユーザーの心理を理解した評価。
-                </div>
-            </section>
-            
-            <!-- UX運用・グロース -->
-            <section class="section">
-                <h2>🚀 UX運用・グロース</h2>
-                <p>リリース後、UXを継続的に改善し、ビジネスを成長させるプロセスです。</p>
-                
-                <h3>継続的なUX改善</h3>
-                
-                <div class="stage-box">
-                    <strong>DevOps（Development Operations）</strong>
-                    開発と運用を統合し、素早くリリース・フィードバック・改善を繰り返す体制。
-                </div>
-                
-                <div class="stage-box">
-                    <strong>DesignOps（Design Operations）</strong>
-                    デザイナーの生産性を高め、デザイン品質を保証する仕組み。デザインシステムやガイドラインの構築・管理。
-                </div>
-                
-                <h3>UX組織化と人材育成</h3>
-                
-                <div class="stage-box">
-                    <strong>トップダウン型UXグロース活動</strong>
-                    経営層がUXを重視し、全社的にUX改善を推進する。大規模な変革が可能。
-                </div>
-                
-                <div class="stage-box">
-                    <strong>ボトムアップ型UXグロース活動</strong>
-                    現場のチームが小さな改善を積み重ねていく。迅速で柔軟だが、組織全体への波及に時間がかかる。
-                </div>
-                
-                <h3>グロースチーム</h3>
-                
-                <div class="definition-card">
-                    <strong>定義</strong>
-                    「デザイナー、エンジニア、ビジネスメンバーなど異職種が協働し、データに基づいて素早くUX改善を実行する組織」
-                </div>
-                
-                <h3>グロースチームに必要な機能</h3>
-                <ul class="checklist">
-                    <li><strong>分析・仮説検証</strong>：データを分析し、改善の優先順位を決定</li>
-                    <li><strong>施策実行</strong>：素早くプロトタイプを作成・実装</li>
-                    <li><strong>測定・学習</strong>：効果を計測し、次の改善に活かす</li>
-                    <li><strong>コミュニケーション</strong>：チーム内および全社的な情報共有</li>
-                </ul>
-                
-                <h3>UX人材育成</h3>
-                <ul class="checklist">
-                    <li><strong>スキルマップ</strong>：各メンバーの強みと成長領域を可視化</li>
-                    <li><strong>カリキュラム</strong>：段階的な学習計画を設定</li>
-                    <li><strong>メンタリング</strong>：経験者による指導と支援</li>
-                    <li><strong>外部研修</strong>：最新のUX知識やトレンドを学ぶ機会</li>
-                </ul>
-                
-                <div class="tip-box">
-                    <h4>覚えやすいコツ</h4>
-                    <p>「UX運用は『測定→学習→改善』の無限ループ」と覚えましょう。一度設計して終わりではなく、ユーザーフィードバックと行動データをもとに、継続的に改善し続けることが重要です。</p>
-                </div>
-            </section>
-            
-            <!-- UX全体ライフサイクル -->
-            <section class="section">
-                <h2>🔄 UX全体ライフサイクル</h2>
-                
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>フェーズ</th>
-                            <th>活動</th>
-                            <th>主要な成果物</th>
-                            <th>指標</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>リサーチ</strong></td>
-                            <td>定量・定性調査、行動分析</td>
-                            <td>ペルソナ、ジャーニーマップ、ユーザー要求</td>
-                            <td>リサーチサンプル数、カバレッジ</td>
-                        </tr>
-                        <tr>
-                            <td><strong>設計</strong></td>
-                            <td>ワイヤーフレーム、プロトタイプ、UXライティング</td>
-                            <td>デザイン案、プロトタイプ</td>
-                            <td>デザインレビュー評価、内部テスト結果</td>
-                        </tr>
-                        <tr>
-                            <td><strong>評価</strong></td>
-                            <td>ユーザーテスト、エキスパートレビュー</td>
-                            <td>テストレポート、改善リスト</td>
-                            <td>テスト参加者数、課題発見数、改善度</td>
-                        </tr>
-                        <tr>
-                            <td><strong>実装</strong></td>
-                            <td>デザイン仕様書作成、開発</td>
-                            <td>実装済みシステム、ユーザードキュメント</td>
-                            <td>実装品質、スケジュール達成度</td>
-                        </tr>
-                        <tr>
-                            <td><strong>運用・改善</strong></td>
-                            <td>ユーザー行動監視、A/Bテスト、継続改善</td>
-                            <td>改善ログ、行動分析レポート</td>
-                            <td>NPS、ユーザー満足度、コンバージョン率</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-            
-            <!-- 重要ワード -->
-            <section class="section">
-                <h2>🔑 重要ワード</h2>
-                <div class="keyword-box">
-                    <h4>W7で学んだ重要な言葉</h4>
-                    <div class="keyword-list">
-                        <span class="keyword-tag">ユーザーセグメンテーション</span>
-                        <span class="keyword-tag">情報設計</span>
-                        <span class="keyword-tag">ワイヤーフレーム</span>
-                        <span class="keyword-tag">プロトタイプ</span>
-                        <span class="keyword-tag">UXライティング</span>
-                        <span class="keyword-tag">マイクロコピー</span>
-                        <span class="keyword-tag">ユーザーテスト</span>
-                        <span class="keyword-tag">思考発話法</span>
-                        <span class="keyword-tag">エキスパートレビュー</span>
-                        <span class="keyword-tag">ヒューリスティック評価</span>
-                        <span class="keyword-tag">DevOps</span>
-                        <span class="keyword-tag">DesignOps</span>
-                        <span class="keyword-tag">グロースチーム</span>
-                        <span class="keyword-tag">A/Bテスト</span>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- チェックリスト -->
-            <section class="section">
-                <h2>✅ W7の学習チェックリスト</h2>
-                <ul class="checklist">
-                    <li>複数ペルソナの管理と優先順位付けの重要性を理解している</li>
-                    <li>ユーザーセグメンテーションの主要な方法を述べられる</li>
-                    <li>情報設計とワイヤーフレームの役割を説明できる</li>
-                    <li>プロトタイプの段階的詳細化プロセスを理解している</li>
-                    <li>UXライティングとマイクロコピーの重要性を述べられる</li>
-                    <li>ユーザーテストの手法と実施時の注意点を説明できる</li>
-                    <li>エキスパートレビューの3つの手法を述べられる</li>
-                    <li>DevOpsとDesignOpsの概念を理解している</li>
-                    <li>グロースチームの役割と必要な機能を説明できる</li>
-                    <li>UX全体ライフサイクルを一貫して理解している</li>
-                </ul>
-            </section>
-            
-            <!-- 最終まとめ -->
-            <section class="section">
-                <div class="summary-box">
-                    <h4>📌 W1～W7全体のまとめ（7つの要点）</h4>
-                    <ol style="margin-left: 20px;">
-                        <li><strong>UXは総合体験</strong> — ユーザビリティだけでなく、感情や社会的文脈を含む</li>
-                        <li><strong>ユーザー理解が全ての基盤</strong> — 定量・定性・行動データを組み合わせた包括的な理解</li>
-                        <li><strong>複雑な課題にはデザイン思考とHCD</strong> — 共感から始まり、反復的に問題を解く</li>
-                        <li><strong>素早さと柔軟性が重要</strong> — アジャイル、リーン、グロースチームで継続改善</li>
-                        <li><strong>心理と文化を考慮</strong> — 行動経済学、認知心理学、文化人類学的な視点</li>
-                        <li><strong>多様性と包摂性</strong> — ユーザビリティとアクセシビリティで全員のための設計</li>
-                        <li><strong>企業理念が指針</strong> — パーパスがUX設計の判断軸となり、持続可能なビジネスを実現</li>
-                    </ol>
-                </div>
-            </section>
-            
-            <!-- 完了メッセージ -->
-            <section class="section">
-                <div class="completion-box">
-                    <h3>🎉 おめでとうございます！</h3>
-                    <p>7週間のUX学習プログラムが完了しました。</p>
-                    <p style="margin-top: 15px; font-size: 1.1em;">
-                        W1：UXの基礎理解<br>
-                        W2：UXデザイン・グロース・インテリジェンス<br>
-                        W3：HCD・デザイン思考<br>
-                        W4：アジャイル・リーン・パーパス<br>
-                        W5：心理学・人間工学・包摂性<br>
-                        W6：UXリサーチ・ユーザー理解<br>
-                        W7：UX設計・評価・運用<br>
-                    </p>
-                    <p style="margin-top: 20px;">
-                        これからは、これらの知識を実践的なプロジェクトで活かし、<br>
-                        ユーザーとビジネスの両面で価値を創造できるUXデザイナーになってください。
-                    </p>
-                </div>
-            </section>
-        </div>
-        
-        <div class="footer">
-            <p>📚 UX学習プログラム Week 7/7 - 最終週</p>
-            <p style="margin-top: 10px; color: #999; font-size: 0.9em;">最終更新: 2026年3月</p>
-        </div>
+<div class="container">
+
+    <!-- ══════════ HEADER ══════════ -->
+    <div class="header">
+        <div class="week-badge">📚 7週目 — 最終週</div>
+        <h1>🚀 ユーザーモデリング + UXデザイン具現化<br>+ UXデザイン評価 + UX運用・グロース</h1>
+        <p style="font-size:1.1em; margin-top:15px;">UX全体サイクルの統合と実践的運用を理解する</p>
     </div>
+    <div class="progress-bar">
+        <div class="progress-fill"></div>
+    </div>
+
+    <div class="content">
+
+        <!-- ══════════ MISSION ══════════ -->
+        <section class="section">
+            <h2>🎯 この週のミッション</h2>
+            <p>W1〜W6で学んだ知識を統合し、UX全体のライフサイクル（リサーチから設計・評価・改善・運用まで）を理解します。実際のプロジェクトでいかにして継続的にUXを改善し、ビジネス成果につなげるかを学びます。</p>
+        </section>
+
+        <!-- ══════════ 高度なユーザーモデリング ══════════ -->
+        <section class="section">
+            <h2>👥 高度なユーザーモデリング</h2>
+
+            <h3>複数のペルソナ管理と優先順位付け</h3>
+            <div class="definition-card">
+                <strong>複数ペルソナの必要性</strong>
+                実務では、1つの製品に対して複数のペルソナが存在することが多い。例：ECサイトには新規ユーザー・リピーター・管理者など複数のペルソナがいる。異なるニーズに対応することで、スケーラブルなUXが実現できる。
+            </div>
+
+            <h3>ユーザーセグメンテーション</h3>
+            <ul class="checklist">
+                <li><strong>デモグラフィック</strong>：年齢、性別、収入など人口統計的属性</li>
+                <li><strong>サイコグラフィック</strong>：価値観、ライフスタイル、興味関心</li>
+                <li><strong>ビヘイビアル</strong>：購買行動、利用頻度、ロイヤルティ</li>
+                <li><strong>ジョブ・ベースド</strong>：ユーザーが解決したい課題に基づくセグメンテーション</li>
+            </ul>
+
+            <div class="tip-box">
+                <h4>覚えやすいコツ</h4>
+                <p>「複数のペルソナを持つことで、異なるニーズに対応し、スケーラブルなUXを実現できる」と覚えましょう。セグメンテーションはデモグラフィック（誰か）→ サイコグラフィック（どんな価値観か）→ ビヘイビアル（どう行動するか）→ ジョブ（何を解決したいか）と深まるほど本質に近づきます。</p>
+            </div>
+        </section>
+
+        <!-- ══════════ UXデザイン具現化 ══════════ -->
+        <section class="section">
+            <h2>🎨 UXデザイン具現化</h2>
+            <p>ユーザー要求をもとに、<span class="hl">実装可能な設計</span>に落とし込むプロセスです。</p>
+
+            <h3>アイデア創出のプロセス</h3>
+
+            <div class="stage-box">
+                <strong>発想法とブレインストーミング</strong>
+                多くのアイデアを生み出す。質より量を優先し、批判なく自由に発想する。
+            </div>
+
+            <div class="stage-box">
+                <strong>カードソート</strong>
+                ユーザーが情報をどのように分類・整理するかを、カードを使って調査する。情報設計に活かす。
+            </div>
+
+            <div class="stage-box">
+                <strong>特性要因図</strong>
+                問題の原因を体系的に整理する図。「なぜ？」を繰り返し、根本原因を追求する。
+            </div>
+
+            <div class="stage-box">
+                <strong>シナリオライティング</strong>
+                ペルソナが製品を使用する場面を物語形式で記述する。文脈に基づくニーズを発見。
+            </div>
+
+            <h3>情報設計とプロトタイピング</h3>
+
+            <div class="stage-box">
+                <strong>Information Architecture（IA）</strong>
+                ユーザーに情報を正しく伝達するための構造設計。ワイヤーフレームやサイトマップで可視化。
+            </div>
+
+            <div class="stage-box">
+                <strong>ワイヤーフレーム</strong>
+                ページレイアウトと機能を簡潔に表現する。詳細なビジュアルデザインの前段階として機能する。
+            </div>
+
+            <div class="stage-box">
+                <strong>プロトタイプ</strong>
+                ローファイ（紙やホワイトボード）からハイファイ（動作可能）まで、段階的に詳細化する。
+            </div>
+
+            <h3>UXライティング</h3>
+            <div class="definition-card">
+                <strong>定義</strong>
+                「ユーザーにわかりやすく情報を伝えるライティング。ボタンラベルやエラーメッセージなど、UI上の全てのテキストが対象」
+            </div>
+
+            <ul class="checklist">
+                <li><strong>マイクロコピー</strong>：「送信」「キャンセル」といったボタン上の短いテキスト</li>
+                <li><strong>コンテンツ設計</strong>：ヘルプテキストやチュートリアルなどの教育的なコンテンツ</li>
+                <li><strong>エラーハンドリング</strong>：わかりやすいエラーメッセージで、ユーザーをサポート</li>
+            </ul>
+
+            <div class="tip-box">
+                <h4>覚えやすいコツ</h4>
+                <p>「UXライティングはデザインの一部」と覚えましょう。見た目のデザインだけでなく、言葉の設計もUXに大きく影響します。マイクロコピー1つで、ユーザーの行動が変わることがあります。</p>
+            </div>
+        </section>
+
+        <!-- ══════════ UXデザイン評価 ══════════ -->
+        <section class="section">
+            <h2>✅ UXデザイン評価</h2>
+            <p>設計したUXが、実際にユーザーの期待を満たしているかを<span class="hl">客観的に評価</span>します。</p>
+
+            <h3>ユーザーテスト</h3>
+            <div class="definition-card">
+                <strong>定義</strong>
+                「プロトタイプやデザイン案をユーザーに提示し、フィードバックを得る評価方法。定性的な洞察が得られる」
+            </div>
+
+            <h3>ユーザーテストの手法</h3>
+
+            <div class="stage-box">
+                <strong>思考発話法</strong>
+                ユーザーが考えていることを声に出してもらいながら、タスクを実行させる。リアルタイムの課題発見に有効。
+            </div>
+
+            <div class="stage-box">
+                <strong>回顧法</strong>
+                タスク実行後、ユーザーに行動や感情を回顧してもらう。思考発話より準備が簡単。
+            </div>
+
+            <div class="stage-box">
+                <strong>ユーザビリティラボ</strong>
+                専門の実験室でアイ・トラッキングなどの計測機器を用いた評価。定量的なデータが得られる。
+            </div>
+
+            <h3>ユーザーテスト実施時の注意点</h3>
+            <ul class="checklist">
+                <li><strong>個人情報保護</strong>：インフォームドコンセントを得て、データを適切に管理</li>
+                <li><strong>サンプル数</strong>：通常5〜8人のテストで、主要な課題の80%が発見される</li>
+                <li><strong>タスク設計</strong>：ユーザーを誘導しない、自然なタスク設計</li>
+                <li><strong>環境設定</strong>：実際の使用環境に近い環境でテストを実施</li>
+            </ul>
+
+            <h3>エキスパートレビュー</h3>
+            <div class="definition-card">
+                <strong>定義</strong>
+                「UX専門家がデザイン案を評価する方法。ユーザーテストより準備が簡単で、迅速に改善点を発見できる」
+            </div>
+
+            <h3>エキスパートレビューの手法</h3>
+
+            <div class="stage-box">
+                <strong>インスペクション</strong>
+                チェックリストに基づいてデザインを評価する。システム的で見落としが少ない。
+            </div>
+
+            <div class="stage-box">
+                <strong>ヒューリスティック評価</strong>
+                10個のユーザビリティ原則に基づいてデザインを評価する。直感的だが、経験に依存する。
+            </div>
+
+            <div class="stage-box">
+                <strong>認知的ウォークスルー</strong>
+                ユーザーの視点に立って、ステップバイステップでUIを評価する。ユーザーの心理を理解した評価。
+            </div>
+
+            <div class="tip-box">
+                <h4>覚えやすいコツ</h4>
+                <p>「ユーザーテスト＝生の声、エキスパートレビュー＝専門知識」と覚えましょう。両者を組み合わせることで、課題の見落としを最小化できます。</p>
+            </div>
+        </section>
+
+        <!-- ══════════ UX運用・グロース ══════════ -->
+        <section class="section">
+            <h2>🚀 UX運用・グロース</h2>
+            <p>リリース後、UXを<span class="hl">継続的に改善</span>し、ビジネスを成長させるプロセスです。</p>
+
+            <h3>継続的なUX改善の仕組み</h3>
+
+            <div class="stage-box">
+                <strong>DevOps（Development Operations）</strong>
+                開発と運用を統合し、素早くリリース・フィードバック・改善を繰り返す体制。
+            </div>
+
+            <div class="stage-box">
+                <strong>DesignOps（Design Operations）</strong>
+                デザイナーの生産性を高め、デザイン品質を保証する仕組み。デザインシステムやガイドラインの構築・管理が中心。
+            </div>
+
+            <h3>UX組織化のアプローチ</h3>
+
+            <div class="stage-box">
+                <strong>トップダウン型UXグロース活動</strong>
+                経営層がUXを重視し、全社的にUX改善を推進する。大規模な変革が可能。
+            </div>
+
+            <div class="stage-box">
+                <strong>ボトムアップ型UXグロース活動</strong>
+                現場のチームが小さな改善を積み重ねていく。迅速で柔軟だが、組織全体への波及に時間がかかる。
+            </div>
+
+            <h3>グロースチーム</h3>
+            <div class="definition-card">
+                <strong>定義</strong>
+                「デザイナー、エンジニア、ビジネスメンバーなど異職種が協働し、データに基づいて素早くUX改善を実行する組織」
+            </div>
+
+            <h3>グロースチームに必要な機能</h3>
+            <ul class="checklist">
+                <li><strong>分析・仮説検証</strong>：データを分析し、改善の優先順位を決定</li>
+                <li><strong>施策実行</strong>：素早くプロトタイプを作成・実装</li>
+                <li><strong>測定・学習</strong>：効果を計測し、次の改善に活かす</li>
+                <li><strong>コミュニケーション</strong>：チーム内および全社的な情報共有</li>
+            </ul>
+
+            <h3>UX人材育成</h3>
+            <ul class="checklist">
+                <li><strong>スキルマップ</strong>：各メンバーの強みと成長領域を可視化</li>
+                <li><strong>カリキュラム</strong>：段階的な学習計画を設定</li>
+                <li><strong>メンタリング</strong>：経験者による指導と支援</li>
+                <li><strong>外部研修</strong>：最新のUX知識やトレンドを学ぶ機会</li>
+            </ul>
+
+            <div class="tip-box">
+                <h4>覚えやすいコツ</h4>
+                <p>「UX運用は『測定→学習→改善』の無限ループ」と覚えましょう。一度設計して終わりではなく、ユーザーフィードバックと行動データをもとに継続的に改善し続けることが重要です。</p>
+            </div>
+        </section>
+
+        <!-- ══════════ UX全体ライフサイクル ══════════ -->
+        <section class="section">
+            <h2>🔄 UX全体ライフサイクル</h2>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>フェーズ</th>
+                        <th>活動</th>
+                        <th>主要な成果物</th>
+                        <th>指標</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>リサーチ</strong></td>
+                        <td>定量・定性調査、行動分析</td>
+                        <td>ペルソナ、ジャーニーマップ、ユーザー要求</td>
+                        <td>リサーチサンプル数、カバレッジ</td>
+                    </tr>
+                    <tr>
+                        <td><strong>設計</strong></td>
+                        <td>ワイヤーフレーム、プロトタイプ、UXライティング</td>
+                        <td>デザイン案、プロトタイプ</td>
+                        <td>デザインレビュー評価、内部テスト結果</td>
+                    </tr>
+                    <tr>
+                        <td><strong>評価</strong></td>
+                        <td>ユーザーテスト、エキスパートレビュー</td>
+                        <td>テストレポート、改善リスト</td>
+                        <td>テスト参加者数、課題発見数、改善度</td>
+                    </tr>
+                    <tr>
+                        <td><strong>実装</strong></td>
+                        <td>デザイン仕様書作成、開発</td>
+                        <td>実装済みシステム、ユーザードキュメント</td>
+                        <td>実装品質、スケジュール達成度</td>
+                    </tr>
+                    <tr>
+                        <td><strong>運用・改善</strong></td>
+                        <td>ユーザー行動監視、A/Bテスト、継続改善</td>
+                        <td>改善ログ、行動分析レポート</td>
+                        <td>NPS、ユーザー満足度、コンバージョン率</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- ══════════ KEYWORDS ══════════ -->
+        <section class="section">
+            <h2>🔑 重要ワード</h2>
+            <div class="keyword-box">
+                <h4>W7で学んだ重要な言葉（14個）</h4>
+                <div class="keyword-list">
+                    <span class="keyword-tag">ユーザーセグメンテーション</span>
+                    <span class="keyword-tag">情報設計（IA）</span>
+                    <span class="keyword-tag">ワイヤーフレーム</span>
+                    <span class="keyword-tag">プロトタイプ</span>
+                    <span class="keyword-tag">UXライティング</span>
+                    <span class="keyword-tag">マイクロコピー</span>
+                    <span class="keyword-tag">ユーザーテスト</span>
+                    <span class="keyword-tag">思考発話法</span>
+                    <span class="keyword-tag">ヒューリスティック評価</span>
+                    <span class="keyword-tag">認知的ウォークスルー</span>
+                    <span class="keyword-tag">DevOps</span>
+                    <span class="keyword-tag">DesignOps</span>
+                    <span class="keyword-tag">グロースチーム</span>
+                    <span class="keyword-tag">インフォームドコンセント</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════ CHECKLIST ══════════ -->
+        <section class="section">
+            <h2>✅ W7の学習チェックリスト</h2>
+            <ul class="checklist">
+                <li>複数ペルソナの管理と優先順位付けの重要性を理解している</li>
+                <li>ユーザーセグメンテーションの主要な方法を述べられる</li>
+                <li>情報設計とワイヤーフレームの役割を説明できる</li>
+                <li>プロトタイプの段階的詳細化プロセスを理解している</li>
+                <li>UXライティングとマイクロコピーの重要性を述べられる</li>
+                <li>ユーザーテストの手法と実施時の注意点を説明できる</li>
+                <li>エキスパートレビューの3つの手法を述べられる</li>
+                <li>DevOpsとDesignOpsの概念を理解している</li>
+                <li>グロースチームの役割と必要な機能を説明できる</li>
+                <li>UX全体ライフサイクルを一貫して理解している</li>
+            </ul>
+        </section>
+
+        <!-- ══════════ SUMMARY ══════════ -->
+        <section class="section">
+            <div class="summary-box">
+                <h4>📌 W1〜W7全体のまとめ（7つの要点）</h4>
+                <ol style="margin-left:20px;">
+                    <li style="margin-bottom:10px;"><strong>UXは総合体験</strong> — ユーザビリティだけでなく、感情や社会的文脈を含む</li>
+                    <li style="margin-bottom:10px;"><strong>ユーザー理解が全ての基盤</strong> — 定量・定性・行動データを組み合わせた包括的な理解</li>
+                    <li style="margin-bottom:10px;"><strong>複雑な課題にはデザイン思考とHCD</strong> — 共感から始まり、反復的に問題を解く</li>
+                    <li style="margin-bottom:10px;"><strong>素早さと柔軟性が重要</strong> — アジャイル、リーン、グロースチームで継続改善</li>
+                    <li style="margin-bottom:10px;"><strong>心理と文化を考慮</strong> — 行動経済学、認知心理学、文化人類学的な視点</li>
+                    <li style="margin-bottom:10px;"><strong>多様性と包摂性</strong> — ユーザビリティとアクセシビリティで全員のための設計</li>
+                    <li><strong>企業理念が指針</strong> — パーパスがUX設計の判断軸となり、持続可能なビジネスを実現</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ══════════ COMPLETION ══════════ -->
+        <section class="section">
+            <div class="completion-box">
+                <h3>🎉 おめでとうございます！</h3>
+                <p>7週間のUX学習プログラムが完了しました。</p>
+                <p style="margin-top:15px; line-height:2;">
+                    W1：UXの基礎理解　／　W2：UXデザイン・グロース・インテリジェンス<br>
+                    W3：HCD・デザイン思考　／　W4：アジャイル・リーン・パーパス<br>
+                    W5：心理学・人間工学・包摂性　／　W6：UXリサーチ・ユーザー理解<br>
+                    W7：UX設計・評価・運用
+                </p>
+                <p style="margin-top:20px;">
+                    これからは、これらの知識を実践的なプロジェクトで活かし、<br>
+                    ユーザーとビジネスの両面で価値を創造できるUXデザイナーになってください。
+                </p>
+            </div>
+        </section>
+
+        <!-- ══════════ BUTTONS ══════════ -->
+        <section class="section">
+            <div class="buttons-section">
+                <a href="w7_ux_q.html" class="btn btn-quiz">✅ W7クイズに挑戦</a>
+                <a href="index.html"   class="btn btn-home">🏠 トップに戻る</a>
+            </div>
+        </section>
+
+    </div><!-- /content -->
+
+    <div class="footer">
+        <p>📚 UX学習プログラム Week 7/7 — 最終週</p>
+        <p style="margin-top:10px; color:#999; font-size:0.9em;">最終更新: 2026年3月</p>
+    </div>
+
+</div><!-- /container -->
 </body>
 </html>
