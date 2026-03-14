@@ -10,272 +10,328 @@
       padding: 0;
       box-sizing: border-box;
     }
-
+    
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding: 20px;
     }
-
+    
     .container {
-      max-width: 800px;
-      margin: 0 auto;
       background: white;
-      border-radius: 12px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 700px;
+      width: 100%;
       overflow: hidden;
     }
-
+    
     .header {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
-      padding: 30px;
+      padding: 40px 30px;
       text-align: center;
     }
-
+    
     .header h1 {
-      font-size: 2.5em;
+      font-size: 2em;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+    
+    .header p {
+      font-size: 1em;
+      opacity: 0.95;
+      font-weight: 500;
+    }
+    
+    .progress-container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 3px;
+      overflow: hidden;
       margin-bottom: 10px;
     }
-
-    .header p {
-      font-size: 1.1em;
-      opacity: 0.9;
-    }
-
-    .back-link {
-      color: white;
-      text-decoration: none;
-      font-size: 0.9em;
-      display: inline-block;
-      margin-bottom: 15px;
-      padding: 8px 12px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 6px;
-      transition: background 0.3s;
-    }
-
-    .back-link:hover {
-      background: rgba(255, 255, 255, 0.3);
-    }
-
-    .progress {
-      height: 8px;
-      background: #e0e0e0;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .progress-bar {
+    
+    .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, #667eea, #764ba2);
+      background: white;
       width: 0%;
       transition: width 0.3s ease;
+      border-radius: 3px;
     }
-
-    .content {
-      padding: 40px;
-    }
-
-    .score-section {
-      display: none;
+    
+    .progress-text {
+      color: white;
+      font-size: 0.9em;
       text-align: center;
-      padding: 40px 20px;
-      animation: fadeIn 0.5s ease;
+      font-weight: 600;
     }
-
-    .score-section.show {
+    
+    .content {
+      padding: 40px 30px;
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .quiz-section {
+      display: none;
+    }
+    
+    .quiz-section.active {
       display: block;
     }
-
-    .score-display {
-      font-size: 4em;
-      font-weight: bold;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin: 20px 0;
-    }
-
-    .score-message {
+    
+    .quiz-question {
       font-size: 1.3em;
+      font-weight: 600;
       color: #333;
-      margin: 20px 0;
-      line-height: 1.6;
-    }
-
-    .nav-buttons {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 30px;
-    }
-
-    .btn {
-      padding: 12px 24px;
-      border: none;
-      border-radius: 8px;
-      font-size: 1em;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-      transition: all 0.3s;
-      font-weight: 600;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-    }
-
-    .btn-secondary {
-      background: #f5f5f5;
-      color: #667eea;
-      border: 2px solid #667eea;
-    }
-
-    .btn-secondary:hover {
-      background: #f0f0f0;
-    }
-
-    .question-counter {
-      color: #999;
-      font-size: 0.9em;
-      margin-bottom: 20px;
-    }
-
-    .question {
-      font-size: 1.2em;
-      font-weight: 600;
       margin-bottom: 25px;
-      color: #333;
+      line-height: 1.5;
     }
-
-    .options {
+    
+    .quiz-options {
       display: flex;
       flex-direction: column;
       gap: 12px;
+      margin-bottom: 25px;
     }
-
-    .option {
+    
+    .option-label {
       display: flex;
       align-items: center;
       padding: 16px;
-      border: 2px solid #e0e0e0;
+      background: #f5f5f5;
+      border: 2px solid transparent;
       border-radius: 8px;
       cursor: pointer;
-      transition: all 0.3s;
-      background: white;
+      transition: all 0.3s ease;
+      font-size: 1em;
+      color: #333;
     }
-
-    .option:hover {
+    
+    .option-label:hover {
+      background: #f0f0f0;
       border-color: #667eea;
-      background: #f9f9ff;
     }
-
-    .option input[type="radio"] {
-      margin-right: 15px;
+    
+    .option-label input[type="radio"] {
+      margin-right: 12px;
       width: 20px;
       height: 20px;
       cursor: pointer;
+      accent-color: #667eea;
     }
-
-    .option.selected {
+    
+    .option-label.selected {
+      background: #e8eaf6;
       border-color: #667eea;
-      background: #f9f9ff;
     }
-
-    .option.correct {
+    
+    .option-label.correct {
+      background: #c8e6c9;
       border-color: #4caf50;
-      background: #f1f8f4;
       border-width: 3px;
     }
-
-    .option.incorrect {
-      border-color: #ff6b6b;
-      background: #fff5f5;
+    
+    .option-label.incorrect {
+      background: #ffcdd2;
+      border-color: #f44336;
       border-width: 3px;
     }
-
-    .feedback {
+    
+    .feedback-box {
       margin-top: 20px;
       padding: 16px;
       border-radius: 8px;
+      border-left: 4px solid;
+      display: none;
       font-size: 0.95em;
       line-height: 1.6;
-      display: none;
     }
-
-    .feedback.show {
+    
+    .feedback-box.show {
       display: block;
     }
-
-    .feedback.correct {
+    
+    .feedback-box.correct {
       background: #f1f8f4;
-      border-left: 4px solid #4caf50;
+      border-color: #4caf50;
       color: #2e7d32;
     }
-
-    .feedback.incorrect {
-      background: #fff5f5;
-      border-left: 4px solid #ff6b6b;
-      color: #d32f2f;
+    
+    .feedback-box.incorrect {
+      background: #fde7e7;
+      border-color: #f44336;
+      color: #c62828;
     }
-
+    
     .feedback-title {
       font-weight: 600;
       margin-bottom: 8px;
     }
-
-    .submit-btn {
-      width: 100%;
+    
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 25px;
+    }
+    
+    .btn {
+      flex: 1;
       padding: 14px;
-      margin-top: 20px;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white;
       border: none;
       border-radius: 8px;
-      font-size: 1.1em;
+      font-size: 1em;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
     }
-
-    .submit-btn:hover {
+    
+    .btn-submit {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    
+    .btn-submit:hover:not(:disabled) {
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
     }
-
-    .submit-btn:disabled {
-      opacity: 0.5;
+    
+    .btn-submit:disabled {
+      opacity: 0.6;
       cursor: not-allowed;
     }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+    
+    .btn-next {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
     }
-
+    
+    .btn-next:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+    }
+    
+    .score-display {
+      text-align: center;
+      padding: 40px 20px;
+    }
+    
+    .score-number {
+      font-size: 3.5em;
+      font-weight: 700;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 20px 0;
+    }
+    
+    .score-message {
+      font-size: 1.2em;
+      color: #333;
+      margin: 20px 0;
+      font-weight: 600;
+    }
+    
+    .score-detail {
+      font-size: 1em;
+      color: #666;
+      margin: 10px 0;
+    }
+    
+    .score-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 30px;
+    }
+    
+    .score-buttons a {
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      text-align: center;
+      transition: all 0.3s ease;
+      font-size: 1em;
+    }
+    
+    .btn-next-week {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    
+    .btn-next-week:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn-review {
+      background: #f5f5f5;
+      color: #667eea;
+      border: 2px solid #667eea;
+    }
+    
+    .btn-review:hover {
+      background: #efefef;
+    }
+    
+    .btn-home {
+      background: #f5f5f5;
+      color: #333;
+      border: 2px solid #ddd;
+    }
+    
+    .btn-home:hover {
+      background: #efefef;
+    }
+    
+    .footer {
+      background: #f9f9f9;
+      padding: 20px;
+      text-align: center;
+      color: #999;
+      font-size: 0.85em;
+      border-top: 1px solid #eee;
+    }
+    
     @media (max-width: 600px) {
-      .content {
-        padding: 20px;
+      .header {
+        padding: 30px 20px;
       }
+      
       .header h1 {
-        font-size: 1.8em;
+        font-size: 1.6em;
       }
-      .score-display {
+      
+      .content {
+        padding: 25px 20px;
+      }
+      
+      .score-number {
         font-size: 2.5em;
+      }
+      
+      .button-group {
+        flex-direction: column;
       }
     }
   </style>
@@ -283,19 +339,40 @@
 <body>
   <div class="container">
     <div class="header">
-      <a href="index.html" class="back-link">← トップに戻る</a>
-      <h1>W5: クイズ</h1>
+      <h1>🎯 W5 クイズ</h1>
       <p>ユーザー心理と包摂性 - 理解度チェック</p>
     </div>
-
-    <div class="progress">
-      <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-text"><span id="progressText">問題 1/10</span></div>
     </div>
-
+    
     <div class="content">
-      <div class="score-section" id="scoreSection"></div>
-      <div id="quizContent"></div>
-      <div class="feedback" id="feedback"></div>
+      <div class="quiz-section active" id="quizSection">
+        <div class="quiz-question" id="questionText"></div>
+        <div class="quiz-options" id="optionsContainer"></div>
+        <div class="feedback-box" id="feedbackBox"></div>
+        <div class="button-group">
+          <button class="btn btn-submit" id="submitBtn" onclick="submitAnswer()">回答する</button>
+        </div>
+      </div>
+      
+      <div class="quiz-section" id="scoreSection">
+        <div class="score-display">
+          <div>🎉 クイズ完了！</div>
+          <div class="score-number" id="scoreNumber">0/10</div>
+          <div class="score-message" id="scoreMessage"></div>
+          <div class="score-detail" id="scoreDetail"></div>
+          <div class="score-buttons" id="scoreButtons"></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer">
+      📚 UX学習プログラム Week 5/7 クイズ
     </div>
   </div>
 
@@ -406,7 +483,7 @@
     let currentQuestion = 0;
     let score = 0;
     let answered = false;
-    let correctAnswers = [];
+    let shuffledOptions = [];
 
     function shuffleArray(array) {
       const shuffled = [...array];
@@ -419,33 +496,35 @@
 
     function renderQuestion() {
       const quiz = quizData[currentQuestion];
-      const shuffledOptions = shuffleArray(quiz.options);
+      shuffledOptions = shuffleArray(quiz.options);
 
-      correctAnswers[currentQuestion] = shuffledOptions.findIndex(opt => opt.correct);
+      document.getElementById('questionText').textContent = quiz.question;
+      document.getElementById('progressText').textContent = `問題 ${currentQuestion + 1}/${quizData.length}`;
 
-      const questionHTML = `
-        <div class="question-counter">Q${currentQuestion + 1}/${quizData.length}</div>
-        <div class="question">${quiz.question}</div>
-        <div class="options" id="optionsContainer">
-          ${shuffledOptions.map((opt, idx) => `
-            <label class="option" onclick="selectOption(${idx})">
-              <input type="radio" name="answer" value="${idx}">
-              <span>${opt.text}</span>
-            </label>
-          `).join('')}
-        </div>
-        <button class="submit-btn" onclick="submitAnswer()">回答する</button>
-      `;
+      const progress = ((currentQuestion + 1) / quizData.length) * 100;
+      document.getElementById('progressFill').style.width = progress + '%';
 
-      document.getElementById('quizContent').innerHTML = questionHTML;
-      document.getElementById('feedback').innerHTML = '';
-      document.getElementById('feedback').classList.remove('show', 'correct', 'incorrect');
-      updateProgress();
+      const optionsHTML = shuffledOptions.map((option, idx) => `
+        <label class="option-label" onclick="selectOption(${idx})">
+          <input type="radio" name="answer" value="${idx}">
+          <span>${option.text}</span>
+        </label>
+      `).join('');
+
+      document.getElementById('optionsContainer').innerHTML = optionsHTML;
+      document.getElementById('feedbackBox').classList.remove('show', 'correct', 'incorrect');
+      document.getElementById('feedbackBox').innerHTML = '';
+      document.getElementById('submitBtn').style.display = 'block';
+      document.getElementById('submitBtn').disabled = false;
+
+      answered = false;
     }
 
     function selectOption(idx) {
-      document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
-      document.querySelectorAll('.option')[idx].classList.add('selected');
+      document.querySelectorAll('.option-label').forEach(label => {
+        label.classList.remove('selected');
+      });
+      document.querySelectorAll('.option-label')[idx].classList.add('selected');
       document.querySelector(`input[value="${idx}"]`).checked = true;
     }
 
@@ -457,36 +536,31 @@
 
       answered = true;
       const selectedIdx = parseInt(document.querySelector('input[name="answer"]:checked').value);
+      const selectedOption = shuffledOptions[selectedIdx];
       const quiz = quizData[currentQuestion];
-      const isCorrect = quiz.options[correctAnswers[currentQuestion]].correct === quizData[currentQuestion].options.find(opt => opt.text === quiz.options[correctAnswers[currentQuestion]].text).correct;
-      
-      const actualCorrect = quiz.options[selectedIdx].correct;
 
-      if (actualCorrect) {
+      const feedbackBox = document.getElementById('feedbackBox');
+      const optionLabels = document.querySelectorAll('.option-label');
+
+      if (selectedOption.correct) {
         score++;
-        document.querySelectorAll('.option')[selectedIdx].classList.add('correct');
-        document.getElementById('feedback').innerHTML = `
-          <div class="feedback-title">✅ 正解です！</div>
-          <div>${quiz.explanation}</div>
-        `;
-        document.getElementById('feedback').classList.add('show', 'correct');
+        optionLabels[selectedIdx].classList.add('correct');
+        feedbackBox.classList.add('correct');
+        feedbackBox.innerHTML = `<div class="feedback-title">✅ 正解です！</div><div>${quiz.explanation}</div>`;
       } else {
-        const correctIdx = correctAnswers[currentQuestion];
-        document.querySelectorAll('.option')[selectedIdx].classList.add('incorrect');
-        document.querySelectorAll('.option')[correctIdx].classList.add('correct');
-        document.getElementById('feedback').innerHTML = `
-          <div class="feedback-title">❌ 残念、不正解です</div>
-          <div>${quiz.explanation}</div>
-        `;
-        document.getElementById('feedback').classList.add('show', 'incorrect');
+        const correctIdx = shuffledOptions.findIndex(opt => opt.correct);
+        optionLabels[selectedIdx].classList.add('incorrect');
+        optionLabels[correctIdx].classList.add('correct');
+        feedbackBox.classList.add('incorrect');
+        feedbackBox.innerHTML = `<div class="feedback-title">❌ 残念、不正解です</div><div>${quiz.explanation}</div>`;
       }
 
-      document.querySelector('.submit-btn').style.display = 'none';
+      feedbackBox.classList.add('show');
+      document.getElementById('submitBtn').disabled = true;
 
       setTimeout(() => {
         if (currentQuestion < quizData.length - 1) {
           currentQuestion++;
-          answered = false;
           renderQuestion();
         } else {
           showScore();
@@ -494,62 +568,50 @@
       }, 2000);
     }
 
-    function updateProgress() {
-      const progress = ((currentQuestion + 1) / quizData.length) * 100;
-      document.getElementById('progressBar').style.width = progress + '%';
-    }
-
     function showScore() {
       const percentage = Math.round((score / quizData.length) * 100);
-      const passMessage = percentage === 100
-        ? '🎉 素晴らしい！完璧な正解です！'
-        : percentage >= 80
-          ? '✅ よく理解できていますね！'
-          : percentage >= 60
-            ? '📚 もう一度資料を確認しましょう'
-            : '❌ 資料をもう一度確認してください';
 
-      let navButtons = '';
+      let message = '';
       if (percentage === 100) {
-        navButtons = `
-          <div class="nav-buttons">
-            <a href="w6_ux.html" class="btn btn-primary">✅ W6へ進む</a>
-            <a href="w5_ux.html" class="btn btn-secondary">📖 W5資料を確認</a>
-            <a href="index.html" class="btn btn-secondary">🏠 トップに戻る</a>
-          </div>
+        message = '🎉 素晴らしい！完璧な正解です！';
+      } else if (percentage >= 80) {
+        message = '✅ よく理解できていますね！';
+      } else if (percentage >= 60) {
+        message = '📚 もう一度資料を確認しましょう';
+      } else {
+        message = '❌ 資料をもう一度確認してください';
+      }
+
+      document.getElementById('scoreNumber').textContent = `${score}/${quizData.length}`;
+      document.getElementById('scoreMessage').textContent = message;
+      document.getElementById('scoreDetail').textContent = `得点率: ${percentage}%`;
+
+      let buttonsHTML = '';
+      if (percentage === 100) {
+        buttonsHTML = `
+          <a href="w6_ux.html" class="score-buttons a btn-next-week">✅ W6へ進む</a>
+          <a href="w5_ux.html" class="score-buttons a btn-review">📖 W5資料を確認</a>
+          <a href="index.html" class="score-buttons a btn-home">🏠 トップに戻る</a>
         `;
       } else if (percentage >= 80) {
-        navButtons = `
-          <div class="nav-buttons">
-            <a href="w6_ux.html" class="btn btn-primary">✅ W6へ進む</a>
-            <a href="w5_ux.html" class="btn btn-secondary">📖 W5資料を確認</a>
-            <a href="w5_ux_q.html" class="btn btn-secondary">🔄 もう一度挑戦</a>
-            <a href="index.html" class="btn btn-secondary">🏠 トップに戻る</a>
-          </div>
+        buttonsHTML = `
+          <a href="w6_ux.html" class="score-buttons a btn-next-week">✅ W6へ進む</a>
+          <a href="w5_ux.html" class="score-buttons a btn-review">📖 W5資料を確認</a>
+          <a href="w5_ux_q.html" class="score-buttons a btn-review">🔄 もう一度挑戦</a>
+          <a href="index.html" class="score-buttons a btn-home">🏠 トップに戻る</a>
         `;
       } else {
-        navButtons = `
-          <div class="nav-buttons">
-            <a href="w5_ux.html" class="btn btn-primary">📖 W5資料を確認</a>
-            <a href="w5_ux_q.html" class="btn btn-secondary">🔄 もう一度挑戦</a>
-            <a href="index.html" class="btn btn-secondary">🏠 トップに戻る</a>
-          </div>
+        buttonsHTML = `
+          <a href="w5_ux.html" class="score-buttons a btn-next-week">📖 W5資料を確認</a>
+          <a href="w5_ux_q.html" class="score-buttons a btn-review">🔄 もう一度挑戦</a>
+          <a href="index.html" class="score-buttons a btn-home">🏠 トップに戻る</a>
         `;
       }
 
-      const scoreHTML = `
-        <div>
-          <div class="score-display">${percentage}%</div>
-          <div class="score-message">${passMessage}</div>
-          <div class="score-message">正解数: ${score}/${quizData.length}</div>
-          ${navButtons}
-        </div>
-      `;
+      document.getElementById('scoreButtons').innerHTML = buttonsHTML;
 
-      document.getElementById('quizContent').innerHTML = '';
-      document.getElementById('scoreSection').innerHTML = scoreHTML;
-      document.getElementById('scoreSection').classList.add('show');
-      document.getElementById('progressBar').style.width = '100%';
+      document.getElementById('quizSection').classList.remove('active');
+      document.getElementById('scoreSection').classList.add('active');
     }
 
     // 初期化
