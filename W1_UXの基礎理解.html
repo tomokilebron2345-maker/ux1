@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W1_UXの基礎理解 - 紙芝居形式学習</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            padding: 40px 20px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+
+        /* セクション */
+        .section {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section h2 {
+            font-size: 2.2em;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section h3 {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+            padding-left: 15px;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+        }
+
+        .text {
+            font-size: 1.1em;
+            line-height: 1.9;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* TIPS BOX */
+        .tips {
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe6f0 100%);
+            border-left: 5px solid #ffd700;
+            padding: 20px 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .tips-title {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tips-content {
+            font-size: 0.95em;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .tips-emoji {
+            font-size: 1.5em;
+        }
+
+        /* カード群 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-left: 5px solid #667eea;
+            padding: 25px;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            margin-right: 10px;
+        }
+
+        .card-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .card-content {
+            font-size: 1em;
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* テーブル */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95em;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: #f9f9f9;
+        }
+
+        /* 図解 */
+        .diagram {
+            background: #f0f4ff;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 25px 0;
+            text-align: center;
+            border: 2px dashed #667eea;
+        }
+
+        .diagram-arrow {
+            color: #667eea;
+            font-size: 1.5em;
+            margin: 15px 0;
+        }
+
+        /* ハニカム構造 - 修正版 */
+        .honeycomb-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .honeycomb-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: 700;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .honeycomb-item:hover {
+            transform: scale(1.05);
+        }
+
+        .honeycomb-item .emoji {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .honeycomb-item-title {
+            font-size: 1em;
+            margin-bottom: 5px;
+        }
+
+        .honeycomb-item-desc {
+            font-size: 0.8em;
+            opacity: 0.9;
+        }
+
+        /* 中央に価値を配置 */
+        .honeycomb-item.center {
+            grid-column: 2;
+            grid-row: 2;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #333;
+            border: 3px solid #ffc700;
+            min-height: 160px;
+        }
+
+        .honeycomb-item.center:hover {
+            transform: scale(1.1);
+        }
+
+        .honeycomb-item.center .emoji {
+            font-size: 3em;
+        }
+
+        .honeycomb-item.center .honeycomb-item-title {
+            font-size: 1.2em;
+        }
+
+        /* チェックリスト */
+        .checklist {
+            background: #f0f4ff;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 0.95em;
+            color: #555;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        /* まとめボックス */
+        .summary-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .summary-box h4 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .summary-box p {
+            font-size: 1em;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        /* アニメーション用 */
+        .highlight-box {
+            background: linear-gradient(120deg, #ffd89b 0%, #19547b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        /* フッター */
+        .footer {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 50px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+
+        .footer h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .footer p {
+            font-size: 1.05em;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .section {
+                padding: 30px 20px;
+            }
+
+            .section h2 {
+                font-size: 1.6em;
+            }
+
+            .section h3 {
+                font-size: 1.2em;
+            }
+
+            .honeycomb-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .honeycomb-item.center {
+                grid-column: 1 / -1;
+                grid-row: auto;
+                margin-top: 10px;
+            }
+
+            .honeycomb-item {
+                min-height: 120px;
+                padding: 20px 15px;
+            }
+
+            .honeycomb-item .emoji {
+                font-size: 2em;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            table {
+                font-size: 0.85em;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <div class="header">
+            <h1>🎯 W1 UXの基礎理解</h1>
+            <p>UXの正体を解き明かす紙芝居講座</p>
+        </div>
+
+        <!-- セクション1: ミッション -->
+        <div class="section">
+            <h2><span class="emoji">🎬</span>今週のミッション</h2>
+            
+            <p class="text">あなたは毎日、スマホでアプリを使っていますよね？</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <span class="emoji" style="font-size: 2em;">📱</span>
+                    <span class="card-content" style="font-size: 1.2em;"><strong>Amazon</strong> - 買い物</span>
+                </div>
+                <div class="card">
+                    <span class="emoji" style="font-size: 2em;">🎬</span>
+                    <span class="card-content" style="font-size: 1.2em;"><strong>Netflix</strong> - 映画鑑賞</span>
+                </div>
+                <div class="card">
+                    <span class="emoji" style="font-size: 2em;">📸</span>
+                    <span class="card-content" style="font-size: 1.2em;"><strong>Instagram</strong> - 写真シェア</span>
+                </div>
+            </div>
+
+            <p class="text" style="font-size: 1.3em; margin-top: 30px;">
+                <strong>❓ なぜ、これらのアプリを繰り返し使う？</strong>
+            </p>
+
+            <p class="text" style="font-size: 1.3em;">
+                <strong>❓ なぜ、他のアプリは使わなくなった？</strong>
+            </p>
+
+            <div class="diagram">
+                <p style="font-size: 1.3em; color: #667eea; font-weight: 700;">👉 答え：それが「<span class="highlight-box">UX</span>」です！</p>
+            </div>
+        </div>
+
+        <!-- セクション2: UXの定義 -->
+        <div class="section">
+            <h2><span class="emoji">🤔</span>UXの第一印象</h2>
+            
+            <p class="text" style="font-size: 1.15em;">
+                <strong>UX(User Experience)</strong> を日本語に訳すと：「ユーザー体験」
+            </p>
+
+            <p class="text">
+                でも、これだけじゃ曖昧だから、世界中の専門家が定義しています。
+            </p>
+
+            <h3>📚 3つの有名な定義</h3>
+
+            <div class="card-grid">
+                <div class="card">
+                    <span class="card-number">1</span>
+                    <div class="card-title">🌍 ISO（国際標準化機構）</div>
+                    <div class="card-content">
+                        製品・サービス・システムの使用を通じてユーザーが知覚・獲得するすべての感覚・感情・認識
+                        <br><br>
+                        <strong style="color: #667eea;">💡 つまり：「全体的な印象」</strong>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <span class="card-number">2</span>
+                    <div class="card-title">🏆 Nielsen & Norman（UXの大家）</div>
+                    <div class="card-content">
+                        ユーザーが製品やサービスとのやり取りを通じて形成する感覚的な評価のすべて
+                        <br><br>
+                        <strong style="color: #667eea;">💡 つまり：「すべての感覚」</strong>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <span class="card-number">3</span>
+                    <div class="card-title">🎯 UXPA（UX専門家協会）</div>
+                    <div class="card-content">
+                        ビジネス目標を達成しながらユーザーニーズを満たす体験の設計と実装
+                        <br><br>
+                        <strong style="color: #667eea;">💡 つまり：「ビジネス × ユーザー」</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips">
+                <div class="tips-title">
+                    <span class="tips-emoji">💡</span>
+                    覚えやすいコツ：「3つの定義の違い」
+                </div>
+                <div class="tips-content">
+                    <strong>ISO</strong> = 「すべて」（感覚・感情・認識すべてをカバー）<br>
+                    <strong>Nielsen & Norman</strong> = 「感覚的な評価」（より実感的な定義）<br>
+                    <strong>UXPA</strong> = 「ビジネス視点」（実務的な定義）
+                    <br><br>
+                    🎯 <strong>覚え方</strong>：「グローバル → 実感的 → ビジネス」と段階的に実務寄りになっていく！
+                </div>
+            </div>
+        </div>
+
+        <!-- セクション3: ハニカム構造 -->
+        <div class="section">
+            <h2><span class="emoji">🍯</span>UXの全貌：ハニカム構造</h2>
+
+            <p class="text">
+                UXは複数の要素で構成されています。この「7つの要素」が揃うと「いいUX」が生まれるんです。
+            </p>
+
+            <div class="honeycomb-container">
+                <!-- 上段 左 -->
+                <div class="honeycomb-item">
+                    <div class="emoji">🔍</div>
+                    <div class="honeycomb-item-title">見つけやすさ</div>
+                    <div class="honeycomb-item-desc">(Findability)</div>
+                </div>
+
+                <!-- 上段 中央 -->
+                <div class="honeycomb-item">
+                    <div class="emoji">💡</div>
+                    <div class="honeycomb-item-title">有用性</div>
+                    <div class="honeycomb-item-desc">(Useful)</div>
+                </div>
+
+                <!-- 上段 右 -->
+                <div class="honeycomb-item">
+                    <div class="emoji">♿</div>
+                    <div class="honeycomb-item-title">アクセシビリティ</div>
+                    <div class="honeycomb-item-desc">(Accessible)</div>
+                </div>
+
+                <!-- 中段 左 -->
+                <div class="honeycomb-item">
+                    <div class="emoji">🎨</div>
+                    <div class="honeycomb-item-title">望ましさ</div>
+                    <div class="honeycomb-item-desc">(Desirable)</div>
+                </div>
+
+                <!-- 中央 - 価値（真ん中） -->
+                <div class="honeycomb-item center">
+                    <div class="emoji">💎</div>
+                    <div class="honeycomb-item-title">価値</div>
+                    <div class="honeycomb-item-desc">(Valuable)</div>
+                </div>
+
+                <!-- 中段 右 -->
+                <div class="honeycomb-item">
+                    <div class="emoji">✅</div>
+                    <div class="honeycomb-item-title">使いやすさ</div>
+                    <div class="honeycomb-item-desc">(Usable)</div>
+                </div>
+
+                <!-- 下段 左 -->
+                <div class="honeycomb-item">
+                    <div class="emoji">🔒</div>
+                    <div class="honeycomb-item-title">信頼性</div>
+                    <div class="honeycomb-item-desc">(Credible)</div>
+                </div>
+
+                <!-- 下段 右 -->
+                <div class="honeycomb-item">
+                    <div class="emoji">🎯</div>
+                    <div class="honeycomb-item-title">見つけやすさ</div>
+                    <div class="honeycomb-item-desc">(Findability)</div>
+                </div>
+            </div>
+
+            <div class="tips">
+                <div class="tips-title">
+                    <span class="tips-emoji">🧠</span>
+                    覚えやすいコツ：「7つ要素の覚え方」
+                </div>
+                <div class="tips-content">
+                    <strong>「ユーザーが見つけ、使い、信じ、欲しくなる体験」</strong>
+                    <br><br>
+                    📌 語呂合わせで覚える：<br>
+                    「<strong>Find</strong>（見つけ）→ <strong>Use</strong>（使い）→ <strong>Feel</strong>（感じて）」
+                    <br><br>
+                    🎯 中央の「💎 価値」が最も重要！<br>
+                    他の6つの要素はすべて「価値」を生み出すための手段です。
+                </div>
+            </div>
+
+            <div class="diagram" style="background: #fffacd; border-color: #ffd700;">
+                <p style="font-size: 1.2em; color: #333; font-weight: 700;">
+                    🎯 この7つがバランス良く揃うと「いいUX」が生まれる！
+                </p>
+            </div>
+        </div>
+
+        <!-- セクション4: UIとUXの違い -->
+        <div class="section">
+            <h2><span class="emoji">❓</span>UIとUXの違い</h2>
+
+            <p class="text">
+                よく混同されるUIとUX。スマホで食べ物を注文するアプリで説明します。
+            </p>
+
+            <div class="card" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); border-left-color: #ff6b6b; color: white; margin-bottom: 20px;">
+                <div style="margin-bottom: 10px; font-size: 1.3em;">🖌️</div>
+                <div class="card-title" style="color: white;">【UI = 見た目・操作部分】</div>
+                <div class="checklist" style="background: rgba(255,255,255,0.2);">
+                    <div class="checklist-item" style="color: white;">
+                        <span style="font-size: 1.2em; margin-right: 10px;">✅</span>
+                        ボタンの色は？
+                    </div>
+                    <div class="checklist-item" style="color: white;">
+                        <span style="font-size: 1.2em; margin-right: 10px;">✅</span>
+                        文字のサイズは？
+                    </div>
+                    <div class="checklist-item" style="color: white;">
+                        <span style="font-size: 1.2em; margin-right: 10px;">✅</span>
+                        写真はどこに配置？
+                    </div>
+                    <div class="checklist-item" style="color: white;">
+                        <span style="font-size: 1.2em; margin-right: 10px;">✅</span>
+                        ボタンをタップしやすいか？
+                    </div>
+                </div>
+                <p style="margin-top: 15px; font-size: 0.95em; opacity: 0.95;">
+                    💡 目に見える「インターフェース」
+                </p>
+            </div>
+
+            <div class="diagram-arrow" style="text-align: center;">⬇️ ⬇️ ⬇️</div>
+
+            <div class="card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-left-color: #4facfe; color: white; margin-top: 20px;">
+                <div style="margin-bottom: 10px; font-size: 1.3em;">💭</div>
+                <div class="card-title" style="color: white;">【UX = 全体の体験】</div>
+                <div class="checklist" style="background: rgba(255,255,255,0.2);">
+                    <div class="checklist-item" style="color: white;">
+                        <span style="font-size: 1.2em; margin-right: 10px;">✅</span>
+                        欲しい商品は見つかった？
+                    </div>
+                    <div class="checklist-item" style="color: white;">
+                        <span style="font-size: 1.2em; margin-right: 10px;">✅</span>
+                        決済は簡単？
+                    </div>
+                    <div class="checklist-item" style="color: white;">
+                        <span style="font-size: 1.2em; margin-right: 10px;">✅</span>
+                        商品は時間通りに届いた？
+                    </div>
+                    <div class="checklist-item" style="color: white;">
+                        <span style="font-size: 1.2em; margin-right: 10px;">✅</span>
+                        また使いたいと思った？
+                    </div>
+                </div>
+                <p style="margin-top: 15px; font-size: 0.95em; opacity: 0.95;">
+                    💡 心の中の「体験全体」
+                </p>
+            </div>
+
+            <div class="tips">
+                <div class="tips-title">
+                    <span class="tips-emoji">⭐</span>
+                    覚えやすいコツ：「UI vs UX」
+                </div>
+                <div class="tips-content">
+                    <strong>UI = User「Interface」</strong> → インターフェース（目に見える部分）<br>
+                    <strong>UX = User「Experience」</strong> → エクスペリエンス（心の体験）
+                    <br><br>
+                    🎯 <strong>覚え方</strong>：「UI は見た目、UX は気持ち」<br>
+                    または「UI は楽器、UX は音楽」と覚えると良いです！
+                </div>
+            </div>
+        </div>
+
+        <!-- セクション5: 似た言葉の整理 -->
+        <div class="section">
+            <h2><span class="emoji">🤯</span>DX・CX・EXとの違い</h2>
+
+            <p class="text">
+                UXと似た言葉がいっぱいあります。それぞれの違いを整理しましょう。
+            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>言葉</th>
+                        <th>対象者</th>
+                        <th>意味</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>UX</strong><br>(ユーザー体験)</td>
+                        <td>ユーザー</td>
+                        <td>製品・サービスの利用体験</td>
+                    </tr>
+                    <tr style="background: #fff0f5;">
+                        <td><strong>CX</strong><br>(カスタマー体験)</td>
+                        <td>顧客</td>
+                        <td>企業との全ての接点における体験<br>（UXより広い）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DX</strong><br>(デジタル化)</td>
+                        <td>企業全体</td>
+                        <td>デジタル化によりビジネスを<br>根本的に変革すること</td>
+                    </tr>
+                    <tr style="background: #f0f8ff;">
+                        <td><strong>EX</strong><br>(従業員体験)</td>
+                        <td>従業員</td>
+                        <td>会社での働く体験</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="tips">
+                <div class="tips-title">
+                    <span class="tips-emoji">🎯</span>
+                    覚えやすいコツ：「4つのXの関係図」
+                </div>
+                <div class="tips-content">
+                    <strong>外側から内側へ拡大する関係</strong>
+                    <br><br>
+                    🎯 <strong>DX（企業全体）</strong><br>
+                    ↓<br>
+                    👥 <strong>CX（全接点）</strong><br>
+                    ↓<br>
+                    📱 <strong>UX（製品体験）</strong> + 👨‍💼 <strong>EX（従業員体験）</strong>
+                    <br><br>
+                    💡 <strong>ニーモニック</strong>：「D C UE」を思い出す時は<br>
+                    「<strong>D</strong>igital <strong>C</strong>hanges <strong>U</strong>ser and <strong>E</strong>mployee」
+                </div>
+            </div>
+
+            <h3>🔍 具体例：Amazonで本を買うとき</h3>
+
+            <div style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 25px; border-radius: 15px; border-left: 5px solid #667eea;">
+                <div style="margin-bottom: 15px;">
+                    <strong style="color: #667eea; font-size: 1.1em;">📱 UX ：</strong>
+                    <span style="color: #555;">アプリで本を検索 → 購入 → レビュー<br>
+                    （製品としてのアプリの体験）</span>
+                </div>
+                <div style="margin-bottom: 15px; padding-top: 15px; border-top: 1px solid rgba(102, 126, 234, 0.3);">
+                    <strong style="color: #667eea; font-size: 1.1em;">🛍️ CX ：</strong>
+                    <span style="color: #555;">検索 → 購入 → 配送 → 到着 → レビュー<br>
+                    （顧客全体の体験）</span>
+                </div>
+                <div style="margin-bottom: 15px; padding-top: 15px; border-top: 1px solid rgba(102, 126, 234, 0.3);">
+                    <strong style="color: #667eea; font-size: 1.1em;">💻 DX ：</strong>
+                    <span style="color: #555;">Amazonがデータで企業全体を変革<br>
+                    （テクノロジーによる経営変革）</span>
+                </div>
+                <div style="padding-top: 15px; border-top: 1px solid rgba(102, 126, 234, 0.3);">
+                    <strong style="color: #667eea; font-size: 1.1em;">👥 EX ：</strong>
+                    <span style="color: #555;">Amazon社員の働く環境と体験<br>
+                    （従業員の体験）</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- セクション6: なぜUXが重視されるのか -->
+        <div class="section">
+            <h2><span class="emoji">🚀</span>なぜ今、UXが重視されるのか？</h2>
+
+            <h3>📊 昔と今でビジネスが変わった！</h3>
+
+            <div class="card" style="background: linear-gradient(135deg, #f5a623 0%, #f76707 100%); border-left-color: #f5a623; color: white;">
+                <div style="font-size: 1.2em; font-weight: 700; margin-bottom: 15px;">【昔の世界】2000年代初期</div>
+                <div style="font-size: 1.1em; line-height: 1.8;">
+                    📺 テレビで広告 → 📦 店舗で購入 → ✨ 完結
+                    <br><br>
+                    <strong>「１つのチャネル」</strong>
+                    <br><br>
+                    👉 UXはあまり重要じゃなかった<br>
+                    　　「とにかく売る」が目的だった
+                </div>
+            </div>
+
+            <div style="text-align: center; margin: 30px 0;">
+                <div style="font-size: 2.5em; color: #667eea;">⬇️</div>
+                <div style="color: #667eea; font-weight: 700; font-size: 1.1em;">テクノロジーで変わった</div>
+            </div>
+
+            <div class="card" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); border-left-color: #11998e; color: white;">
+                <div style="font-size: 1.2em; font-weight: 700; margin-bottom: 15px;">【今の世界】2020年代</div>
+                <div style="font-size: 0.95em; line-height: 1.8;">
+                    📱 SNS → 🌐 ウェブ → 📲 アプリ → 🏪 店舗 → 📞 サポート → 💬 コミュニティ
+                    <br><br>
+                    <strong>「複数のチャネルが連動」</strong>
+                    <br><br>
+                    👉 「毎回、いい体験」が必須！<br>
+                    　　 一つでも悪いと別のサービスに乗り換える
+                </div>
+            </div>
+
+            <div class="tips">
+                <div class="tips-title">
+                    <span class="tips-emoji">💡</span>
+                    覚えやすいコツ：「チャネル数の増加」
+                </div>
+                <div class="tips-content">
+                    <strong>昔：1つのチャネル = 1回きりの関係</strong><br>
+                    <strong>今：複数チャネル = 継続的な関係</strong>
+                    <br><br>
+                    🎯 <strong>覚え方</strong>：「1回の満足 vs 毎回の満足」<br>
+                    昔は「買ってくれればOK」でしたが、<br>
+                    今は「ずっと使ってくれることが成功」に変わった！
+                </div>
+            </div>
+        </div>
+
+        <!-- セクション7: ビジネスモデルの転換 -->
+        <div class="section">
+            <h2><span class="emoji">💰</span>ビジネスモデルの大転換</h2>
+
+            <div class="card" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); border-left-color: #ff6b6b; color: white; margin-bottom: 25px;">
+                <div style="font-size: 1.2em; font-weight: 700; margin-bottom: 10px;">❌ 売り切り型</div>
+                <div style="font-size: 1.05em;">
+                    商品を買ったら終わり
+                </div>
+            </div>
+
+            <div style="text-align: center; margin: 25px 0;">
+                <div style="font-size: 2em; color: #667eea;">⬇️</div>
+                <div style="color: #667eea; font-weight: 700; font-size: 1.1em;">テクノロジーで変わった</div>
+            </div>
+
+            <div class="card" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); border-left-color: #11998e; color: white; margin-top: 25px;">
+                <div style="font-size: 1.2em; font-weight: 700; margin-bottom: 10px;">✅ サブスク型・継続型</div>
+                <div style="font-size: 1.05em;">
+                    毎月使い続けてもらうために<br>
+                    「常にいい体験」が必要！
+                </div>
+            </div>
+
+            <h3>📊 数字で見る変化</h3>
+
+            <div class="diagram" style="background: #fff8f0; border-color: #ff6b6b;">
+                <div style="text-align: left; color: #333;">
+                    <div style="margin-bottom: 20px; padding: 15px; background: white; border-radius: 10px; border-left: 4px solid #ff6b6b;">
+                        <strong style="color: #ff6b6b; font-size: 1.1em;">【従来】</strong><br>
+                        売上 = 1回の購入 × 顧客数<br>
+                        例：1000円 × 100人 = <strong style="color: #ff6b6b;">10万円（終わり）</strong>
+                    </div>
+                    <div style="padding: 15px; background: white; border-radius: 10px; border-left: 4px solid #11998e;">
+                        <strong style="color: #11998e; font-size: 1.1em;">【現在】</strong><br>
+                        売上 = 月額料金 × 継続月数 × 顧客数<br>
+                        例：1000円 × 12ヶ月 × 100人 = <strong style="color: #11998e;">120万円</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips">
+                <div class="tips-title">
+                    <span class="tips-emoji">💡</span>
+                    覚えやすいコツ：「12倍の魔法」
+                </div>
+                <div class="tips-content">
+                    <strong>売り切り型：100円 × 100人 = 1万円</strong><br>
+                    <strong>サブスク型：100円 × 100人 × 12ヶ月 = 12万円</strong>
+                    <br><br>
+                    🎯 <strong>覚え方</strong>：「サブスクは12倍の可能性！」<br>
+                    だから「毎回いい体験」が超重要なんです。
+                </div>
+            </div>
+        </div>
+
+        <!-- セクション8: テクノロジーの影響 -->
+        <div class="section">
+            <h2><span class="emoji">💻</span>テクノロジーが変えたこと</h2>
+
+            <h3>📊 ビッグデータが使えるようになった</h3>
+
+            <div class="card-grid">
+                <div class="card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-left-color: #f5576c; color: white;">
+                    <div style="margin-bottom: 10px; font-size: 1.3em;">❌</div>
+                    <div class="card-title" style="color: white;">昔：「なんとなく」で設計</div>
+                    <div class="card-content" style="color: rgba(255,255,255,0.9);">
+                        👉 失敗する確率が高かった
+                    </div>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-left-color: #00f2fe; color: white;">
+                    <div style="margin-bottom: 10px; font-size: 1.3em;">✅</div>
+                    <div class="card-title" style="color: white;">今：「データ」で設計</div>
+                    <div class="card-content" style="color: rgba(255,255,255,0.9);">
+                        💾 ユーザーの行動を記録<br>
+                        📊 何が好きか分析<br>
+                        📈 改善効果を測定<br>
+                        👉 成功確率がアップ！
+                    </div>
+                </div>
+            </div>
+
+            <h3>🤖 AI・機械学習の活用</h3>
+
+            <div class="diagram" style="background: #fffacd; border-color: #ffd700;">
+                <div style="color: #333;">
+                    <div style="margin-bottom: 15px;">
+                        <strong style="font-size: 1.2em;">例：Netflixの推奨機能</strong>
+                    </div>
+                    <div style="font-size: 1.05em; margin-bottom: 10px;">
+                        📺 「あなたにおすすめ」
+                    </div>
+                    <div style="margin: 15px 0; color: #666;">
+                        ← これはAIがUXを自動最適化している！
+                    </div>
+                    <div style="background: white; padding: 15px; border-radius: 10px; border-left: 4px solid #ffd700; color: #333;">
+                        <strong>あなたの視聴履歴</strong> → <strong style="color: #ffd700;">AI分析</strong> → <strong>最適な作品提案</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips">
+                <div class="tips-title">
+                    <span class="tips-emoji">💡</span>
+                    覚えやすいコツ：「データドリブン = UXドリブン」
+                </div>
+                <div class="tips-content">
+                    <strong>データに基づいた意思決定 = より良いUXが生まれる</strong>
+                    <br><br>
+                    🎯 <strong>覚え方</strong>：「データはUXの羅針盤」<br>
+                    データがあれば、ユーザーの本当のニーズが見える！
+                </div>
+            </div>
+        </div>
+
+        <!-- セクション9: UXデザイナーの仕事 -->
+        <div class="section">
+            <h2><span class="emoji">🎨</span>UXデザイナーって何をする人？</h2>
+
+            <h3>💼 UXデザイナーの仕事フロー</h3>
+
+            <div style="margin-top: 30px;">
+                <div style="display: flex; gap: 10px; align-items: flex-start; margin-bottom: 20px;">
+                    <div style="background: #667eea; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">1</div>
+                    <div style="flex-grow: 1;">
+                        <div class="card" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); border-left-color: #667eea;">
+                            <div class="card-title">ユーザーを理解する</div>
+                            <div class="checklist" style="background: rgba(102, 126, 234, 0.1);">
+                                <div class="checklist-item">📊 データを集める</div>
+                                <div class="checklist-item">📱 実際に使ってみる</div>
+                                <div class="checklist-item">🎤 ユーザーに聞く</div>
+                            </div>
+                            <p style="margin-top: 10px; font-weight: 600; color: #333;">「ユーザーは何に困ってるの？」</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin: 15px 0;">
+                    <span style="color: #667eea; font-size: 1.5em;">⬇️</span>
+                </div>
+
+                <div style="display: flex; gap: 10px; align-items: flex-start; margin-bottom: 20px;">
+                    <div style="background: #667eea; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">2</div>
+                    <div style="flex-grow: 1;">
+                        <div class="card" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); border-left-color: #667eea;">
+                            <div class="card-title">ビジネス目標と照らす</div>
+                            <div class="checklist" style="background: rgba(102, 126, 234, 0.1);">
+                                <div class="checklist-item">💼 会社の売上目標</div>
+                                <div class="checklist-item">🎯 市場戦略</div>
+                                <div class="checklist-item">📈 成長目標</div>
+                            </div>
+                            <p style="margin-top: 10px; font-weight: 600; color: #333;">「会社は何を達成したいの？」</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin: 15px 0;">
+                    <span style="color: #667eea; font-size: 1.5em;">⬇️</span>
+                </div>
+
+                <div style="display: flex; gap: 10px; align-items: flex-start; margin-bottom: 20px;">
+                    <div style="background: #667eea; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">3</div>
+                    <div style="flex-grow: 1;">
+                        <div class="card" style="background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); border-left-color: #667eea;">
+                            <div class="card-title">体験を設計する</div>
+                            <div class="checklist" style="background: rgba(102, 126, 234, 0.1);">
+                                <div class="checklist-item">🎨 サービスの流れ</div>
+                                <div class="checklist-item">📐 ページレイアウト</div>
+                                <div class="checklist-item">🎯 ユーザーの導線</div>
+                            </div>
+                            <p style="margin-top: 10px; font-weight: 600; color: #333;">「どうすればいい体験になる？」</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin: 15px 0;">
+                    <span style="color: #667eea; font-size: 1.5em;">⬇️</span>
+                </div>
+
+                <div style="display: flex; gap: 10px; align-items: flex-start;">
+                    <div style="background: #667eea; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0;">4</div>
+                    <div style="flex-grow: 1;">
+                        <div class="card" style="background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%); border-left-color: #667eea;">
+                            <div class="card-title">テストして改善</div>
+                            <div class="checklist" style="background: rgba(102, 126, 234, 0.1);">
+                                <div class="checklist-item">👥 ユーザーテスト</div>
+                                <div class="checklist-item">📊 データ分析</div>
+                                <div class="checklist-item">🔄 改善ループ</div>
+                            </div>
+                            <p style="margin-top: 10px; font-weight: 600; color: #333;">「ホントに改善した？」</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips">
+                <div class="tips-title">
+                    <span class="tips-emoji">💡</span>
+                    覚えやすいコツ：「4つのステップ」
+                </div>
+                <div class="tips-content">
+                    <strong>「 理解（I） → 分析（A） → 設計（D） → 評価（E）」</strong>
+                    <br><br>
+                    🎯 <strong>頭文字で覚える</strong>：「IADE」<br>
+                    （もしくは「UABE」：Understand → Align → Build → Evaluate）
+                </div>
+            </div>
+        </div>
+
+        <!-- セクション10: 必要なスキル -->
+        <div class="section">
+            <h2><span class="emoji">⚡</span>UXデザイナーの必須スキル</h2>
+
+            <p class="text">UXデザイナーには、複数のスキルが必要です。</p>
+
+            <div class="honeycomb-container">
+                <div class="honeycomb-item" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <div class="emoji">🧠</div>
+                    <div class="honeycomb-item-title">ユーザー理解力</div>
+                    <div class="honeycomb-item-desc">ニーズを見つける</div>
+                </div>
+                <div class="honeycomb-item" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <div class="emoji">💼</div>
+                    <div class="honeycomb-item-title">ビジネス理解力</div>
+                    <div class="honeycomb-item-desc">目標を理解する</div>
+                </div>
+                <div class="honeycomb-item" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <div class="emoji">🎨</div>
+                    <div class="honeycomb-item-title">創造力</div>
+                    <div class="honeycomb-item-desc">新しい体験を生む</div>
+                </div>
+                <div class="honeycomb-item" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <div class="emoji">📊</div>
+                    <div class="honeycomb-item-title">分析力</div>
+                    <div class="honeycomb-item-desc">データから導く</div>
+                </div>
+                <div class="honeycomb-item" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); grid-column: 2;">
+                    <div class="emoji">🤝</div>
+                    <div class="honeycomb-item-title">チーム連携力</div>
+                    <div class="honeycomb-item-desc">協力して成功</div>
+                </div>
+            </div>
+
+            <div class="tips">
+                <div class="tips-title">
+                    <span class="tips-emoji">💡</span>
+                    覚えやすいコツ：「5つのスキルの語呂合わせ」
+                </div>
+                <div class="tips-content">
+                    <strong>「ユーザー × ビジネス × 創造 × 分析 × 連携」</strong>
+                    <br><br>
+                    🎯 <strong>覚え方</strong>：「UBクリエイティブ＆アナリティクス」<br>
+                    または「ハート＆ヘッド＆ハンド」<br>
+                    （心・頭・手で3つの力が必要）
+                </div>
+            </div>
+        </div>
+
+        <!-- セクション11: 実例 -->
+        <div class="section">
+            <h2><span class="emoji">🔍</span>身近にあるいいUX設計</h2>
+
+            <p class="text">
+                実は、私たちが毎日使うサービスには、素晴らしいUX設計が隠れています。
+            </p>
+
+            <div class="card-grid">
+                <div class="card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); border-left-color: #fa709a;">
+                    <div class="card-title">🛍️ Amazon</div>
+                    <div class="card-content">
+                        検索 → 商品詳細 → レビュー → 購入 → 配送追跡
+                        <br><br>
+                        ✅ 全部が「使いやすく」<br>
+                        ✅ 「信頼できて」<br>
+                        ✅ 「便利」
+                    </div>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); border-left-color: #ff6b6b; color: white;">
+                    <div class="card-title" style="color: white;">🎬 Netflix</div>
+                    <div class="card-content" style="color: rgba(255,255,255,0.95);">
+                        ログイン → 検索 → 再生 → 推奨
+                        <br><br>
+                        ✅ 全部が「欲しい体験」を<br>
+                        　　予測してくれる
+                    </div>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-left-color: #667eea; color: white;">
+                    <div class="card-title" style="color: white;">📱 Apple iPhone</div>
+                    <div class="card-content" style="color: rgba(255,255,255,0.95);">
+                        UI（物理設計）+ UX（体験設計）
+                        <br><br>
+                        ✅ 全部が「シンプル」<br>
+                        ✅ 「直感的」
+                    </div>
+                </div>
+            </div>
+
+            <div class="diagram" style="background: #fffacd; border-color: #ffd700;">
+                <p style="font-size: 1.2em; color: #333;">
+                    💡 <strong>つまり：いいUX = 「つい何度も使ってしまう」</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- セクション12: W1まとめ -->
+        <div class="section">
+            <h2><span class="emoji">✅</span>W1で学んだ5つの真実</h2>
+
+            <div style="margin-top: 30px;">
+                <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-left-color: #667eea; color: white; margin-bottom: 15px;">
+                    <div style="font-size: 1.3em; margin-bottom: 5px;">✅ 1.</div>
+                    <div class="card-content" style="color: rgba(255,255,255,0.95);">
+                        UX = 単なる「使いやすさ」ではなく<br>
+                        <strong>「全体的な体験」</strong>のこと
+                    </div>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-left-color: #f5576c; color: white; margin-bottom: 15px;">
+                    <div style="font-size: 1.3em; margin-bottom: 5px;">✅ 2.</div>
+                    <div class="card-content" style="color: rgba(255,255,255,0.95);">
+                        UI（見た目）と UX（体験）は違う<br>
+                        <strong>両方大事だけど、別モノ</strong>
+                    </div>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-left-color: #4facfe; color: white; margin-bottom: 15px;">
+                    <div style="font-size: 1.3em; margin-bottom: 5px;">✅ 3.</div>
+                    <div class="card-content" style="color: rgba(255,255,255,0.95);">
+                        DX・CX・EX とは異なる概念<br>
+                        <strong>でも関係している</strong>
+                    </div>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); border-left-color: #fa709a; color: white; margin-bottom: 15px;">
+                    <div style="font-size: 1.3em; margin-bottom: 5px;">✅ 4.</div>
+                    <div class="card-content" style="color: rgba(255,255,255,0.95);">
+                        テクノロジーの進化で<br>
+                        <strong>「いい体験」がビジネスの生死を分ける</strong>
+                    </div>
+                </div>
+
+                <div class="card" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); border-left-color: #11998e; color: white;">
+                    <div style="font-size: 1.3em; margin-bottom: 5px;">✅ 5.</div>
+                    <div class="card-content" style="color: rgba(255,255,255,0.95);">
+                        UXデザイナーは<br>
+                        <strong>「ユーザー × ビジネス」を両立させる仕事</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- セクション13: 重要ワード集 -->
+        <div class="section">
+            <h2><span class="emoji">📚</span>W1の重要ワード集</h2>
+
+            <p class="text">これら14個のワードは、W2以降でも何度も出てきます。</p>
+
+            <div class="checklist" style="margin-top: 30px;">
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <strong>UX (User Experience)</strong> - ユーザー体験
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <strong>UI (User Interface)</strong> - ユーザーインターフェース
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <strong>DX (Digital Transformation)</strong> - デジタル化による変革
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <strong>CX (Customer Experience)</strong> - カスタマー体験
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <strong>EX (Employee Experience)</strong> - 従業員体験
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <strong>UXのハニカム構造</strong> - 7つの要素
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <strong>ユーザビリティ</strong> - 使いやすさ
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <strong>アクセシビリティ</strong> - 誰でも使える
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <strong>OMO</strong> - Online Merges with Offline
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <strong>D2C</strong> - Direct to Consumer
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <strong>プラットフォームビジネス</strong> - 参加者が相互作用
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <strong>ビッグデータ</strong> - 大量のデータ
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <strong>データドリブン</strong> - データに基づいた意思決定
+                </div>
+                <div class="checklist-item">
+                    <input type="checkbox">
+                    <strong>サブスクリプション型</strong> - 継続利用モデル
+                </div>
+            </div>
+
+            <div class="tips">
+                <div class="tips-title">
+                    <span class="tips-emoji">💡</span>
+                    覚えやすいコツ：「グループ化して覚える」
+                </div>
+                <div class="tips-content">
+                    <strong>グループ1：体験系</strong> → UX / UI / CX / EX<br>
+                    <strong>グループ2：ビジネス系</strong> → OMO / D2C / プラットフォーム<br>
+                    <strong>グループ3：データ系</strong> → ビッグデータ / データドリブン<br>
+                    <strong>グループ4：モデル系</strong> → サブスク / DX / ハニカム
+                    <br><br>
+                    🎯 <strong>覚え方</strong>：4つのグループに分けると覚えやすい！
+                </div>
+            </div>
+
+            <div class="summary-box">
+                <h4>🎉 W1 完了チェックリスト</h4>
+                <p>✅ UXの3つの定義を説明できる</p>
+                <p>✅ ハニカム構造の7つの要素を言える</p>
+                <p>✅ UI、UX、DX、CXの違いが分かる</p>
+                <p>✅ なぜ今UXが重要か理由を3つ言える</p>
+                <p>✅ 14個の重要ワードをすべてチェックした</p>
+            </div>
+        </div>
+
+        <!-- フッター -->
+        <div class="footer">
+            <h3>🚀 次週のテーマ：W2</h3>
+            <p>
+                <strong>🎨 UX関連理論①</strong>
+                <br><br>
+                • HCD（人間中心デザイン）<br>
+                • デザイン思考<br>
+                • 行動経済学<br>
+                • 認知心理学
+                <br><br>
+                W1で学んだ「UXとは何か」を基に、<br>
+                「なぜそのように設計するのか」という理論的背景を学んでいきます。
+            </p>
+        </div>
+    </div>
+</body>
+</html>
