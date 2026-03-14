@@ -25,6 +25,18 @@
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .header {
@@ -52,12 +64,20 @@
             width: 100%;
             height: 8px;
             background: #e0e0e0;
+            position: relative;
+            overflow: hidden;
         }
         
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            width: 42%;
+            width: 42.86%;
+            animation: slideRight 0.8s ease-out;
+        }
+        
+        @keyframes slideRight {
+            from { width: 0; }
+            to { width: 42.86%; }
         }
         
         .content {
@@ -66,6 +86,12 @@
         
         .section {
             margin-bottom: 50px;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
         .section h2 {
@@ -103,78 +129,25 @@
             font-size: 1.1em;
         }
         
-        .process-flow {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        
-        .flow-step {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+        .process-box {
+            background: linear-gradient(135deg, #e0e7ff 0%, #f3e7e9 100%);
             padding: 20px;
             border-radius: 8px;
-            text-align: center;
-            min-width: 100px;
-            font-weight: bold;
-            margin: 10px 5px;
-            flex: 1;
-            font-size: 0.9em;
-        }
-        
-        .flow-arrow {
-            color: #667eea;
-            font-size: 1.5em;
-            margin: 0 10px;
-        }
-        
-        .double-diamond {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        
-        .diamond-phase {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e0e7ff 100%);
-            padding: 25px;
-            margin: 10px;
-            border-radius: 12px;
-            border-left: 4px solid #667eea;
-            flex: 1;
-            min-width: 200px;
-        }
-        
-        .diamond-phase h4 {
-            color: #667eea;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-        }
-        
-        .diamond-phase p {
-            font-size: 0.95em;
-            color: #555;
-        }
-        
-        .tip-box {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            border-left: 4px solid #ff9500;
-            padding: 20px;
             margin: 20px 0;
-            border-radius: 8px;
         }
         
-        .tip-box h4 {
-            color: #ff6b00;
-            margin-bottom: 10px;
+        .process-step {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
         }
         
-        .tip-box h4:before {
-            content: "💡 ";
-            margin-right: 10px;
+        .process-step strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 5px;
         }
         
         .comparison-table {
@@ -202,6 +175,27 @@
         
         .comparison-table tr:hover {
             background: #f9f9f9;
+        }
+        
+        .tip-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-left: 4px solid #ff9500;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .tip-box h4 {
+            color: #ff6b00;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .tip-box h4:before {
+            content: "💡 ";
+            margin-right: 10px;
+            font-size: 1.2em;
         }
         
         .keyword-box {
@@ -271,12 +265,44 @@
             font-weight: bold;
         }
         
-        .footer {
-            background: #f8f9fa;
-            padding: 30px;
-            text-align: center;
-            color: #666;
-            border-top: 1px solid #e0e0e0;
+        .buttons-section {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-quiz {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+        
+        .btn-quiz:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16,185,129,0.4);
+        }
+        
+        .btn-home {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
         }
         
         .next-week {
@@ -289,41 +315,37 @@
             margin-top: 20px;
         }
         
-        .stage-box {
-            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-            padding: 20px;
-            margin: 15px 0;
-            border-left: 4px solid #0284c7;
-            border-radius: 8px;
-        }
-        
-        .stage-box strong {
-            color: #0284c7;
-            display: block;
-            margin-bottom: 8px;
-            font-size: 1.1em;
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
         }
         
         @media (max-width: 768px) {
-            .process-flow {
-                flex-direction: column;
-            }
-            
-            .flow-arrow {
-                transform: rotate(90deg);
-                margin: 10px 0;
-            }
-            
-            .double-diamond {
-                flex-direction: column;
-            }
-            
             .header h1 {
                 font-size: 1.8em;
             }
             
             .content {
                 padding: 20px;
+            }
+            
+            .comparison-table {
+                font-size: 0.9em;
+            }
+            
+            .comparison-table th, .comparison-table td {
+                padding: 10px;
+            }
+            
+            .buttons-section {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
             }
         }
     </style>
@@ -333,7 +355,7 @@
         <div class="header">
             <div class="week-badge">📚 3週目</div>
             <h1>Human-Centered Design + Design Thinking</h1>
-            <p style="font-size: 1.1em; margin-top: 15px;">ユーザー中心の問題解決アプローチを深く理解する</p>
+            <p style="font-size: 1.1em; margin-top: 15px;">ユーザー中心の問題解決プロセスを実践的に学ぶ</p>
         </div>
         <div class="progress-bar">
             <div class="progress-fill"></div>
@@ -343,242 +365,207 @@
             <!-- ミッション -->
             <section class="section">
                 <h2>🎯 この週のミッション</h2>
-                <p>Human-Centered Design（HCD）とDesign Thinkingの基本的な考え方を理解し、実際の問題解決プロセスを具体的に学びます。これら2つのアプローチがどのように相補関係にあるのかを理解し、実践的なスキルを身につけます。</p>
+                <p>Human-Centered Design（HCD）とDesign Thinkingの具体的なプロセス、ツール、実践方法を学びます。実際にユーザーをどのように理解し、問題をどのように定義し、解決策をどのように生み出すのかを、段階的に習得することが目標です。</p>
             </section>
             
             <!-- Human-Centered Design -->
             <section class="section">
-                <h2>🧑‍🤝‍🧑 Human-Centered Design（HCD）</h2>
-                <p>Human-Centered Design（人間中心設計）とは、人間のニーズ、行動、価値観を設計プロセスの中心に据えるアプローチです。ユーザーの世界をより深く理解することから始まります。</p>
+                <h2>👥 Human-Centered Design (HCD)の実践</h2>
+                <p>Human-Centered Designは、ISO 9241-210で標準化された、人間中心の設計プロセスです。ユーザーの行動、ニーズ、文化を深く理解してから設計に取り組みます。</p>
                 
-                <h3>HCDの定義</h3>
+                <h3>HCDの4つの基本原則</h3>
+                
                 <div class="definition-card">
-                    <strong>ISO 9241-210による定義</strong>
-                    「製品、システム、またはサービスが、ユーザーにとって有用で、使いやすく、アクセスしやすいものとなるよう、システムの開発に人間を統合するプロセス」
+                    <strong>1. ユーザー理解が出発点</strong>
+                    設計を始める前に、ユーザーが誰であるか、何をしたいのか、どのような課題を抱えているのかを徹底的に理解することが必須です。
                 </div>
                 
-                <h3>HCDの6つの基本原則</h3>
-                <ul class="checklist">
-                    <li><strong>利用者視点</strong>：ユーザーの実際の行動、ニーズ、制約を理解する</li>
-                    <li><strong>共創</strong>：ユーザー、デザイナー、ビジネスメンバーが一緒に問題を解く</li>
-                    <li><strong>プロトタイピング</strong>：早期に試作品を作って検証する</li>
-                    <li><strong>反復的改善</strong>：フィードバックをもとに繰り返し改善する</li>
-                    <li><strong>複合的なスキル</strong>：多様なバックグラウンドのメンバーで構成する</li>
-                    <li><strong>文脈の理解</strong>：ユーザーの文化や社会的背景を理解する</li>
-                </ul>
-                
-                <h3>HCDのプロセス：4つの主要活動</h3>
-                
-                <div class="stage-box">
-                    <strong>1. 計画（Plan）</strong>
-                    HCDプロセスを始める前に、プロジェクトの目的、ステークホルダー、リソースを定義します。誰のために、何を設計するのかを明確にします。
+                <div class="definition-card">
+                    <strong>2. 全体的なユーザージャーニーを考える</strong>
+                    個別の機能ではなく、ユーザーが製品やサービスと接する全ての接点での体験を設計します。
                 </div>
                 
-                <div class="stage-box">
-                    <strong>2. 理解と明示（Understand and Specify）</strong>
-                    ユーザーの行動、ニーズ、価値観を理解するために、フィールドワークやインタビューを行います。ユーザーの実際の体験や痛みを発見します。
+                <div class="definition-card">
+                    <strong>3. 複数の利害関係者の視点を含める</strong>
+                    ユーザーだけでなく、企業、ステークホルダーなど、複数の視点からの要件を統合的に考えます。
                 </div>
                 
-                <div class="stage-box">
-                    <strong>3. 生成（Generate）</strong>
-                    理解した情報をもとに、ユーザーのニーズを満たすアイデアを創出します。多くのアイデアを生み出し、可能性を広げます。
+                <div class="definition-card">
+                    <strong>4. 反復的な改善プロセス</strong>
+                    設計は一度で完成するのではなく、ユーザーテストとフィードバックに基づいて継続的に改善されます。
                 </div>
                 
-                <div class="stage-box">
-                    <strong>4. 評価（Evaluate）</strong>
-                    プロトタイプやコンセプトをユーザーに提示し、フィードバックを得ます。改善が必要な場合は、ステップ2に戻ります（反復）。
+                <h3>HCDのプロセス</h3>
+                
+                <div class="process-box">
+                    <div class="process-step">
+                        <strong>1. 背景とニーズの理解</strong>
+                        ユーザーリサーチを通じて、ユーザーの行動、ニーズ、課題を深く理解します。
+                    </div>
+                    <div class="process-step">
+                        <strong>2. 要件の指定</strong>
+                        理解したニーズから、設計の要件（ユーザー要件とビジネス要件）を明確にします。
+                    </div>
+                    <div class="process-step">
+                        <strong>3. デザイン解決策の作成</strong>
+                        要件に基づいて、複数のデザイン案を作成し、プロトタイプ化します。
+                    </div>
+                    <div class="process-step">
+                        <strong>4. デザインの評価</strong>
+                        ユーザーテストを実施し、デザイン案がニーズを満たしているかを確認します。
+                    </div>
                 </div>
                 
                 <div class="tip-box">
                     <h4>覚えやすいコツ</h4>
-                    <p>「HCDは理解 → 生成 → 評価の反復」と覚えましょう。ユーザーの深い理解がすべての出発点であり、その理解をもとに解決策を生み出し、ユーザーからのフィードバックで改善を続けます。</p>
+                    <p>HCDは「理解 → 定義 → 創造 → 評価」の4ステップが循環的に回ることが特徴です。これがISO標準として認められている信頼性の高いプロセスです。</p>
                 </div>
-                
-                <h3>HCDのマインドセット</h3>
-                <ul class="checklist">
-                    <li><strong>共感</strong>：ユーザーの立場に立って考える</li>
-                    <li><strong>好奇心</strong>：なぜそのような行動をするのか、深く問い続ける</li>
-                    <li><strong>謙虚さ</strong>：自分たちの仮説が正しいとは限らないことを認識する</li>
-                    <li><strong>実験的思考</strong>：小さく試して検証することを繰り返す</li>
-                    <li><strong>包摂性</strong>：多様なユーザーのニーズを考慮する</li>
-                </ul>
             </section>
             
             <!-- Design Thinking -->
             <section class="section">
-                <h2>💭 Design Thinking</h2>
-                <p>Design Thinkingは、複雑な問題に対してユーザー中心のアプローチを取り、革新的な解決策を創造する思考プロセスです。HCDを実践的に推進するための方法論と言えます。</p>
+                <h2>💡 Design Thinkingの5つのステップ</h2>
+                <p>Design Thinkingは、スタンフォード大学のd.schoolで開発された、革新的な問題解決のための思考法です。ユーザーへの深い共感から始まり、試行錯誤を通じて新しい価値を生み出します。</p>
                 
-                <h3>Design Thinkingが必要とされる背景</h3>
-                <ul class="checklist">
-                    <li>問題が複雑で、正解が不明確な状況</li>
-                    <li>既存のアプローチでは解決できないイノベーティブな課題</li>
-                    <li>ユーザーの潜在的なニーズを発見する必要がある場合</li>
-                    <li>異なる視点や部門を統合する必要がある組織課題</li>
-                </ul>
+                <h3>Design Thinkingの5ステップ</h3>
                 
-                <h3>ダブルダイヤモンド：5つのステップ</h3>
-                <p>Design Thinkingのプロセスは「ダブルダイヤモンド」で表現されます。最初のダイヤは「正しい問題を見つける」、2番目のダイヤは「正しい解決策を見つける」です。</p>
-                
-                <div class="double-diamond">
-                    <div class="diamond-phase">
-                        <h4>1️⃣ 共感（Empathize）</h4>
-                        <p>ユーザーの行動、思考、感情を観察し、深く理解する。ユーザーへのインタビューやフィールドワークを行う。</p>
+                <div class="process-box">
+                    <div class="process-step">
+                        <strong>1. 共感（Empathize）</strong>
+                        ユーザーの立場に立って、その行動、感情、動機を深く理解します。観察やインタビューを通じて、ユーザーが何を考え、何を感じているのかを把握します。
                     </div>
-                    <div class="diamond-phase">
-                        <h4>2️⃣ 定義（Define）</h4>
-                        <p>ユーザーの真のニーズと問題を定義する。「ユーザーは○○なので、△△が必要である」という形でPOVを作成。</p>
+                    <div class="process-step">
+                        <strong>2. 問題定義（Define）</strong>
+                        得た情報を整理し、ユーザーが本当に抱えている問題を明確に定義します。表面的な課題ではなく、根本的な問題を見つけることが重要です。
                     </div>
-                </div>
-                
-                <div class="double-diamond">
-                    <div class="diamond-phase">
-                        <h4>3️⃣ 創造（Ideate）</h4>
-                        <p>定義した問題に対して、多くのアイデアを生み出す。ブレインストーミングやワークショップを通じて創造性を発揮。</p>
+                    <div class="process-step">
+                        <strong>3. 創造（Ideate）</strong>
+                        定義した問題に対して、複数のアイデアを自由に生み出します。ブレインストーミングなどの手法を使い、既成概念にとらわれない発想を促します。
                     </div>
-                    <div class="diamond-phase">
-                        <h4>4️⃣ プロトタイプ（Prototype）</h4>
-                        <p>最も有望なアイデアを、簡単な試作品として具現化する。完璧さより、学習を優先。</p>
+                    <div class="process-step">
+                        <strong>4. プロトタイピング（Prototype）</strong>
+                        アイデアを実際の形にして、ユーザーが触って試せるようにします。紙やデジタルなど、様々な方法でプロトタイプを作成します。
                     </div>
-                </div>
-                
-                <div class="diamond-phase">
-                    <h4>5️⃣ テスト（Test）</h4>
-                    <p>プロトタイプをユーザーにテストしてもらい、フィードバックを得る。必要に応じてステップ1～4に戻って改善。</p>
+                    <div class="process-step">
+                        <strong>5. テスト（Test）</strong>
+                        実際のユーザーにプロトタイプを使ってもらい、フィードバックを集めます。新しい気づきが得られたら、再び共感から始まる循環に戻ります。
+                    </div>
                 </div>
                 
                 <div class="tip-box">
                     <h4>覚えやすいコツ</h4>
-                    <p>「共感 → 定義 → 創造 → プロトタイプ → テスト」のサイクル。最初のダイヤで「正しい問題」を見つけ、2番目のダイヤで「正しい解決策」を見つけるという、二段階の拡散・収束プロセスが特徴です。</p>
+                    <p>Design Thinkingは「失敗から学ぶ」ことを重視します。最初のプロトタイプが完璧でなくても構いません。ユーザーからのフィードバックを通じて、段階的に解決策を磨いていくプロセスです。</p>
                 </div>
-                
-                <h3>Design Thinkingを用いた製品・サービス開発プロセス</h3>
-                
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>段階</th>
-                            <th>活動</th>
-                            <th>成果物</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>課題認識</strong></td>
-                            <td>ユーザーの行動観察、インタビュー、データ分析</td>
-                            <td>ペルソナ、ユーザーシナリオ、同情マップ</td>
-                        </tr>
-                        <tr>
-                            <td><strong>問題定義</strong></td>
-                            <td>ユーザーの潜在的なニーズと課題の整理</td>
-                            <td>POI（Point of Inspiration）、HMW（How Might We）</td>
-                        </tr>
-                        <tr>
-                            <td><strong>アイデア創出</strong></td>
-                            <td>ブレインストーミング、ワークショップ、スケッチ</td>
-                            <td>アイデアリスト、コンセプトスケッチ</td>
-                        </tr>
-                        <tr>
-                            <td><strong>プロトタイピング</strong></td>
-                            <td>ローファイプロトタイプ、ハイファイプロトタイプ制作</td>
-                            <td>試作品、デモンストレーション</td>
-                        </tr>
-                        <tr>
-                            <td><strong>ユーザーテスト</strong></td>
-                            <td>ユーザーによるテスト、フィードバック収集</td>
-                            <td>ユーザーフィードバック、改善リスト</td>
-                        </tr>
-                    </tbody>
-                </table>
             </section>
             
-            <!-- HCDとDesign Thinkingの関係 -->
+            <!-- HCDとDesign Thinkingの比較 -->
             <section class="section">
-                <h2>🔗 HCDとDesign Thinkingの関係性</h2>
+                <h2>🔄 HCDとDesign Thinkingの関係</h2>
                 
                 <table class="comparison-table">
                     <thead>
                         <tr>
                             <th>観点</th>
-                            <th>HCD（Human-Centered Design）</th>
+                            <th>Human-Centered Design (HCD)</th>
                             <th>Design Thinking</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>性質</strong></td>
-                            <td>設計原理・哲学</td>
-                            <td>問題解決の方法論</td>
+                            <td><strong>起源</strong></td>
+                            <td>ISO標準化された公式プロセス</td>
+                            <td>スタンフォード大学d.schoolが開発した思考法</td>
                         </tr>
                         <tr>
-                            <td><strong>対象</strong></td>
+                            <td><strong>焦点</strong></td>
+                            <td>ユーザーのニーズと要件を満たすプロセス</td>
+                            <td>創造性と革新的な問題解決</td>
+                        </tr>
+                        <tr>
+                            <td><strong>適用範囲</strong></td>
                             <td>製品・サービス設計全般</td>
-                            <td>複雑で不確実性の高い問題</td>
+                            <td>ビジネス課題、社会問題など広範</td>
                         </tr>
                         <tr>
-                            <td><strong>重点</strong></td>
-                            <td>ユーザーのニーズと価値観の理解</td>
-                            <td>問題の再定義と創造的な解決</td>
-                        </tr>
-                        <tr>
-                            <td><strong>プロセス</strong></td>
-                            <td>計画 → 理解 → 生成 → 評価（反復）</td>
-                            <td>共感 → 定義 → 創造 → プロト → テスト</td>
+                            <td><strong>進め方</strong></td>
+                            <td>段階的で体系化されている</td>
+                            <td>反復的で柔軟、実験的</td>
                         </tr>
                         <tr>
                             <td><strong>関係性</strong></td>
-                            <td>HCDは基本原理、Design Thinkingはその実行方法</td>
-                            <td>HCDの理念をもとに実践するプロセス</td>
+                            <td colspan="2">Design ThinkingはHCDの思考法を取り入れ、より創造的に展開したもの</td>
                         </tr>
                     </tbody>
                 </table>
                 
                 <div class="tip-box">
                     <h4>覚えやすいコツ</h4>
-                    <p>「HCDは『なぜ』、Design Thinkingは『どうやって』」と覚えましょう。HCDはユーザー中心であるべき理由を示し、Design Thinkingはそれをいかに実践するかを示す方法論です。</p>
+                    <p>「HCDは規格、Design Thinkingは姿勢」と覚えましょう。HCDは厳密で体系的なプロセスであり、Design Thinkingはその中に創造性と柔軟性を取り入れた思考法です。</p>
                 </div>
             </section>
             
-            <!-- ユニバーサルデザイン -->
+            <!-- ユーザーリサーチ手法 -->
             <section class="section">
-                <h2>♿ ユニバーサルデザイン</h2>
-                <p>ユニバーサルデザインは、年齢や能力の違いに関わらず、全ての人が利用しやすいように設計することです。HCDの包摂的なアプローチと密接に関連しています。</p>
+                <h2>🔍 HCD・Design Thinkingで使う主要ツール</h2>
+                
+                <h3>ユーザーリサーチ手法</h3>
                 
                 <div class="definition-card">
-                    <strong>定義</strong>
-                    「できるだけ多くの人が利用可能なようにデザインすること。多くの場合、最後の段階で障害者向けに適応させるのではなく、最初からそのように設計することを意味する」
+                    <strong>インタビュー</strong>
+                    ユーザーと直接対話し、行動背景や感情を深掘りします。「なぜ？」を繰り返すことで、潜在ニーズを発見できます。
                 </div>
                 
-                <h3>ユニバーサルデザインの7つの原則</h3>
-                <ul class="checklist">
-                    <li><strong>平等性</strong>：全てのユーザーに等しく利用できる機能を提供</li>
-                    <li><strong>柔軟性</strong>：個人の好みやスキルに対応する</li>
-                    <li><strong>シンプルさ</strong>：複雑さを減らし、直感的に理解できるようにする</li>
-                    <li><strong>認識可能性</strong>：必要な情報が容易に認識できる</li>
-                    <li><strong>エラー耐性</strong>：間違いによる危険な結果を防ぐ</li>
-                    <li><strong>低負荷</strong>：身体的な労力を最小化する</li>
-                    <li><strong>操作性</strong>：様々な体格や握力に対応する</li>
-                </ul>
+                <div class="definition-card">
+                    <strong>観察（Contextual Inquiry）</strong>
+                    ユーザーが実際に製品やサービスを使用している環境を観察し、行動パターンや課題を発見します。
+                </div>
+                
+                <div class="definition-card">
+                    <strong>ジャーニーマップ</strong>
+                    ユーザーが製品やサービスと接する全ての接点を時系列で可視化し、各段階での感情や課題を把握します。
+                </div>
+                
+                <div class="definition-card">
+                    <strong>ペルソナ</strong>
+                    リサーチ結果に基づいて、代表的なユーザー像を作成します。設計チーム全体で同じユーザーイメージを共有するのに効果的です。
+                </div>
+                
+                <h3>創造性を高めるツール</h3>
+                
+                <div class="definition-card">
+                    <strong>ブレインストーミング</strong>
+                    アイデアの良い悪いを判断せず、自由に発想を出し合い、様々な可能性を探索します。
+                </div>
+                
+                <div class="definition-card">
+                    <strong>プロトタイピング</strong>
+                    低解像度のプロトタイプから始めることで、快速にアイデアを形にし、テストできます。
+                </div>
+                
+                <div class="definition-card">
+                    <strong>ユーザーテスト</strong>
+                    プロトタイプを実際のユーザーに使ってもらい、直接フィードバックを得ます。
+                </div>
             </section>
             
             <!-- 重要ワード -->
             <section class="section">
                 <h2>🔑 重要ワード</h2>
                 <div class="keyword-box">
-                    <h4>W3で学んだ重要な言葉</h4>
+                    <h4>W3で学んだ重要な言葉（12個）</h4>
                     <div class="keyword-list">
-                        <span class="keyword-tag">HCD</span>
-                        <span class="keyword-tag">利用者視点</span>
-                        <span class="keyword-tag">共創</span>
+                        <span class="keyword-tag">Human-Centered Design</span>
                         <span class="keyword-tag">Design Thinking</span>
                         <span class="keyword-tag">共感（Empathize）</span>
-                        <span class="keyword-tag">定義（Define）</span>
+                        <span class="keyword-tag">問題定義（Define）</span>
                         <span class="keyword-tag">創造（Ideate）</span>
-                        <span class="keyword-tag">プロトタイプ</span>
+                        <span class="keyword-tag">プロトタイピング</span>
                         <span class="keyword-tag">テスト</span>
-                        <span class="keyword-tag">ダブルダイヤモンド</span>
-                        <span class="keyword-tag">ユニバーサルデザイン</span>
-                        <span class="keyword-tag">POV（Point of View）</span>
+                        <span class="keyword-tag">ユーザージャーニーマップ</span>
+                        <span class="keyword-tag">ペルソナ</span>
+                        <span class="keyword-tag">インタビュー</span>
+                        <span class="keyword-tag">観察</span>
+                        <span class="keyword-tag">ブレインストーミング</span>
                     </div>
                 </div>
             </section>
@@ -587,13 +574,13 @@
             <section class="section">
                 <h2>✅ W3の学習チェックリスト</h2>
                 <ul class="checklist">
-                    <li>HCDの定義と基本原則を説明できる</li>
-                    <li>HCDの4つの主要活動（計画、理解、生成、評価）を述べられる</li>
-                    <li>Design Thinkingの5つのステップ（共感→定義→創造→プロト→テスト）を説明できる</li>
-                    <li>ダブルダイヤモンドの概念を理解している</li>
-                    <li>HCDとDesign Thinkingの違いと関係性を説明できる</li>
-                    <li>ユニバーサルデザインの7つの原則を述べられる</li>
-                    <li>実際のプロジェクトでどのようにHCDやDesign Thinkingを適用するか想像できる</li>
+                    <li>HCDの4つの基本原則を説明できる</li>
+                    <li>HCDの4ステップ（理解→定義→創造→評価）を説明できる</li>
+                    <li>Design Thinkingの5ステップ（共感→問題定義→創造→プロトタイピング→テスト）を順序通り説明できる</li>
+                    <li>HCDとDesign Thinkingの関係性を説明できる</li>
+                    <li>ユーザーリサーチの主要手法（インタビュー、観察、ジャーニーマップ、ペルソナ）を理解している</li>
+                    <li>プロトタイピングがなぜ重要なのかを説明できる</li>
+                    <li>実際のプロジェクトでこれらのツールをどのように活用するかイメージできる</li>
                 </ul>
             </section>
             
@@ -602,11 +589,11 @@
                 <div class="summary-box">
                     <h4>📌 W3のまとめ（5つの要点）</h4>
                     <ol style="margin-left: 20px;">
-                        <li><strong>HCDは理念、Design Thinkingは方法論</strong> — HCDはユーザー中心で設計すべき理由を示し、Design Thinkingはそれをいかに実践するかを示す</li>
-                        <li><strong>ユーザー理解が全ての出発点</strong> — フィールドワークやインタビューを通じて、ユーザーの真のニーズを深く理解することが重要</li>
-                        <li><strong>問題の再定義が革新を生む</strong> — 表面的な症状ではなく、根本的なユーザーの課題を定義することで、より優れた解決策が生まれる</li>
-                        <li><strong>反復と改善の文化</strong> — 完璧を目指すのではなく、小さく試して検証を繰り返す。その過程でユーザーから学び続ける</li>
-                        <li><strong>包摂的設計がスタンダード</strong> — ユニバーサルデザインの考え方で、多様なユーザーのニーズを最初から考慮する</li>
+                        <li><strong>HCDは標準化されたプロセス</strong> — ISO 9241-210で定義された、体系的でプロフェッショナルな設計アプローチ</li>
+                        <li><strong>Design Thinkingは創造的な思考法</strong> — 共感から始まり、試行錯誤を通じて革新的な解決策を生み出す</li>
+                        <li><strong>共感がすべての出発点</strong> — ユーザーを深く理解することなしに、良い設計は生まれない</li>
+                        <li><strong>反復と実験が鍵</strong> — プロトタイピングとテストを繰り返すことで、段階的に最適な解決策を磨く</li>
+                        <li><strong>両者は補完関係</strong> — HCDの体系性とDesign Thinkingの創造性を組み合わせることで、最強のアプローチになる</li>
                     </ol>
                 </div>
             </section>
@@ -615,7 +602,15 @@
             <section class="section">
                 <div class="next-week">
                     <p>次週（W4）は「アジャイル + リーン + パーパス」を学びます。<br>
-                    素早い開発と経営理念がUXにどう影響するかを見ていきましょう！</p>
+                    開発手法と経営理念の統合を理解しましょう！</p>
+                </div>
+            </section>
+            
+            <!-- クイズボタン -->
+            <section class="section">
+                <div class="buttons-section">
+                    <a href="w3_ux_q.html" class="btn btn-quiz">✅ W3クイズに挑戦</a>
+                    <a href="index.html" class="btn btn-home">🏠 トップに戻る</a>
                 </div>
             </section>
         </div>
