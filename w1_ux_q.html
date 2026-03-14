@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W1_UXの基礎理解 - クイズ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+
+        /* クイズセクション */
+        .quiz-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .quiz-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .quiz-question {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: 700;
+            line-height: 1.6;
+        }
+
+        /* 選択肢 */
+        .quiz-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-option {
+            background: #f5f7fa;
+            border: 2px solid #e0e0e0;
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .quiz-option:hover {
+            background: #e8ecf8;
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .quiz-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .quiz-option-text {
+            margin-left: 40px;
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        /* ラジオボタンのカスタムデザイン */
+        .quiz-option input[type="radio"] + .quiz-option-text::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #667eea;
+            border-radius: 50%;
+            background: white;
+        }
+
+        .quiz-option input[type="radio"]:checked + .quiz-option-text::before {
+            background: #667eea;
+            box-shadow: inset 0 0 0 5px white;
+        }
+
+        /* 正解・不正解の表示 */
+        .quiz-result {
+            display: none;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 1.1em;
+            font-weight: 700;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .quiz-result.show {
+            display: block;
+        }
+
+        .quiz-result.correct {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border-left: 5px solid #0d7a6a;
+        }
+
+        .quiz-result.incorrect {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            border-left: 5px solid #cc4444;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .result-text {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .result-explanation {
+            font-size: 0.95em;
+            font-weight: 500;
+            opacity: 0.95;
+            line-height: 1.6;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* ボタン */
+        .quiz-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1.05em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .quiz-button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .quiz-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* スコア表示 */
+        .score-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+
+        .score-section h2 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .score-display {
+            font-size: 3.5em;
+            color: #667eea;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .score-message {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .reset-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .reset-button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .quiz-section {
+                padding: 25px;
+            }
+
+            .quiz-question {
+                font-size: 1.2em;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <div class="header">
+            <h1>🎯 W1 UXの基礎理解 - クイズ</h1>
+            <p>学んだことを確認しましょう！</p>
+        </div>
+
+        <!-- プログレスバー -->
+        <div style="background: white; border-radius: 20px; padding: 20px; margin-bottom: 30px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <span style="font-weight: 700; color: #333;">問題 <span id="current-question">1</span> / 10</span>
+                <span style="font-weight: 700; color: #667eea;" id="score-display">正解: 0/0</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
+            </div>
+        </div>
+
+        <!-- クイズコンテナ -->
+        <div id="quiz-container">
+            <!-- クイズがここに動的に追加される -->
+        </div>
+
+        <!-- スコア表示 -->
+        <div id="score-section" style="display: none;">
+            <div class="score-section">
+                <h2>🎉 クイズ完了！</h2>
+                <div class="score-display" id="final-score">0/10</div>
+                <div class="score-message" id="score-message">お疲れ様でした！</div>
+                <button class="reset-button" onclick="location.reload()">もう一度挑戦する</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizzes = [
+            {
+                question: "UXとは何の略ですか？",
+                options: [
+                    { text: "User eXperience（ユーザー体験）", correct: true },
+                    { text: "User eXchange（ユーザー交換）", correct: false },
+                    { text: "User eXecution（ユーザー実行）", correct: false },
+                    { text: "Unique eXperience（ユニーク体験）", correct: false }
+                ],
+                explanation: "UXはUser Experience の略で、ユーザーが製品やサービスを通じて得る全体的な体験を指します。"
+            },
+            {
+                question: "UXのハニカム構造の中央に位置する最も重要な要素は？",
+                options: [
+                    { text: "使いやすさ", correct: false },
+                    { text: "価値（Valuable）", correct: true },
+                    { text: "有用性", correct: false },
+                    { text: "信頼性", correct: false }
+                ],
+                explanation: "ハニカム構造では「価値」が中央に位置し、他の6つの要素はすべて価値を生み出すための手段です。"
+            },
+            {
+                question: "UIとUXの違いについて、正しい説明はどれですか？",
+                options: [
+                    { text: "UIもUXも同じ意味である", correct: false },
+                    { text: "UI は見た目や操作部分、UX は全体的な体験", correct: true },
+                    { text: "UI は心の体験、UX は目に見える部分", correct: false },
+                    { text: "UX は見た目、UI は機能的な部分", correct: false }
+                ],
+                explanation: "UI（ユーザーインターフェース）は見た目や操作部分で、UX（ユーザー体験）はそれを通じた全体的な体験です。"
+            },
+            {
+                question: "CX、DX、EX の中で、「企業全体のデジタル化による変革」を指すものはどれ？",
+                options: [
+                    { text: "CX（カスタマー体験）", correct: false },
+                    { text: "DX（デジタルトランスフォーメーション）", correct: true },
+                    { text: "EX（従業員体験）", correct: false },
+                    { text: "UX（ユーザー体験）", correct: false }
+                ],
+                explanation: "DXはデジタルトランスフォーメーションの略で、企業がデジタル技術によってビジネスを根本的に変革することを意味します。"
+            },
+            {
+                question: "昔と今のビジネスモデルで大きく変わったことは？",
+                options: [
+                    { text: "商品の価格が安くなった", correct: false },
+                    { text: "「売り切り型」から「サブスク型・継続型」へ変わった", correct: true },
+                    { text: "店舗数が減った", correct: false },
+                    { text: "広告の効果が増えた", correct: false }
+                ],
+                explanation: "昔は「1回の購入で終わり」でしたが、今は「毎月使い続けてもらう」サブスク型が主流になり、継続的にいい体験を提供することが重要になりました。"
+            },
+            {
+                question: "ハニカム構造の7つの要素に含まれていないものはどれ？",
+                options: [
+                    { text: "アクセシビリティ", correct: false },
+                    { text: "プロフィタビリティ（収益性）", correct: true },
+                    { text: "信頼性", correct: false },
+                    { text: "望ましさ", correct: false }
+                ],
+                explanation: "ハニカム構造の7つ要素は：見つけやすさ、有用性、アクセシビリティ、望ましさ、使いやすさ、信頼性、価値 です。プロフィタビリティは含まれません。"
+            },
+            {
+                question: "UXデザイナーに必要な5つのスキルに含まれていないものはどれ？",
+                options: [
+                    { text: "ユーザー理解力", correct: false },
+                    { text: "プログラミング能力", correct: true },
+                    { text: "ビジネス理解力", correct: false },
+                    { text: "分析力", correct: false }
+                ],
+                explanation: "UXデザイナーに必要な5つのスキルは：ユーザー理解力、ビジネス理解力、創造力、分析力、チーム連携力 です。必ずしもプログラミングスキルは必須ではありません。"
+            },
+            {
+                question: "データドリブンな設計とは、どのような設計方法ですか？",
+                options: [
+                    { text: "デザイナーの直感で設計する", correct: false },
+                    { text: "データに基づいて意思決定し、改善する", correct: true },
+                    { text: "ユーザーの感情だけを優先する", correct: false },
+                    { text: "最新のトレンドだけを追う", correct: false }
+                ],
+                explanation: "データドリブンとは、ユーザーの行動データや分析結果に基づいて意思決定し、改善していく方法です。推測ではなく事実に基づきます。"
+            },
+            {
+                question: "ISO による UX の定義で強調されることは？",
+                options: [
+                    { text: "ビジネス目標の達成だけ", correct: false },
+                    { text: "製品の使いやすさだけ", correct: false },
+                    { text: "ユーザーが知覚・獲得するすべての感覚・感情・認識", correct: true },
+                    { text: "デザインの美しさだけ", correct: false }
+                ],
+                explanation: "ISOの定義では、UXは感覚、感情、認識の全体を指します。これは最も包括的で国際的な定義です。"
+            },
+            {
+                question: "なぜ今、UXが重視されるようになったのか？最も重要な理由は？",
+                options: [
+                    { text: "デザイナーが増えたから", correct: false },
+                    { text: "複数のチャネルが連動し、継続的にいい体験が必須になったから", correct: true },
+                    { text: "テレビ広告が減ったから", correct: false },
+                    { text: "規制が厳しくなったから", correct: false }
+                ],
+                explanation: "テクノロジーの発展により、顧客は複数のチャネル（SNS、アプリ、店舗など）を経験し、一つでも悪いと別のサービスに乗り換える時代になりました。そのため、継続的にいい体験を提供することが必須になったのです。"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+
+        function renderQuiz() {
+            const quiz = quizzes[currentQuestionIndex];
+            const container = document.getElementById('quiz-container');
+            
+            container.innerHTML = `
+                <div class="quiz-section">
+                    <div class="quiz-number">問題 ${currentQuestionIndex + 1} / ${quizzes.length}</div>
+                    <div class="quiz-question">${quiz.question}</div>
+                    
+                    <div class="quiz-options">
+                        ${quiz.options.map((option, index) => `
+                            <label class="quiz-option">
+                                <input type="radio" name="quiz-option" value="${index}" 
+                                    onchange="handleAnswer(${index}, ${option.correct})">
+                                <div class="quiz-option-text">${option.text}</div>
+                            </label>
+                        `).join('')}
+                    </div>
+                    
+                    <div id="result-${currentQuestionIndex}" class="quiz-result"></div>
+                    
+                    <button class="quiz-button" id="submit-btn" onclick="submitAnswer()" disabled>
+                        回答する
+                    </button>
+                </div>
+            `;
+            
+            // プログレスバーを更新
+            const progressFill = document.getElementById('progress-fill');
+            progressFill.style.width = ((currentQuestionIndex + 1) / quizzes.length * 100) + '%';
+            
+            // 現在の問題番号を更新
+            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+            
+            answered = false;
+        }
+
+        function handleAnswer(selectedIndex, isCorrect) {
+            document.getElementById('submit-btn').disabled = false;
+        }
+
+        function submitAnswer() {
+            if (answered) return;
+            
+            const selectedRadio = document.querySelector('input[name="quiz-option"]:checked');
+            if (!selectedRadio) return;
+            
+            const selectedIndex = parseInt(selectedRadio.value);
+            const quiz = quizzes[currentQuestionIndex];
+            const isCorrect = quiz.options[selectedIndex].correct;
+            
+            answered = true;
+            
+            const resultDiv = document.getElementById(`result-${currentQuestionIndex}`);
+            resultDiv.classList.add('show');
+            
+            if (isCorrect) {
+                resultDiv.classList.add('correct');
+                resultDiv.innerHTML = `
+                    <div class="result-text">
+                        <span class="result-icon">✅ 正解！</span>
+                    </div>
+                    <div class="result-explanation">${quiz.explanation}</div>
+                `;
+                score++;
+            } else {
+                resultDiv.classList.add('incorrect');
+                resultDiv.innerHTML = `
+                    <div class="result-text">
+                        <span class="result-icon">❌ 不正解</span>
+                    </div>
+                    <div class="result-explanation"><strong>正しい答え：</strong> ${quiz.options.find(o => o.correct).text}<br><br>${quiz.explanation}</div>
+                `;
+            }
+            
+            // スコアを更新
+            document.getElementById('score-display').textContent = `正解: ${score}/${currentQuestionIndex + 1}`;
+            
+            // 次へボタンを表示
+            document.getElementById('submit-btn').textContent = currentQuestionIndex < quizzes.length - 1 ? '次の問題へ' : 'クイズ完了';
+            document.getElementById('submit-btn').disabled = false;
+            document.getElementById('submit-btn').onclick = nextQuestion;
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < quizzes.length - 1) {
+                currentQuestionIndex++;
+                renderQuiz();
+            } else {
+                showScore();
+            }
+        }
+
+        function showScore() {
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('score-section').style.display = 'block';
+            
+            document.getElementById('final-score').textContent = `${score}/${quizzes.length}`;
+            
+            let message = '';
+            if (score === quizzes.length) {
+                message = '🌟 完璧です！UX マスター認定！';
+            } else if (score >= quizzes.length * 0.8) {
+                message = '⭐ 素晴らしい！よく理解できています！';
+            } else if (score >= quizzes.length * 0.6) {
+                message = '👍 良好です！復習するとさらに理解が深まります！';
+            } else {
+                message = '📚 もう一度、学習内容を見直してみましょう！';
+            }
+            
+            document.getElementById('score-message').textContent = message;
+        }
+
+        // 初期化
+        renderQuiz();
+    </script>
+</body>
+</html>
