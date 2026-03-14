@@ -25,6 +25,18 @@
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.3);
             overflow: hidden;
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .header {
@@ -52,12 +64,20 @@
             width: 100%;
             height: 8px;
             background: #e0e0e0;
+            position: relative;
+            overflow: hidden;
         }
         
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            width: 28%;
+            width: 28.57%;
+            animation: slideRight 0.8s ease-out;
+        }
+        
+        @keyframes slideRight {
+            from { width: 0; }
+            to { width: 28.57%; }
         }
         
         .content {
@@ -66,6 +86,12 @@
         
         .section {
             margin-bottom: 50px;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
         .section h2 {
@@ -103,6 +129,44 @@
             font-size: 1.1em;
         }
         
+        .process-flow {
+            background: linear-gradient(135deg, #e0e7ff 0%, #f3e7e9 100%);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1em;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .comparison-table tr:hover {
+            background: #f9f9f9;
+        }
+        
         .tip-box {
             background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
             border-left: 4px solid #ff9500;
@@ -114,37 +178,14 @@
         .tip-box h4 {
             color: #ff6b00;
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
         }
         
         .tip-box h4:before {
             content: "💡 ";
             margin-right: 10px;
-        }
-        
-        .process-flow {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
-        
-        .flow-step {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            min-width: 120px;
-            font-weight: bold;
-            margin: 10px 5px;
-            flex: 1;
-        }
-        
-        .flow-arrow {
-            color: #667eea;
-            font-size: 1.5em;
-            margin: 0 10px;
+            font-size: 1.2em;
         }
         
         .keyword-box {
@@ -181,33 +222,6 @@
             color: white;
         }
         
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        
-        .comparison-table th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px;
-            text-align: left;
-            font-weight: bold;
-        }
-        
-        .comparison-table td {
-            padding: 15px;
-            border-bottom: 1px solid #e0e0e0;
-        }
-        
-        .comparison-table tr:hover {
-            background: #f9f9f9;
-        }
-        
         .summary-box {
             background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
             border-left: 4px solid #4ade80;
@@ -241,12 +255,44 @@
             font-weight: bold;
         }
         
-        .footer {
-            background: #f8f9fa;
-            padding: 30px;
-            text-align: center;
-            color: #666;
-            border-top: 1px solid #e0e0e0;
+        .buttons-section {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-quiz {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+        
+        .btn-quiz:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16,185,129,0.4);
+        }
+        
+        .btn-home {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
         }
         
         .next-week {
@@ -259,22 +305,37 @@
             margin-top: 20px;
         }
         
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+        
         @media (max-width: 768px) {
-            .process-flow {
-                flex-direction: column;
-            }
-            
-            .flow-arrow {
-                transform: rotate(90deg);
-                margin: 10px 0;
-            }
-            
             .header h1 {
                 font-size: 1.8em;
             }
             
             .content {
                 padding: 20px;
+            }
+            
+            .comparison-table {
+                font-size: 0.9em;
+            }
+            
+            .comparison-table th, .comparison-table td {
+                padding: 10px;
+            }
+            
+            .buttons-section {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
             }
         }
     </style>
@@ -284,7 +345,7 @@
         <div class="header">
             <div class="week-badge">📚 2週目</div>
             <h1>UXデザイン + UXグロース + UXインテリジェンス</h1>
-            <p style="font-size: 1.1em; margin-top: 15px;">UXの戦略的活用とビジネス価値を理解する</p>
+            <p style="font-size: 1.1em; margin-top: 15px;">UXを戦略的に活用し、ビジネスと社会価値を実現する</p>
         </div>
         <div class="progress-bar">
             <div class="progress-fill"></div>
@@ -299,60 +360,58 @@
             
             <!-- UXデザイン -->
             <section class="section">
-                <h2>🎨 UXデザインの考え方・手法</h2>
+                <h2>🎨 UXデザインの基本</h2>
                 <p>UXデザインは単なるデザイン作業ではなく、ユーザーのニーズを発見し、ビジネスと調和させながら、段階的に最適な体験を設計するプロセスです。</p>
                 
                 <h3>UXデザインの基本的な考え方</h3>
-                <ul class="checklist">
-                    <li>ユーザー中心設計：全ての判断の出発点はユーザーのニーズ</li>
-                    <li>全体システムの設計：個別機能ではなく、全体的な流れを統合的に考える</li>
-                    <li>反復的改善：完成が終わりではなく、常に改善を続ける</li>
-                    <li>ビジネスとのバランス：UXの理想とビジネスの現実を調和させる</li>
-                </ul>
+                
+                <div class="definition-card">
+                    <strong>ユーザー中心設計</strong>
+                    全ての判断の出発点はユーザーのニーズです。企業の都合ではなく、ユーザーが本当に求めているものを理解し、優先します。
+                </div>
+                
+                <div class="definition-card">
+                    <strong>全体システムの設計</strong>
+                    個別機能ではなく、全体的な流れを統合的に考えます。ユーザージャーニー全体での体験を最適化することが重要です。
+                </div>
+                
+                <div class="definition-card">
+                    <strong>反復的改善</strong>
+                    完成が終わりではなく、常に改善を続けます。ユーザーからのフィードバックをもとに、段階的に進化させていくプロセスです。
+                </div>
+                
+                <div class="definition-card">
+                    <strong>ビジネスとのバランス</strong>
+                    UXの理想とビジネスの現実を調和させます。技術的制約や事業戦略の中で、最適なUXを実現することが求められます。
+                </div>
                 
                 <h3>代表的なUXデザイン手法</h3>
                 
                 <div class="definition-card">
                     <strong>Design Thinking</strong>
-                    ユーザーの潜在ニーズを共感を通じて理解し、試行錯誤を通じて新しい価値を創造するアプローチ。Googleなど多くのイノベーション企業が採用しています。
+                    ユーザーの潜在ニーズを共感を通じて理解し、試行錯誤を通じて新しい価値を創造するアプローチ。Googleやアップルなど、多くのイノベーション企業が採用しています。
                 </div>
                 
                 <div class="definition-card">
                     <strong>Human-Centered Design (HCD)</strong>
-                    人間を中心に据えた設計プロセス。ユーザーの行動、文化、社会的文脈を深く理解した上で、設計に取り組みます。
+                    人間を中心に据えた設計プロセス。ユーザーの行動、文化、社会的文脈を深く理解した上で、設計に取り組みます。ISOでも標準化されています。
                 </div>
                 
                 <h3>UXデザインのプロセス</h3>
+                
                 <div class="process-flow">
-                    <div class="flow-step">リサーチ</div>
-                    <div class="flow-arrow">→</div>
-                    <div class="flow-step">要件定義</div>
-                    <div class="flow-arrow">→</div>
-                    <div class="flow-step">設計</div>
-                    <div class="flow-arrow">→</div>
-                    <div class="flow-step">評価</div>
-                    <div class="flow-arrow">→</div>
-                    <div class="flow-step">改善</div>
+                    リサーチ → 要件定義 → 設計 → 評価 → 改善
                 </div>
                 
                 <div class="tip-box">
                     <h4>覚えやすいコツ</h4>
                     <p>「仮説 → 実施 → 検証 → 反復」のサイクルが回り続けることが重要です。UXデザインは一度作ったら終わりではなく、ユーザーフィードバックをもとに常に進化し続けるものです。</p>
                 </div>
-                
-                <h3>UXデザイナーに求められるスキル</h3>
-                <ul class="checklist">
-                    <li><strong>UX企画力</strong>：ユーザーニーズとビジネスゴールを統合し、企画を立案する</li>
-                    <li><strong>ユーザー理解</strong>：定量的・定性的なリサーチを通じて、ユーザーの潜在ニーズを発見</li>
-                    <li><strong>ビジネス構築</strong>：UXの改善がビジネス成果につながるよう戦略を立てる</li>
-                    <li><strong>世界観体現</strong>：ブランドやサービスの価値観をビジュアルと体験で表現</li>
-                    <li><strong>グロースチーム運用</strong>：異職種メンバーと協働し、素早い改善サイクルを実行</li>
-                </ul>
             </section>
             
             <!-- UXグロース -->
             <section class="section">
-                <h2>📈 UXグロース</h2>
+                <h2>📈 UXグロースの戦略</h2>
                 <p>UXグロースとは、ユーザー体験の継続的な改善を通じて、ビジネスを成長させる活動です。段階的に戦略的な改善を実行し、ユーザーの満足度と事業の成長を同時に実現します。</p>
                 
                 <h3>アフターデジタル時代のビジネスモデル</h3>
@@ -397,18 +456,19 @@
                 </table>
                 
                 <h3>UXグロース活動のプロセス</h3>
+                
                 <ul class="checklist">
                     <li>ユーザーデータの収集・分析</li>
                     <li>改善機会の発見</li>
                     <li>優先順位の決定</li>
                     <li>施策の実装</li>
                     <li>効果測定</li>
-                    <li>反復</li>
+                    <li>反復（改善サイクルを回す）</li>
                 </ul>
                 
                 <div class="tip-box">
                     <h4>覚えやすいコツ</h4>
-                    <p>「抜本改善 vs 高速改善」を覚えましょう。大きな変化が必要なら中期的な抜本改善、小さな改善なら高速改善サイクルを回します。</p>
+                    <p>「抜本改善 vs 高速改善」を覚えましょう。大きな変化が必要なら中期的な抜本改善、小さな改善なら高速改善サイクルを回します。両方のアプローチが必要です。</p>
                 </div>
             </section>
             
@@ -421,32 +481,46 @@
                 
                 <div class="definition-card">
                     <strong>定義</strong>
-                    「テクノロジーとユーザーの関係性を知性的に設計することで、個人の幸福度を高め、社会全体の良好な循環を実現する」という考え方。
+                    「テクノロジーとユーザーの関係性を知性的に設計することで、個人の幸福度を高め、社会全体の良好な循環を実現する」という考え方です。
                 </div>
                 
                 <h3>UXインテリジェンスが必要とされる背景</h3>
-                <ul class="checklist">
-                    <li>テクノロジーの急速な進化</li>
-                    <li>AIやビッグデータの悪用のリスク</li>
-                    <li>個人情報保護やプライバシーへの配慮の必要性</li>
-                    <li>デジタルデバイドや格差の拡大</li>
-                </ul>
+                
+                <div class="definition-card">
+                    <strong>テクノロジーの急速な進化</strong>
+                    AI、ビッグデータ、IoTなど、新しいテクノロジーが急速に進化しており、その影響を適切に理解する必要があります。
+                </div>
+                
+                <div class="definition-card">
+                    <strong>AIやビッグデータの悪用のリスク</strong>
+                    テクノロジーは人々の操作や搾取にも使われる可能性があり、倫理的な設計が求められます。
+                </div>
+                
+                <div class="definition-card">
+                    <strong>個人情報保護やプライバシーへの配慮</strong>
+                    デジタル時代では個人データが大量に収集・分析されており、ユーザーのプライバシー保護が重要です。
+                </div>
+                
+                <div class="definition-card">
+                    <strong>デジタルデバイドや格差の拡大</strong>
+                    テクノロジーの恩恵を受ける人と受けない人の格差が広がっており、包摂的なデザインが必要です。
+                </div>
                 
                 <h3>UXインテリジェンスが実現するあるべき社会像</h3>
                 
                 <div class="definition-card">
-                    <strong>1. UX選択の自由</strong>
-                    ユーザーが自分たちのニーズに合わせて、複数の体験選択肢から自由に選べる社会
+                    <strong>UX選択の自由</strong>
+                    ユーザーが自分たちのニーズに合わせて、複数の体験選択肢から自由に選べる社会を実現します。
                 </div>
                 
                 <div class="definition-card">
-                    <strong>2. 多様な自由の調和</strong>
-                    個人の自由とプライバシーを尊重しながら、社会全体の利益も実現する社会
+                    <strong>多様な自由の調和</strong>
+                    個人の自由とプライバシーを尊重しながら、社会全体の利益も実現する社会です。
                 </div>
                 
                 <div class="definition-card">
-                    <strong>3. テクノロジーの民主化</strong>
-                    テクノロジーが一部の企業や人々に独占されるのではなく、全員がその恩恵を受けられる社会
+                    <strong>テクノロジーの民主化</strong>
+                    テクノロジーが一部の企業や人々に独占されるのではなく、全員がその恩恵を受けられる社会を目指します。
                 </div>
                 
                 <div class="tip-box">
@@ -459,18 +533,18 @@
             <section class="section">
                 <h2>🔑 重要ワード</h2>
                 <div class="keyword-box">
-                    <h4>W2で学んだ重要な言葉</h4>
+                    <h4>W2で学んだ重要な言葉（10個）</h4>
                     <div class="keyword-list">
                         <span class="keyword-tag">UXデザイン</span>
                         <span class="keyword-tag">Design Thinking</span>
-                        <span class="keyword-tag">Human-Centered Design</span>
+                        <span class="keyword-tag">HCD</span>
                         <span class="keyword-tag">UXグロース</span>
                         <span class="keyword-tag">アフターデジタル</span>
                         <span class="keyword-tag">バリュージャーニー</span>
                         <span class="keyword-tag">グロースチーム</span>
                         <span class="keyword-tag">UXインテリジェンス</span>
                         <span class="keyword-tag">UX選択の自由</span>
-                        <span class="keyword-tag">多様な自由の調和</span>
+                        <span class="keyword-tag">テクノロジーの民主化</span>
                     </div>
                 </div>
             </section>
@@ -508,6 +582,14 @@
                 <div class="next-week">
                     <p>次週（W3）は「Human-Centered Design + Design Thinking」について詳しく学びます。<br>
                     具体的な実行プロセスと事例を見ていきましょう！</p>
+                </div>
+            </section>
+            
+            <!-- クイズボタン -->
+            <section class="section">
+                <div class="buttons-section">
+                    <a href="w2_ux_q.html" class="btn btn-quiz">✅ W2クイズに挑戦</a>
+                    <a href="index.html" class="btn btn-home">🏠 トップに戻る</a>
                 </div>
             </section>
         </div>
