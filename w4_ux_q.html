@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W4: クイズ - アジャイル + リーン + パーパス</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.8;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .week-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .progress-info {
+            background: rgba(0,0,0,0.1);
+            padding: 15px 30px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .quiz-container {
+            margin-bottom: 30px;
+        }
+        
+        .question {
+            background: #f5f7fa;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+        }
+        
+        .question h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .question p {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 15px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        .option label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+        
+        .option.selected-correct {
+            background: #d4edda;
+            border-color: #28a745;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.3);
+        }
+        
+        .option.selected-incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.3);
+        }
+        
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .feedback.show {
+            display: block;
+        }
+        
+        .feedback.correct {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+        
+        .feedback.incorrect {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+        }
+        
+        .feedback strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+        
+        .submit-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .score-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            margin-top: 40px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .score-section.show {
+            display: block;
+        }
+        
+        .score-number {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .score-message {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+        
+        .reset-btn {
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+        
+        .reset-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .question {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="week-badge">🎯 W4 クイズ</div>
+            <h1>アジャイル + リーン + パーパス</h1>
+        </div>
+        <div class="progress-info">
+            <span id="progress">問題 1/12</span>
+        </div>
+        
+        <div class="content" id="quizContent">
+            <!-- Questions will be inserted here -->
+        </div>
+        
+        <div class="score-section" id="scoreSection">
+            <h2>🎉 クイズ完了！</h2>
+            <div class="score-number"><span id="scoreValue">0</span>/<span id="totalQuestions">12</span></div>
+            <div class="score-message" id="scoreMessage"></div>
+            <button class="reset-btn" onclick="resetQuiz()">もう一度やる</button>
+        </div>
+        
+        <div class="footer">
+            <p>📚 UX学習プログラム Week 4/7 クイズ</p>
+        </div>
+    </div>
+    
+    <script>
+        const quizData = [
+            {
+                question: "アジャイル開発とウォーターフォール型の最も大きな違いは何ですか？",
+                options: [
+                    { text: "ウォーターフォール型の方が新しい技術である", correct: false },
+                    { text: "ウォーターフォール型は全要件を最初に決め、アジャイルは段階的に改善する", correct: true },
+                    { text: "アジャイルはテストが不要である", correct: false },
+                    { text: "ウォーターフォール型の方が失敗しにくい", correct: false }
+                ],
+                explanation: "ウォーターフォール型は計画 → 設計 → 実装 → テスト → リリースと順序立って進み、変更が困難です。一方、アジャイルはスプリントサイクルで段階的に改善し、変更に柔軟に対応します。"
+            },
+            {
+                question: "スクラムにおけるスプリントとは何ですか？",
+                options: [
+                    { text: "プロジェクト全体の期間", correct: false },
+                    { text: "1～4週間の固定期間のサイクル。この期間で計画・実装・レビュー・改善を実行", correct: true },
+                    { text: "テストの段階のこと", correct: false },
+                    { text: "リリース後のサポート期間", correct: false }
+                ],
+                explanation: "スプリントは、アジャイル開発の基本単位です。短い期間で、計画から実装、テスト、レビューまでを完結させ、各スプリント終了時に動作するソフトウェアが完成します。"
+            },
+            {
+                question: "アジャイル開発が必要とされる背景として最も適切なのはどれですか？",
+                options: [
+                    { text: "コストをできるだけ削減したい場合", correct: false },
+                    { text: "市場環境が急速に変化し、ユーザーニーズが多様である場合", correct: true },
+                    { text: "チームのサイズが小さい場合のみ", correct: false },
+                    { text: "テクノロジーが古い場合", correct: false }
+                ],
+                explanation: "アジャイルは、変化する要件に対応できることが特徴です。市場環境の急速な変化やユーザーニーズの多様化に対応する必要がある場合に有効です。"
+            },
+            {
+                question: "レトロスペクティブの目的として最も正しいのはどれですか？",
+                options: [
+                    { text: "ユーザーからフィードバックを得ること", correct: false },
+                    { text: "スプリント終了後、チームが改善点を洗い出し、次のスプリントに活かすこと", correct: true },
+                    { text: "完成した製品をユーザーに見せること", correct: false },
+                    { text: "プロジェクト全体のコストを計算すること", correct: false }
+                ],
+                explanation: "レトロスペクティブは、スプリント終了後に開催される会議です。チームが『何がうまくいったか』『何を改善すべきか』を議論し、プロセスの改善に活かします。"
+            },
+            {
+                question: "リーン開発の基本概念として最も正しいのはどれですか？",
+                options: [
+                    { text: "最新の技術を最大限に活用すること", correct: false },
+                    { text: "顧客が本当に望む価値に焦点を当てながら、開発プロセスの無駄を排除し、効率的に製品・サービスを提供すること", correct: true },
+                    { text: "できるだけ多くの機能を持つ製品を作ること", correct: false },
+                    { text: "最初から完璧な製品を目指すこと", correct: false }
+                ],
+                explanation: "リーン開発は、顧客価値を最大化しながら、無駄を徹底的に排除することを目指します。トヨタ生産方式から着想を得ています。"
+            },
+            {
+                question: "MVP（最小実行可能製品）とは何を意味していますか？",
+                options: [
+                    { text: "市場で最も売上が大きい製品", correct: false },
+                    { text: "最小限の機能で、ユーザーのニーズを満たし、フィードバックを得られる製品", correct: true },
+                    { text: "最新の技術を使った製品", correct: false },
+                    { text: "最も低価格の製品", correct: false }
+                ],
+                explanation: "MVPは、必要最小限の機能を持ちながら、ユーザーからフィードバックを得るために作られる製品です。完璧さより、素早いリリースと学習を優先します。"
+            },
+            {
+                question: "リーンスタートアップの『ピボット』とは何ですか？",
+                options: [
+                    { text: "ビジネスに大成功すること", correct: false },
+                    { text: "仮説が間違っていた時に、戦略や方向性を根本的に変えること", correct: true },
+                    { text: "製品の小さな改善を加えること", correct: false },
+                    { text: "ユーザーのニーズを無視して独自の方向に進むこと", correct: false }
+                ],
+                explanation: "ピボットは、データや測定結果から、仮説が違ったと判断した時に、方向を根本的に変えることです。失敗ではなく、学習の結果の意思決定です。"
+            },
+            {
+                question: "リーン開発における7つの無駄の中で、『部分最適化』とは何ですか？",
+                options: [
+                    { text: "細かい部分をできるだけ最適化すること", correct: false },
+                    { text: "全体的な価値を見落とした部分的な最適化により、全体の効率が低下すること", correct: true },
+                    { text: "システムの一部だけを最新化すること", correct: false },
+                    { text: "ユーザーの要望に全て応じること", correct: false }
+                ],
+                explanation: "部分最適化は、全体を見ずに部分的に最適化しようとすることで、かえって全体的な効率が低下する現象を指します。"
+            },
+            {
+                question: "パーパス（企業の目的）の定義として最も正しいのはどれですか？",
+                options: [
+                    { text: "企業の短期的な利益目標", correct: false },
+                    { text: "企業が営利活動を通じて社会に実現したい価値や、解決したい社会課題。企業の存在意義そのもの", correct: true },
+                    { text: "製品の機能仕様", correct: false },
+                    { text: "社員の給与決定のための指標", correct: false }
+                ],
+                explanation: "パーパスは、単なる利益追求ではなく、企業が社会に対して果たす根本的な目的や役割を指します。企業の長期的な存在意義を示すものです。"
+            },
+            {
+                question: "パーパスの3層構造（ミッション・ビジョン・バリュー）について、最も正しい説明はどれですか？",
+                options: [
+                    { text: "3つは同じ意味である", correct: false },
+                    { text: "ミッション：何をするか、ビジョン：どうなりたいか、バリュー：いかにしてか", correct: true },
+                    { text: "ビジョンが最も重要で、ミッションとバリューは副次的", correct: false },
+                    { text: "この3つは業種によって異なる定義を持つ", correct: false }
+                ],
+                explanation: "ミッションは現在の活動内容、ビジョンは将来のあるべき姿、バリューは大切にする原則や姿勢を表現します。これら3つがそろって企業のパーパスが構成されます。"
+            },
+            {
+                question: "企業経営にパーパスが必要とされる理由として挙げられていないのはどれですか？",
+                options: [
+                    { text: "社員のモチベーション向上", correct: false },
+                    { text: "顧客ロイヤルティ向上", correct: false },
+                    { text: "税金の削減", correct: true },
+                    { text: "人材採用と育成", correct: false }
+                ],
+                explanation: "パーパスが必要な理由は、社員のモチベーション、顧客ロイヤルティ、人材採用、社会への説明責任、持続可能な経営基盤構築などです。税金削減とは直接的な関係ではありません。"
+            },
+            {
+                question: "UXとパーパスの関係として最も適切なのはどれですか？",
+                options: [
+                    { text: "UXはパーパスとは関係なく、単純に使いやすさだけを追求すべき", correct: false },
+                    { text: "優れたUXは、企業のパーパスを実現する手段。企業理念がUX設計に反映されることで、ユーザーにとって意味のある体験が生まれる", correct: true },
+                    { text: "パーパスがあるとUX設計の自由度が制限される", correct: false },
+                    { text: "大企業だけがパーパスとUXを統合する必要がある", correct: false }
+                ],
+                explanation: "企業のパーパスが明確であれば、UX設計の判断軸もブレなくなります。社会への貢献という根本目的が、ユーザーにとって意味のある体験を生み出すのです。"
+            }
+        ];
+        
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+        
+        function initQuiz() {
+            renderQuestion();
+        }
+        
+        function renderQuestion() {
+            const container = document.getElementById('quizContent');
+            const question = quizData[currentQuestion];
+            
+            let html = `
+                <div class="quiz-container">
+                    <div class="question">
+                        <h3>Q${currentQuestion + 1}. ${question.question}</h3>
+                        <div class="options" id="optionsContainer">
+            `;
+            
+            question.options.forEach((option, index) => {
+                html += `
+                    <div class="option" id="option-${index}">
+                        <label>
+                            <input type="radio" name="answer" value="${index}" onchange="selectOption(${index})">
+                            ${option.text}
+                        </label>
+                    </div>
+                `;
+            });
+            
+            html += `
+                        </div>
+                        <div class="feedback" id="feedback"></div>
+                        <button class="submit-btn" id="submitBtn" onclick="submitAnswer()">回答する</button>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            updateProgress();
+        }
+        
+        function selectOption(index) {
+            const options = document.querySelectorAll('.option input[type="radio"]');
+            options.forEach((opt, i) => {
+                if (i === index) {
+                    opt.checked = true;
+                }
+            });
+        }
+        
+        function submitAnswer() {
+            if (answered) return;
+            
+            const selected = document.querySelector('input[name="answer"]:checked');
+            if (!selected) {
+                alert('選択してください');
+                return;
+            }
+            
+            answered = true;
+            const answerIndex = parseInt(selected.value);
+            const question = quizData[currentQuestion];
+            const isCorrect = question.options[answerIndex].correct;
+            
+            if (isCorrect) {
+                score++;
+                document.getElementById(`option-${answerIndex}`).classList.add('selected-correct');
+            } else {
+                document.getElementById(`option-${answerIndex}`).classList.add('selected-incorrect');
+                const correctIndex = question.options.findIndex(opt => opt.correct);
+                document.getElementById(`option-${correctIndex}`).classList.add('correct');
+            }
+            
+            const feedback = document.getElementById('feedback');
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'incorrect');
+            feedback.innerHTML = `
+                <strong>${isCorrect ? '✓ 正解です！' : '✗ 不正解です'}</strong>
+                ${question.explanation}
+            `;
+            
+            const btn = document.getElementById('submitBtn');
+            btn.textContent = currentQuestion === quizData.length - 1 ? '完了' : '次へ';
+            btn.onclick = nextQuestion;
+        }
+        
+        function nextQuestion() {
+            currentQuestion++;
+            answered = false;
+            
+            if (currentQuestion >= quizData.length) {
+                showScore();
+            } else {
+                renderQuestion();
+            }
+        }
+        
+        function updateProgress() {
+            document.getElementById('progress').textContent = `問題 ${currentQuestion + 1}/${quizData.length}`;
+        }
+        
+        function showScore() {
+            document.getElementById('quizContent').style.display = 'none';
+            const scoreSection = document.getElementById('scoreSection');
+            scoreSection.classList.add('show');
+            
+            document.getElementById('scoreValue').textContent = score;
+            document.getElementById('totalQuestions').textContent = quizData.length;
+            
+            let message = '';
+            const percentage = (score / quizData.length) * 100;
+            
+            if (percentage === 100) {
+                message = '🌟 完璧です！アジャイル、リーン、パーパスについて完全に理解できています。';
+            } else if (percentage >= 80) {
+                message = '👏 よくできました！現代的な開発手法と企業理念を理解しています。';
+            } else if (percentage >= 60) {
+                message = '📚 基本は理解できています。各要素の関連性をより深く学びましょう。';
+            } else {
+                message = '🔍 もう一度資料を確認して、理解を深めましょう。';
+            }
+            
+            document.getElementById('scoreMessage').textContent = message;
+        }
+        
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('scoreSection').classList.remove('show');
+            renderQuestion();
+        }
+        
+        // Initialize quiz
+        initQuiz();
+    </script>
+</body>
+</html>

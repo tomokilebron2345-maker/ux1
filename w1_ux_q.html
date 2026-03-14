@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W1: クイズ - UXとは + UXが重視される背景</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.8;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .week-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .progress-info {
+            background: rgba(0,0,0,0.1);
+            padding: 15px 30px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .quiz-container {
+            margin-bottom: 30px;
+        }
+        
+        .question {
+            background: #f5f7fa;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+        }
+        
+        .question h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .question p {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 15px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        .option label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+        
+        .option.selected-correct {
+            background: #d4edda;
+            border-color: #28a745;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.3);
+        }
+        
+        .option.selected-incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.3);
+        }
+        
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .feedback.show {
+            display: block;
+        }
+        
+        .feedback.correct {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+        
+        .feedback.incorrect {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+        }
+        
+        .feedback strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+        
+        .submit-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .score-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            margin-top: 40px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .score-section.show {
+            display: block;
+        }
+        
+        .score-number {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .score-message {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+        
+        .reset-btn {
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+        
+        .reset-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .question {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="week-badge">🎯 W1 クイズ</div>
+            <h1>UXとは + UXが重視される背景</h1>
+        </div>
+        <div class="progress-info">
+            <span id="progress">問題 1/12</span>
+        </div>
+        
+        <div class="content" id="quizContent">
+            <!-- Questions will be inserted here -->
+        </div>
+        
+        <div class="score-section" id="scoreSection">
+            <h2>🎉 クイズ完了！</h2>
+            <div class="score-number"><span id="scoreValue">0</span>/<span id="totalQuestions">12</span></div>
+            <div class="score-message" id="scoreMessage"></div>
+            <button class="reset-btn" onclick="resetQuiz()">もう一度やる</button>
+        </div>
+        
+        <div class="footer">
+            <p>📚 UX学習プログラム Week 1/7 クイズ</p>
+        </div>
+    </div>
+    
+    <script>
+        const quizData = [
+            {
+                question: "UX(User Experience)の定義として正しいものはどれでしょうか？",
+                options: [
+                    { text: "WebサイトやアプリケーションのUI（ユーザーインターフェース）の見た目", correct: false },
+                    { text: "製品やサービスを使用した場合に得られた知覚と反応（ユーザーの全体的な体験）", correct: true },
+                    { text: "デジタル技術を使用した企業変革のプロセス", correct: false },
+                    { text: "従業員が職場で得る体験", correct: false }
+                ],
+                explanation: "UXは単なるUIではなく、ユーザーが製品やサービスと関わるあらゆる側面における知覚、感情、反応を含む総合的な体験を指します。"
+            },
+            {
+                question: "UXのハニカム構造における中央に位置する最も重要な要素は何ですか？",
+                options: [
+                    { text: "使いやすさ", correct: false },
+                    { text: "価値", correct: true },
+                    { text: "アクセシビリティ", correct: false },
+                    { text: "見つけやすさ", correct: false }
+                ],
+                explanation: "UXのハニカム構造では、「価値」が中央に位置する最も重要な要素です。他の6つの要素（見つけやすさ、使いやすさ、アクセシビリティ、望ましさ、信頼性、有用性）は、この価値を支える周辺要素です。"
+            },
+            {
+                question: "UIとUXの関係について正しい説明はどれですか？",
+                options: [
+                    { text: "UIとUXは同じ意味である", correct: false },
+                    { text: "UXはUIを包含するより広い概念である", correct: true },
+                    { text: "UIはUXを包含する概念である", correct: false },
+                    { text: "UIと UXは全く関連性がない", correct: false }
+                ],
+                explanation: "UIはユーザーインターフェース（見た目や操作性）を指し、UXはより広い概念で全体的な体験を指します。良いUIが必ずしも良いUXを保証するわけではありません。"
+            },
+            {
+                question: "DX(Digital Transformation)とUXの違いについて、正しいものはどれですか？",
+                options: [
+                    { text: "DXはユーザー視点、UXは企業視点である", correct: false },
+                    { text: "DXは企業のデジタル変革、UXはユーザーの体験を指し、視点が異なる", correct: true },
+                    { text: "DXとUXは同じ意味である", correct: false },
+                    { text: "DXの方がUXより重要である", correct: false }
+                ],
+                explanation: "DXは企業がデジタル技術を活用してビジネスプロセスを変革することであり、企業視点です。一方、UXはユーザーが得る体験であり、ユーザー視点です。"
+            },
+            {
+                question: "CX(Customer Experience)とUXの関係として最も正しいのはどれですか？",
+                options: [
+                    { text: "CXとUXは同じ意味である", correct: false },
+                    { text: "UXはCXの一部である", correct: true },
+                    { text: "CXはUXの一部である", correct: false },
+                    { text: "CXとUXは全く関連がない", correct: false }
+                ],
+                explanation: "CXはCustomer Experienceで、購買前から購買後まで顧客がブランドと関わるあらゆる場面での体験を指します。UXはデジタル製品やサービスに限定されることが多く、CXより狭い概念です。"
+            },
+            {
+                question: "近年、ビジネスモデルが売り切り型からサブスクリプション型に変わることで、UXがより重要になった理由は何ですか？",
+                options: [
+                    { text: "売り切り型ではUXが必要ないから", correct: false },
+                    { text: "サブスクリプション型では継続的な顧客満足度（UX）が収益に直結するから", correct: true },
+                    { text: "技術が進化したから", correct: false },
+                    { text: "顧客の数が増えたから", correct: false }
+                ],
+                explanation: "サブスクリプション型では、ユーザーが継続して利用するため、その満足度（UX）が継続率や収益に直接影響します。売り切り型では1回の取引で完結するため、UXの重要性は相対的に低い傾向があります。"
+            },
+            {
+                question: "ビッグデータとAIの活用がUXに与える影響として正しいものはどれですか？",
+                options: [
+                    { text: "全てのユーザーに同じ体験を提供できる", correct: false },
+                    { text: "ユーザー行動を詳細に把握し、個別のニーズに合わせたパーソナライズされた体験を提供できる", correct: true },
+                    { text: "UXの重要性が低下する", correct: false },
+                    { text: "ユーザーの行動を予測できなくなる", correct: false }
+                ],
+                explanation: "ビッグデータの分析とAIの活用により、ユーザー行動を詳細に把握し、その場その場で最適でパーソナライズされた体験を提供することが可能になりました。"
+            },
+            {
+                question: "OMOとD2Cが重要になった背景にあるのは何ですか？",
+                options: [
+                    { text: "オンラインとオフラインの融合、直接販売モデルの登場により、ユーザーデータの活用が競争力の源になったから", correct: true },
+                    { text: "店舗販売が減少したから", correct: false },
+                    { text: "インターネットが普及したから", correct: false },
+                    { text: "商品の質が向上したから", correct: false }
+                ],
+                explanation: "OMO（Online Merges Offline）やD2C（Direct to Consumer）により、企業が直接ユーザーデータを取得し、分析・活用することで、競争力を高めることができるようになりました。"
+            },
+            {
+                question: "UXデザイナーに求められるスキルとして挙げられていないものはどれですか？",
+                options: [
+                    { text: "ユーザーリサーチ", correct: false },
+                    { text: "ビジネス構築", correct: false },
+                    { text: "建築設計", correct: true },
+                    { text: "グロースチーム運用", correct: false }
+                ],
+                explanation: "UXデザイナーに求められるスキルは、ユーザーリサーチ、ビジネス構築、世界観体現、グロースチーム運用、分析・仮説検証の5つです。建築設計はUXデザイナーの必須スキルではありません。"
+            },
+            {
+                question: "ユーザビリティとUXの関係として正しいのはどれですか？",
+                options: [
+                    { text: "ユーザビリティとUXは同じ意味である", correct: false },
+                    { text: "ユーザビリティは使いやすさを指し、UXはより広く感情や満足度を包含する", correct: true },
+                    { text: "UXはユーザビリティを包含しない", correct: false },
+                    { text: "ユーザビリティの方がUXより重要である", correct: false }
+                ],
+                explanation: "ユーザビリティは「使いやすさ」という単一の属性を指しますが、UXはそれに加えて感情、満足度、信頼感など、より広い要素を包含します。ユーザビリティはUXの構成要素の一つです。"
+            },
+            {
+                question: "プラットフォームビジネスにおいてUXが重要な理由は何ですか？",
+                options: [
+                    { text: "デザインが美しいから", correct: false },
+                    { text: "UXの優劣が売上に直結し、継続的なUX改善が競争力の源になるから", correct: true },
+                    { text: "ユーザー数が多いから", correct: false },
+                    { text: "技術が複雑だから", correct: false }
+                ],
+                explanation: "プラットフォームビジネス（AmazonやNetflixなど）では、ユーザーの満足度と継続利用がビジネスモデルの中心です。そのため、UXの優劣が直接売上に影響し、継続的なUX改善が必須となります。"
+            },
+            {
+                question: "ISO 9241-11によるUXの定義として正しいものはどれですか？",
+                options: [
+                    { text: "製品の機能の充実度", correct: false },
+                    { text: "製品、システムまたはサービスを使用した場合に得られた知覚と反応", correct: true },
+                    { text: "デジタル技術の活用度", correct: false },
+                    { text: "ユーザーの購買行動", correct: false }
+                ],
+                explanation: "ISO 9241-11による定義は「製品、システムまたはサービスを使用した場合に得られた知覚と反応」です。これが国際標準化機構による公式なUXの定義の一つです。"
+            }
+        ];
+        
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+        
+        function initQuiz() {
+            renderQuestion();
+        }
+        
+        function renderQuestion() {
+            const container = document.getElementById('quizContent');
+            const question = quizData[currentQuestion];
+            
+            let html = `
+                <div class="quiz-container">
+                    <div class="question">
+                        <h3>Q${currentQuestion + 1}. ${question.question}</h3>
+                        <div class="options" id="optionsContainer">
+            `;
+            
+            question.options.forEach((option, index) => {
+                html += `
+                    <div class="option" id="option-${index}">
+                        <label>
+                            <input type="radio" name="answer" value="${index}" onchange="selectOption(${index})">
+                            ${option.text}
+                        </label>
+                    </div>
+                `;
+            });
+            
+            html += `
+                        </div>
+                        <div class="feedback" id="feedback"></div>
+                        <button class="submit-btn" id="submitBtn" onclick="submitAnswer()">回答する</button>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            updateProgress();
+        }
+        
+        function selectOption(index) {
+            const options = document.querySelectorAll('.option input[type="radio"]');
+            options.forEach((opt, i) => {
+                if (i === index) {
+                    opt.checked = true;
+                }
+            });
+        }
+        
+        function submitAnswer() {
+            if (answered) return;
+            
+            const selected = document.querySelector('input[name="answer"]:checked');
+            if (!selected) {
+                alert('選択してください');
+                return;
+            }
+            
+            answered = true;
+            const answerIndex = parseInt(selected.value);
+            const question = quizData[currentQuestion];
+            const isCorrect = question.options[answerIndex].correct;
+            
+            if (isCorrect) {
+                score++;
+                document.getElementById(`option-${answerIndex}`).classList.add('selected-correct');
+            } else {
+                document.getElementById(`option-${answerIndex}`).classList.add('selected-incorrect');
+                const correctIndex = question.options.findIndex(opt => opt.correct);
+                document.getElementById(`option-${correctIndex}`).classList.add('correct');
+            }
+            
+            const feedback = document.getElementById('feedback');
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'incorrect');
+            feedback.innerHTML = `
+                <strong>${isCorrect ? '✓ 正解です！' : '✗ 不正解です'}</strong>
+                ${question.explanation}
+            `;
+            
+            const btn = document.getElementById('submitBtn');
+            btn.textContent = currentQuestion === quizData.length - 1 ? '完了' : '次へ';
+            btn.onclick = nextQuestion;
+        }
+        
+        function nextQuestion() {
+            currentQuestion++;
+            answered = false;
+            
+            if (currentQuestion >= quizData.length) {
+                showScore();
+            } else {
+                renderQuestion();
+            }
+        }
+        
+        function updateProgress() {
+            document.getElementById('progress').textContent = `問題 ${currentQuestion + 1}/${quizData.length}`;
+        }
+        
+        function showScore() {
+            document.getElementById('quizContent').style.display = 'none';
+            const scoreSection = document.getElementById('scoreSection');
+            scoreSection.classList.add('show');
+            
+            document.getElementById('scoreValue').textContent = score;
+            document.getElementById('totalQuestions').textContent = quizData.length;
+            
+            let message = '';
+            const percentage = (score / quizData.length) * 100;
+            
+            if (percentage === 100) {
+                message = '🌟 完璧です！UXについて完全に理解できています。';
+            } else if (percentage >= 80) {
+                message = '👏 よくできました！次週への準備ができています。';
+            } else if (percentage >= 60) {
+                message = '📚 基本は理解できています。復習をおすすめします。';
+            } else {
+                message = '🔍 もう一度資料を確認して、理解を深めましょう。';
+            }
+            
+            document.getElementById('scoreMessage').textContent = message;
+        }
+        
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('scoreSection').classList.remove('show');
+            renderQuestion();
+        }
+        
+        // Initialize quiz
+        initQuiz();
+    </script>
+</body>
+</html>

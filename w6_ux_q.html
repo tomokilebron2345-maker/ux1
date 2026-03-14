@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W6: クイズ - UXリサーチ + ユーザー理解</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.8;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .week-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .progress-info {
+            background: rgba(0,0,0,0.1);
+            padding: 15px 30px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .quiz-container {
+            margin-bottom: 30px;
+        }
+        
+        .question {
+            background: #f5f7fa;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+        }
+        
+        .question h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .question p {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 15px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        .option label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+        
+        .option.selected-correct {
+            background: #d4edda;
+            border-color: #28a745;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.3);
+        }
+        
+        .option.selected-incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.3);
+        }
+        
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .feedback.show {
+            display: block;
+        }
+        
+        .feedback.correct {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+        
+        .feedback.incorrect {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+        }
+        
+        .feedback strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+        
+        .submit-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .score-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            margin-top: 40px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .score-section.show {
+            display: block;
+        }
+        
+        .score-number {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .score-message {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+        
+        .reset-btn {
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+        
+        .reset-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .question {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="week-badge">🎯 W6 クイズ</div>
+            <h1>UXリサーチ + ユーザー理解</h1>
+        </div>
+        <div class="progress-info">
+            <span id="progress">問題 1/14</span>
+        </div>
+        
+        <div class="content" id="quizContent">
+            <!-- Questions will be inserted here -->
+        </div>
+        
+        <div class="score-section" id="scoreSection">
+            <h2>🎉 クイズ完了！</h2>
+            <div class="score-number"><span id="scoreValue">0</span>/<span id="totalQuestions">14</span></div>
+            <div class="score-message" id="scoreMessage"></div>
+            <button class="reset-btn" onclick="resetQuiz()">もう一度やる</button>
+        </div>
+        
+        <div class="footer">
+            <p>📚 UX学習プログラム Week 6/7 クイズ</p>
+        </div>
+    </div>
+    
+    <script>
+        const quizData = [
+            {
+                question: "UXリサーチの定義として最も正しいのはどれですか？",
+                options: [
+                    { text: "マーケティング市場調査のこと", correct: false },
+                    { text: "ユーザーのニーズ、行動、感情を理解するための系統的な調査。定量的・定性的なデータを組み合わせる", correct: true },
+                    { text: "ウェブサイトのアクセス解析", correct: false },
+                    { text: "競合他社の分析", correct: false }
+                ],
+                explanation: "UXリサーチは、ユーザーのニーズ、行動、感情を理解するための包括的な調査です。アンケート（定量）とインタビュー（定性）、行動ログなどを複合的に使用します。"
+            },
+            {
+                question: "定量調査と定性調査の違いについて、最も正しいのはどれですか？",
+                options: [
+                    { text: "定量調査は『何か、どのくらいか』を把握し、定性調査は『なぜか』を理解する", correct: true },
+                    { text: "定量調査の方がより信頼性が高い", correct: false },
+                    { text: "定性調査だけで十分である", correct: false },
+                    { text: "定量と定性は相互に排他的である", correct: false }
+                ],
+                explanation: "定量調査は統計的に『何か、どのくらい』かを把握し、定性調査は『なぜそうなのか』という背景や動機を理解します。両者は相補的です。"
+            },
+            {
+                question: "定量調査の主要な手法として挙げられていないのはどれですか？",
+                options: [
+                    { text: "アンケート調査", correct: false },
+                    { text: "クロス集計", correct: false },
+                    { text: "フィールドワーク観察", correct: true },
+                    { text: "A/Bテスト", correct: false }
+                ],
+                explanation: "定量調査は数字で分析できる手法です。アンケート、クロス集計、A/Bテストなどが含まれ、フィールドワーク観察は定性調査に該当します。"
+            },
+            {
+                question: "定性調査の『エスノグラフィー』について、最も正しいのはどれですか？",
+                options: [
+                    { text: "複数のユーザーを集めてグループディスカッションすること", correct: false },
+                    { text: "長期間にわたってユーザーの生活や行動を詳細に観察・記録する文化人類学的なアプローチ", correct: true },
+                    { text: "ユーザーに日記を書かせる方法", correct: false },
+                    { text: "オンラインのアンケート調査", correct: false }
+                ],
+                explanation: "エスノグラフィーは、文化人類学的なアプローチで、長期間にわたってユーザーの生活や行動を詳細に観察・記録する定性調査手法です。"
+            },
+            {
+                question: "行動データ分析における『行動ギャップ』とは何ですか？",
+                options: [
+                    { text: "ユーザーが複数の行動を同時にしている状態", correct: false },
+                    { text: "ユーザーの『言ったこと』と『実際にしたこと』の乖離", correct: true },
+                    { text: "ページ間のリンク構造の不備", correct: false },
+                    { text: "ユーザーが作業を中断する箇所", correct: false }
+                ],
+                explanation: "行動ギャップは、インタビューでユーザーが『こうしている』と言うことと、実際の行動ログから見えるユーザーの行動に違いがある状態です。本当のニーズを把握するために重要です。"
+            },
+            {
+                question: "『ペインポイント』と『ゲインポイント』について、最も正しい説明はどれですか？",
+                options: [
+                    { text: "ペインポイントはユーザーが困っている箇所、ゲインポイントはユーザーが満足している箇所", correct: true },
+                    { text: "ペインポイントは全員が感じるもので、ゲインポイントは個人差がある", correct: false },
+                    { text: "ペインポイントは直帰率に関連し、ゲインポイントはページ数に関連する", correct: false },
+                    { text: "両者は同じ意味である", correct: false }
+                ],
+                explanation: "ペインポイントはユーザーが困っている、改善すべき箇所（直帰率が高いページなど）であり、ゲインポイントはユーザーが満足している箇所（滞在時間が長い、コンバージョンするページなど）です。"
+            },
+            {
+                question: "ペルソナについて、最も正しい説明はどれですか？",
+                options: [
+                    { text: "実在するユーザーの詳細な情報", correct: false },
+                    { text: "ターゲットユーザーを代表する架空のキャラクター。設計判断の指針となる", correct: true },
+                    { text: "全てのユーザーを1つのペルソナで代表できる", correct: false },
+                    { text: "ペルソナは数字のみで記述される", correct: false }
+                ],
+                explanation: "ペルソナは、リサーチ結果から創造された架空のユーザー代表です。年齢、職業、ニーズ、行動パターンなど詳細に記述され、設計チーム全体で共有される設計判断の指針となります。"
+            },
+            {
+                question: "カスタマージャーニーマップの主要な構成要素として挙げられていないのはどれですか？",
+                options: [
+                    { text: "各段階でのユーザーの感情", correct: false },
+                    { text: "ユーザーが接触するタッチポイント", correct: false },
+                    { text: "競合企業の戦略", correct: true },
+                    { text: "各段階でのユーザーの課題", correct: false }
+                ],
+                explanation: "カスタマージャーニーマップには、時系列、ユーザーの行動、感情、タッチポイント、課題、機会などが含まれます。競合企業の戦略は通常含まれません。"
+            },
+            {
+                question: "エンパシーマップの目的として最も正しいのはどれですか？",
+                options: [
+                    { text: "ユーザーの行動ログを分析すること", correct: false },
+                    { text: "ペルソナが『見ているもの』『聞いているもの』『話しているもの』『思っていること』『感じていること』などを可視化し、深い共感を生み出すこと", correct: true },
+                    { text: "ユーザーのスキルレベルを評価すること", correct: false },
+                    { text: "競合企業との違いを明らかにすること", correct: false }
+                ],
+                explanation: "エンパシーマップは、ペルソナの見ている世界、聞いている情報、話している内容、考えていること、感じていることを可視化し、ユーザーへの深い共感を生み出すツールです。"
+            },
+            {
+                question: "ユーザーストーリーの形式として最も正しいのはどれですか？",
+                options: [
+                    { text: "『ユーザーとして、私は○○したい。なぜなら△△だから』という形で要求を言語化", correct: true },
+                    { text: "『システムは○○を実現すべき』という形で技術要件を記述", correct: false },
+                    { text: "『ユーザーは○○と言った』という形でユーザーの発言を記録", correct: false },
+                    { text: "『競合は○○を提供している』という形で競合分析する", correct: false }
+                ],
+                explanation: "ユーザーストーリーは、『ユーザーとして、私は○○したい。なぜなら△△だから』という形式で、ユーザー視点から要求を言語化します。これにより、ユーザーの動機も一緒に記録されます。"
+            },
+            {
+                question: "バリュープロポジションとは何ですか？",
+                options: [
+                    { text: "製品の機能一覧", correct: false },
+                    { text: "ユーザーが達成したい目標と、企業が提供する価値の交点", correct: true },
+                    { text: "ユーザーの行動パターン", correct: false },
+                    { text: "製品の価格設定", correct: false }
+                ],
+                explanation: "バリュープロポジションは、『ユーザーが達成したい目標』と『企業が提供する価値』が交わる点です。これにより、ユーザーにとって本当に意味のある価値提供を明確にできます。"
+            },
+            {
+                question: "AS-IS分析とTO-BE分析について、最も正しいのはどれですか？",
+                options: [
+                    { text: "AS-ISは現在、TO-BEは理想の利用状況を分析する", correct: true },
+                    { text: "AS-ISは過去、TO-BEは将来の利用状況を分析する", correct: false },
+                    { text: "AS-ISはあるべき状態、TO-BEは現状を分析する", correct: false },
+                    { text: "両者は同じ意味である", correct: false }
+                ],
+                explanation: "AS-IS分析は、ユーザーが現在どのような方法で課題に対処しているかを把握し、TO-BE分析は、ユーザーが理想とする利用状況を想定します。この2つのギャップを埋めるのが設計です。"
+            },
+            {
+                question: "ジョブ理論について、最も正しいのはどれですか？",
+                options: [
+                    { text: "ユーザーの職業に基づくセグメンテーション", correct: false },
+                    { text: "ユーザーが製品やサービスを使用する『目的』（ジョブ）に焦点を当てる。ユーザーが解決したい課題に基づくセグメンテーション", correct: true },
+                    { text: "ユーザーの年代による分類", correct: false },
+                    { text: "ユーザーの行動ログの分析方法", correct: false }
+                ],
+                explanation: "ジョブ理論は、ユーザーが製品を『何のために使っているのか』というジョブ（目的）に焦点を当てます。例えば、『移動が必要だから』『気分転換したいから』など。これにより、より本質的なセグメンテーションが可能になります。"
+            },
+            {
+                question: "KJ法について、最も正しいのはどれですか？",
+                options: [
+                    { text: "インタビュー結果を分類・整理し、パターンを発見する手法", correct: true },
+                    { text: "ユーザーのIQ測定法", correct: false },
+                    { text: "定量調査の統計分析方法", correct: false },
+                    { text: "カテゴリー化した情報をランキングする方法", correct: false }
+                ],
+                explanation: "KJ法は、定性調査（特にインタビュー）の結果を分類し、整理することで、共通のパターンやテーマを発見する手法です。インタビューデータの分析に広く使用されます。"
+            }
+        ];
+        
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+        
+        function initQuiz() {
+            renderQuestion();
+        }
+        
+        function renderQuestion() {
+            const container = document.getElementById('quizContent');
+            const question = quizData[currentQuestion];
+            
+            let html = `
+                <div class="quiz-container">
+                    <div class="question">
+                        <h3>Q${currentQuestion + 1}. ${question.question}</h3>
+                        <div class="options" id="optionsContainer">
+            `;
+            
+            question.options.forEach((option, index) => {
+                html += `
+                    <div class="option" id="option-${index}">
+                        <label>
+                            <input type="radio" name="answer" value="${index}" onchange="selectOption(${index})">
+                            ${option.text}
+                        </label>
+                    </div>
+                `;
+            });
+            
+            html += `
+                        </div>
+                        <div class="feedback" id="feedback"></div>
+                        <button class="submit-btn" id="submitBtn" onclick="submitAnswer()">回答する</button>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            updateProgress();
+        }
+        
+        function selectOption(index) {
+            const options = document.querySelectorAll('.option input[type="radio"]');
+            options.forEach((opt, i) => {
+                if (i === index) {
+                    opt.checked = true;
+                }
+            });
+        }
+        
+        function submitAnswer() {
+            if (answered) return;
+            
+            const selected = document.querySelector('input[name="answer"]:checked');
+            if (!selected) {
+                alert('選択してください');
+                return;
+            }
+            
+            answered = true;
+            const answerIndex = parseInt(selected.value);
+            const question = quizData[currentQuestion];
+            const isCorrect = question.options[answerIndex].correct;
+            
+            if (isCorrect) {
+                score++;
+                document.getElementById(`option-${answerIndex}`).classList.add('selected-correct');
+            } else {
+                document.getElementById(`option-${answerIndex}`).classList.add('selected-incorrect');
+                const correctIndex = question.options.findIndex(opt => opt.correct);
+                document.getElementById(`option-${correctIndex}`).classList.add('correct');
+            }
+            
+            const feedback = document.getElementById('feedback');
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'incorrect');
+            feedback.innerHTML = `
+                <strong>${isCorrect ? '✓ 正解です！' : '✗ 不正解です'}</strong>
+                ${question.explanation}
+            `;
+            
+            const btn = document.getElementById('submitBtn');
+            btn.textContent = currentQuestion === quizData.length - 1 ? '完了' : '次へ';
+            btn.onclick = nextQuestion;
+        }
+        
+        function nextQuestion() {
+            currentQuestion++;
+            answered = false;
+            
+            if (currentQuestion >= quizData.length) {
+                showScore();
+            } else {
+                renderQuestion();
+            }
+        }
+        
+        function updateProgress() {
+            document.getElementById('progress').textContent = `問題 ${currentQuestion + 1}/${quizData.length}`;
+        }
+        
+        function showScore() {
+            document.getElementById('quizContent').style.display = 'none';
+            const scoreSection = document.getElementById('scoreSection');
+            scoreSection.classList.add('show');
+            
+            document.getElementById('scoreValue').textContent = score;
+            document.getElementById('totalQuestions').textContent = quizData.length;
+            
+            let message = '';
+            const percentage = (score / quizData.length) * 100;
+            
+            if (percentage === 100) {
+                message = '🌟 完璧です！UXリサーチとユーザー理解について完全に習得しました。';
+            } else if (percentage >= 80) {
+                message = '👏 よくできました！ユーザーを多角的に理解する力が身についています。';
+            } else if (percentage >= 60) {
+                message = '📚 基本は理解できています。各リサーチ手法の使い分けをより深く学びましょう。';
+            } else {
+                message = '🔍 もう一度資料を確認して、理解を深めましょう。';
+            }
+            
+            document.getElementById('scoreMessage').textContent = message;
+        }
+        
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('scoreSection').classList.remove('show');
+            renderQuestion();
+        }
+        
+        // Initialize quiz
+        initQuiz();
+    </script>
+</body>
+</html>

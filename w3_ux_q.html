@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W3: クイズ - Human-Centered Design + Design Thinking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.8;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .week-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .progress-info {
+            background: rgba(0,0,0,0.1);
+            padding: 15px 30px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .quiz-container {
+            margin-bottom: 30px;
+        }
+        
+        .question {
+            background: #f5f7fa;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+        }
+        
+        .question h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .question p {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 15px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        .option label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+        
+        .option.selected-correct {
+            background: #d4edda;
+            border-color: #28a745;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.3);
+        }
+        
+        .option.selected-incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.3);
+        }
+        
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .feedback.show {
+            display: block;
+        }
+        
+        .feedback.correct {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+        
+        .feedback.incorrect {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+        }
+        
+        .feedback strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+        
+        .submit-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .score-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            margin-top: 40px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .score-section.show {
+            display: block;
+        }
+        
+        .score-number {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .score-message {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+        
+        .reset-btn {
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+        
+        .reset-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .question {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="week-badge">🎯 W3 クイズ</div>
+            <h1>Human-Centered Design + Design Thinking</h1>
+        </div>
+        <div class="progress-info">
+            <span id="progress">問題 1/12</span>
+        </div>
+        
+        <div class="content" id="quizContent">
+            <!-- Questions will be inserted here -->
+        </div>
+        
+        <div class="score-section" id="scoreSection">
+            <h2>🎉 クイズ完了！</h2>
+            <div class="score-number"><span id="scoreValue">0</span>/<span id="totalQuestions">12</span></div>
+            <div class="score-message" id="scoreMessage"></div>
+            <button class="reset-btn" onclick="resetQuiz()">もう一度やる</button>
+        </div>
+        
+        <div class="footer">
+            <p>📚 UX学習プログラム Week 3/7 クイズ</p>
+        </div>
+    </div>
+    
+    <script>
+        const quizData = [
+            {
+                question: "Human-Centered Design（HCD）の基本的な考え方として最も正しいのはどれですか？",
+                options: [
+                    { text: "技術的な最新ツールを中心に設計すること", correct: false },
+                    { text: "人間のニーズ、行動、価値観を設計プロセスの中心に据えるアプローチ", correct: true },
+                    { text: "最新のデザインスタイルを追従すること", correct: false },
+                    { text: "コスト削減を最優先に設計すること", correct: false }
+                ],
+                explanation: "HCDは、ユーザーの実際のニーズ、行動、価値観を深く理解し、それを設計の中心に据えるアプローチです。テクノロジーやスタイルではなく、人間が中心です。"
+            },
+            {
+                question: "HCDの4つの主要活動の正しい順序はどれですか？",
+                options: [
+                    { text: "生成 → 計画 → 理解 → 評価", correct: false },
+                    { text: "計画 → 理解と明示 → 生成 → 評価", correct: true },
+                    { text: "理解 → 計画 → 評価 → 生成", correct: false },
+                    { text: "評価 → 理解 → 生成 → 計画", correct: false }
+                ],
+                explanation: "HCDは、まずプロジェクト目的を計画し、ユーザーを理解し、そのニーズに基づいてアイデアを生成し、プロトタイプを評価するというプロセスを回します。"
+            },
+            {
+                question: "Design Thinkingの5つのステップとして正しいのはどれですか？",
+                options: [
+                    { text: "共感 → 定義 → 創造 → プロトタイプ → テスト", correct: true },
+                    { text: "テスト → プロトタイプ → 創造 → 定義 → 共感", correct: false },
+                    { text: "定義 → 共感 → 創造 → テスト → プロトタイプ", correct: false },
+                    { text: "プロトタイプ → テスト → 共感 → 定義 → 創造", correct: false }
+                ],
+                explanation: "Design Thinkingは、ユーザーへの共感から始まり、問題を定義し、アイデアを創造し、プロトタイプを作成し、ユーザーテストでフィードバックを得るプロセスです。"
+            },
+            {
+                question: "Design Thinkingの『共感（Empathize）』ステップにおいて最も重要なことは何ですか？",
+                options: [
+                    { text: "自分たちの仮説をユーザーに説明すること", correct: false },
+                    { text: "ユーザーの行動、思考、感情を観察し、深く理解することと", correct: true },
+                    { text: "市場調査の統計データを収集すること", correct: false },
+                    { text: "既存の類似製品を分析すること", correct: false }
+                ],
+                explanation: "共感ステップでは、ユーザーの実際の行動やニーズを深く理解することが最も重要です。インタビューやフィールドワークを通じて、ユーザーの世界を見る必要があります。"
+            },
+            {
+                question: "ダブルダイヤモンドの概念について、最も正しい説明はどれですか？",
+                options: [
+                    { text: "2つのダイヤは同じプロセスを2回繰り返すこと", correct: false },
+                    { text: "最初のダイヤは『正しい問題を見つける』、2番目のダイヤは『正しい解決策を見つける』", correct: true },
+                    { text: "ダイヤの形は装飾的な意味しかない", correct: false },
+                    { text: "問題と解決策を同時に見つけるプロセス", correct: false }
+                ],
+                explanation: "ダブルダイヤモンドは、最初のダイヤで多くの情報を集めて『正しい問題』を定義し、2番目のダイヤで多くのアイデアから『正しい解決策』を見つけるプロセスを表現しています。"
+            },
+            {
+                question: "HCDとDesign Thinkingの関係について、最も適切な説明はどれですか？",
+                options: [
+                    { text: "HCDとDesign Thinkingは全く無関係である", correct: false },
+                    { text: "HCDは理念であり、Design Thinkingはその理念をいかに実践するかを示す方法論", correct: true },
+                    { text: "Design Thinkingの方が古い概念である", correct: false },
+                    { text: "HCDの中にDesign Thinkingが完全に含まれている", correct: false }
+                ],
+                explanation: "HCDはユーザー中心で設計すべき理由を示す原理であり、Design Thinkingはそれをいかに実践するかを示す具体的な方法論です。相補的な関係にあります。"
+            },
+            {
+                question: "Design Thinkingの『定義（Define）』ステップで作成すべきものは何ですか？",
+                options: [
+                    { text: "マーケティングキャンペーン", correct: false },
+                    { text: "技術仕様書", correct: false },
+                    { text: "POV（Point of View）：ユーザーの真のニーズと問題の定義", correct: true },
+                    { text: "プロダクトロードマップ", correct: false }
+                ],
+                explanation: "定義ステップでは、ユーザーの潜在的なニーズと問題をPOVという形で定義します。これが次のステップの創造をガイドする重要な成果物です。"
+            },
+            {
+                question: "プロトタイプ（Prototype）の目的として最も正しいのはどれですか？",
+                options: [
+                    { text: "完璧で市場投入可能な製品を作ること", correct: false },
+                    { text: "最も有望なアイデアを簡単な試作品として具現化し、学習を得ること", correct: true },
+                    { text: "コストをできるだけ低く抑えること", correct: false },
+                    { text: "技術的な複雑さを示すこと", correct: false }
+                ],
+                explanation: "Design Thinkingにおけるプロトタイプは、完璧さより学習を優先します。安価で簡単に作られ、ユーザーからのフィードバックを得るための手段です。"
+            },
+            {
+                question: "ユニバーサルデザインの7つの原則として挙げられていないのはどれですか？",
+                options: [
+                    { text: "平等性", correct: false },
+                    { text: "柔軟性", correct: false },
+                    { text: "最新技術の活用", correct: true },
+                    { text: "エラー耐性", correct: false }
+                ],
+                explanation: "ユニバーサルデザインの7つの原則は、平等性、柔軟性、シンプルさ、認識可能性、エラー耐性、低負荷、操作性です。最新技術の活用は原則ではありません。"
+            },
+            {
+                question: "HCDの基本原則である『共創（Co-creation）』とは何を意味していますか？",
+                options: [
+                    { text: "デザイナーが単独で最適な解決策を作ること", correct: false },
+                    { text: "ユーザー、デザイナー、ビジネスメンバーが一緒に問題を解くこと", correct: true },
+                    { text: "複数の企業が協力して製品を開発すること", correct: false },
+                    { text: "ユーザーが製品を改造すること", correct: false }
+                ],
+                explanation: "共創は、多様なバックグラウンドを持つメンバーが協働し、一緒に問題を解くプロセスを指します。これにより、より包括的で優れた解決策が生まれます。"
+            },
+            {
+                question: "Design Thinkingが必要とされる状況として最も適切なのはどれですか？",
+                options: [
+                    { text: "問題が明確で、既知の解決策が存在する場合", correct: false },
+                    { text: "問題が複雑で、正解が不明確で、革新的な解決策が必要な場合", correct: true },
+                    { text: "製品の機能を単に追加する場合", correct: false },
+                    { text: "既存のプロセスを最適化する場合", correct: false }
+                ],
+                explanation: "Design Thinkingは、複雑で不確実性が高く、革新的な解決策が必要な状況で特に有効です。既知の問題には従来の方法論が適しています。"
+            },
+            {
+                question: "HCDプロセスにおいて『計画（Plan）』ステップで決めるべきこととして挙げられていないのはどれですか？",
+                options: [
+                    { text: "プロジェクトの目的", correct: false },
+                    { text: "ステークホルダー", correct: false },
+                    { text: "技術的なプログラミング言語", correct: true },
+                    { text: "必要なリソース", correct: false }
+                ],
+                explanation: "HCDの計画ステップでは、目的、ステークホルダー、リソース、スケジュール、チーム構成などを決めます。技術的な実装は後のステップで決められます。"
+            }
+        ];
+        
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+        
+        function initQuiz() {
+            renderQuestion();
+        }
+        
+        function renderQuestion() {
+            const container = document.getElementById('quizContent');
+            const question = quizData[currentQuestion];
+            
+            let html = `
+                <div class="quiz-container">
+                    <div class="question">
+                        <h3>Q${currentQuestion + 1}. ${question.question}</h3>
+                        <div class="options" id="optionsContainer">
+            `;
+            
+            question.options.forEach((option, index) => {
+                html += `
+                    <div class="option" id="option-${index}">
+                        <label>
+                            <input type="radio" name="answer" value="${index}" onchange="selectOption(${index})">
+                            ${option.text}
+                        </label>
+                    </div>
+                `;
+            });
+            
+            html += `
+                        </div>
+                        <div class="feedback" id="feedback"></div>
+                        <button class="submit-btn" id="submitBtn" onclick="submitAnswer()">回答する</button>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            updateProgress();
+        }
+        
+        function selectOption(index) {
+            const options = document.querySelectorAll('.option input[type="radio"]');
+            options.forEach((opt, i) => {
+                if (i === index) {
+                    opt.checked = true;
+                }
+            });
+        }
+        
+        function submitAnswer() {
+            if (answered) return;
+            
+            const selected = document.querySelector('input[name="answer"]:checked');
+            if (!selected) {
+                alert('選択してください');
+                return;
+            }
+            
+            answered = true;
+            const answerIndex = parseInt(selected.value);
+            const question = quizData[currentQuestion];
+            const isCorrect = question.options[answerIndex].correct;
+            
+            if (isCorrect) {
+                score++;
+                document.getElementById(`option-${answerIndex}`).classList.add('selected-correct');
+            } else {
+                document.getElementById(`option-${answerIndex}`).classList.add('selected-incorrect');
+                const correctIndex = question.options.findIndex(opt => opt.correct);
+                document.getElementById(`option-${correctIndex}`).classList.add('correct');
+            }
+            
+            const feedback = document.getElementById('feedback');
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'incorrect');
+            feedback.innerHTML = `
+                <strong>${isCorrect ? '✓ 正解です！' : '✗ 不正解です'}</strong>
+                ${question.explanation}
+            `;
+            
+            const btn = document.getElementById('submitBtn');
+            btn.textContent = currentQuestion === quizData.length - 1 ? '完了' : '次へ';
+            btn.onclick = nextQuestion;
+        }
+        
+        function nextQuestion() {
+            currentQuestion++;
+            answered = false;
+            
+            if (currentQuestion >= quizData.length) {
+                showScore();
+            } else {
+                renderQuestion();
+            }
+        }
+        
+        function updateProgress() {
+            document.getElementById('progress').textContent = `問題 ${currentQuestion + 1}/${quizData.length}`;
+        }
+        
+        function showScore() {
+            document.getElementById('quizContent').style.display = 'none';
+            const scoreSection = document.getElementById('scoreSection');
+            scoreSection.classList.add('show');
+            
+            document.getElementById('scoreValue').textContent = score;
+            document.getElementById('totalQuestions').textContent = quizData.length;
+            
+            let message = '';
+            const percentage = (score / quizData.length) * 100;
+            
+            if (percentage === 100) {
+                message = '🌟 完璧です！HCDとDesign Thinkingについて完全に理解できています。';
+            } else if (percentage >= 80) {
+                message = '👏 よくできました！ユーザー中心の思考が身についています。';
+            } else if (percentage >= 60) {
+                message = '📚 基本は理解できています。実践を通じて深めましょう。';
+            } else {
+                message = '🔍 もう一度資料を確認して、理解を深めましょう。';
+            }
+            
+            document.getElementById('scoreMessage').textContent = message;
+        }
+        
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('scoreSection').classList.remove('show');
+            renderQuestion();
+        }
+        
+        // Initialize quiz
+        initQuiz();
+    </script>
+</body>
+</html>

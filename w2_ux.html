@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W2: UXデザイン + UXグロース + UXインテリジェンス</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.8;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .week-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 28%;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .section h2 {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .section h3 {
+            font-size: 1.4em;
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .definition-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .definition-card:hover {
+            transform: translateX(5px);
+        }
+        
+        .definition-card strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+        
+        .tip-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-left: 4px solid #ff9500;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .tip-box h4 {
+            color: #ff6b00;
+            margin-bottom: 10px;
+        }
+        
+        .tip-box h4:before {
+            content: "💡 ";
+            margin-right: 10px;
+        }
+        
+        .process-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .flow-step {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 120px;
+            font-weight: bold;
+            margin: 10px 5px;
+            flex: 1;
+        }
+        
+        .flow-arrow {
+            color: #667eea;
+            font-size: 1.5em;
+            margin: 0 10px;
+        }
+        
+        .keyword-box {
+            background: linear-gradient(135deg, #e0e7ff 0%, #f3e7e9 100%);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .keyword-box h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .keyword-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .keyword-tag {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .keyword-tag:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .comparison-table tr:hover {
+            background: #f9f9f9;
+        }
+        
+        .summary-box {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            border-left: 4px solid #4ade80;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .summary-box h4 {
+            color: #22863a;
+            margin-bottom: 10px;
+        }
+        
+        .checklist {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .checklist li {
+            padding: 10px;
+            margin: 8px 0;
+            background: white;
+            border-left: 3px solid #667eea;
+            border-radius: 4px;
+        }
+        
+        .checklist li:before {
+            content: "☐ ";
+            margin-right: 10px;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .next-week {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .process-flow {
+                flex-direction: column;
+            }
+            
+            .flow-arrow {
+                transform: rotate(90deg);
+                margin: 10px 0;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="week-badge">📚 2週目</div>
+            <h1>UXデザイン + UXグロース + UXインテリジェンス</h1>
+            <p style="font-size: 1.1em; margin-top: 15px;">UXの戦略的活用とビジネス価値を理解する</p>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        
+        <div class="content">
+            <!-- ミッション -->
+            <section class="section">
+                <h2>🎯 この週のミッション</h2>
+                <p>UXデザインの具体的なプロセスとマインドセット、そしてUXを事業成長（グロース）に活かす方法を理解します。さらに、UXインテリジェンスという新しい考え方を学び、社会全体への価値提供を考える視点を養います。</p>
+            </section>
+            
+            <!-- UXデザイン -->
+            <section class="section">
+                <h2>🎨 UXデザインの考え方・手法</h2>
+                <p>UXデザインは単なるデザイン作業ではなく、ユーザーのニーズを発見し、ビジネスと調和させながら、段階的に最適な体験を設計するプロセスです。</p>
+                
+                <h3>UXデザインの基本的な考え方</h3>
+                <ul class="checklist">
+                    <li>ユーザー中心設計：全ての判断の出発点はユーザーのニーズ</li>
+                    <li>全体システムの設計：個別機能ではなく、全体的な流れを統合的に考える</li>
+                    <li>反復的改善：完成が終わりではなく、常に改善を続ける</li>
+                    <li>ビジネスとのバランス：UXの理想とビジネスの現実を調和させる</li>
+                </ul>
+                
+                <h3>代表的なUXデザイン手法</h3>
+                
+                <div class="definition-card">
+                    <strong>Design Thinking</strong>
+                    ユーザーの潜在ニーズを共感を通じて理解し、試行錯誤を通じて新しい価値を創造するアプローチ。Googleなど多くのイノベーション企業が採用しています。
+                </div>
+                
+                <div class="definition-card">
+                    <strong>Human-Centered Design (HCD)</strong>
+                    人間を中心に据えた設計プロセス。ユーザーの行動、文化、社会的文脈を深く理解した上で、設計に取り組みます。
+                </div>
+                
+                <h3>UXデザインのプロセス</h3>
+                <div class="process-flow">
+                    <div class="flow-step">リサーチ</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">要件定義</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">設計</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">評価</div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step">改善</div>
+                </div>
+                
+                <div class="tip-box">
+                    <h4>覚えやすいコツ</h4>
+                    <p>「仮説 → 実施 → 検証 → 反復」のサイクルが回り続けることが重要です。UXデザインは一度作ったら終わりではなく、ユーザーフィードバックをもとに常に進化し続けるものです。</p>
+                </div>
+                
+                <h3>UXデザイナーに求められるスキル</h3>
+                <ul class="checklist">
+                    <li><strong>UX企画力</strong>：ユーザーニーズとビジネスゴールを統合し、企画を立案する</li>
+                    <li><strong>ユーザー理解</strong>：定量的・定性的なリサーチを通じて、ユーザーの潜在ニーズを発見</li>
+                    <li><strong>ビジネス構築</strong>：UXの改善がビジネス成果につながるよう戦略を立てる</li>
+                    <li><strong>世界観体現</strong>：ブランドやサービスの価値観をビジュアルと体験で表現</li>
+                    <li><strong>グロースチーム運用</strong>：異職種メンバーと協働し、素早い改善サイクルを実行</li>
+                </ul>
+            </section>
+            
+            <!-- UXグロース -->
+            <section class="section">
+                <h2>📈 UXグロース</h2>
+                <p>UXグロースとは、ユーザー体験の継続的な改善を通じて、ビジネスを成長させる活動です。段階的に戦略的な改善を実行し、ユーザーの満足度と事業の成長を同時に実現します。</p>
+                
+                <h3>アフターデジタル時代のビジネスモデル</h3>
+                
+                <div class="definition-card">
+                    <strong>アフターデジタル</strong>
+                    デジタル技術が特別なものではなく、生活の一部として完全に浸透した状態。この時代では、「顧客体験」がビジネスの中心になります。
+                </div>
+                
+                <div class="definition-card">
+                    <strong>バリュージャーニー</strong>
+                    顧客がサービスとの関わりを通じて得る価値の軌跡。単なる機能提供ではなく、ジャーニー全体での価値提供が重要です。
+                </div>
+                
+                <h3>UXグロース活動の3つのレベル</h3>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>レベル</th>
+                            <th>説明</th>
+                            <th>例</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>全社単位</strong></td>
+                            <td>企業全体のブランド体験や経営戦略に関わるUX改善</td>
+                            <td>企業のDXやビジネスモデル変革</td>
+                        </tr>
+                        <tr>
+                            <td><strong>事業単位</strong></td>
+                            <td>特定の事業部門における、中期的な戦略的UX改善</td>
+                            <td>新規事業のローンチやサービス全体の再設計</td>
+                        </tr>
+                        <tr>
+                            <td><strong>個別サービス単位</strong></td>
+                            <td>既存サービスの短期的な高速改善（A/Bテストなど）</td>
+                            <td>UI/UXの細部改善、機能追加の検証</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h3>UXグロース活動のプロセス</h3>
+                <ul class="checklist">
+                    <li>ユーザーデータの収集・分析</li>
+                    <li>改善機会の発見</li>
+                    <li>優先順位の決定</li>
+                    <li>施策の実装</li>
+                    <li>効果測定</li>
+                    <li>反復</li>
+                </ul>
+                
+                <div class="tip-box">
+                    <h4>覚えやすいコツ</h4>
+                    <p>「抜本改善 vs 高速改善」を覚えましょう。大きな変化が必要なら中期的な抜本改善、小さな改善なら高速改善サイクルを回します。</p>
+                </div>
+            </section>
+            
+            <!-- UXインテリジェンス -->
+            <section class="section">
+                <h2>🧠 UXインテリジェンスの理念</h2>
+                <p>UXインテリジェンスは、単なるUXの改善ではなく、テクノロジーと人間の関わり方を根本的に考え直し、全ての人にとって良い社会を実現する思想です。</p>
+                
+                <h3>UXインテリジェンスとは</h3>
+                
+                <div class="definition-card">
+                    <strong>定義</strong>
+                    「テクノロジーとユーザーの関係性を知性的に設計することで、個人の幸福度を高め、社会全体の良好な循環を実現する」という考え方。
+                </div>
+                
+                <h3>UXインテリジェンスが必要とされる背景</h3>
+                <ul class="checklist">
+                    <li>テクノロジーの急速な進化</li>
+                    <li>AIやビッグデータの悪用のリスク</li>
+                    <li>個人情報保護やプライバシーへの配慮の必要性</li>
+                    <li>デジタルデバイドや格差の拡大</li>
+                </ul>
+                
+                <h3>UXインテリジェンスが実現するあるべき社会像</h3>
+                
+                <div class="definition-card">
+                    <strong>1. UX選択の自由</strong>
+                    ユーザーが自分たちのニーズに合わせて、複数の体験選択肢から自由に選べる社会
+                </div>
+                
+                <div class="definition-card">
+                    <strong>2. 多様な自由の調和</strong>
+                    個人の自由とプライバシーを尊重しながら、社会全体の利益も実現する社会
+                </div>
+                
+                <div class="definition-card">
+                    <strong>3. テクノロジーの民主化</strong>
+                    テクノロジーが一部の企業や人々に独占されるのではなく、全員がその恩恵を受けられる社会
+                </div>
+                
+                <div class="tip-box">
+                    <h4>覚えやすいコツ</h4>
+                    <p>「UXはビジネスの成功だけでなく、社会全体の幸福度を高める」と覚えましょう。これがUXインテリジェンスの本質です。</p>
+                </div>
+            </section>
+            
+            <!-- 重要ワード -->
+            <section class="section">
+                <h2>🔑 重要ワード</h2>
+                <div class="keyword-box">
+                    <h4>W2で学んだ重要な言葉</h4>
+                    <div class="keyword-list">
+                        <span class="keyword-tag">UXデザイン</span>
+                        <span class="keyword-tag">Design Thinking</span>
+                        <span class="keyword-tag">Human-Centered Design</span>
+                        <span class="keyword-tag">UXグロース</span>
+                        <span class="keyword-tag">アフターデジタル</span>
+                        <span class="keyword-tag">バリュージャーニー</span>
+                        <span class="keyword-tag">グロースチーム</span>
+                        <span class="keyword-tag">UXインテリジェンス</span>
+                        <span class="keyword-tag">UX選択の自由</span>
+                        <span class="keyword-tag">多様な自由の調和</span>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- チェックリスト -->
+            <section class="section">
+                <h2>✅ W2の学習チェックリスト</h2>
+                <ul class="checklist">
+                    <li>UXデザインの基本的な考え方を3つ以上述べられる</li>
+                    <li>Design Thinkingと HCDの違いを説明できる</li>
+                    <li>UXデザインのプロセス（リサーチ→要件定義→設計→評価→改善）を説明できる</li>
+                    <li>UXグロースの3つのレベル（全社・事業・個別サービス）の違いを説明できる</li>
+                    <li>アフターデジタル時代のビジネスモデル変化を理解している</li>
+                    <li>UXインテリジェンスの定義と実現すべき社会像を述べられる</li>
+                    <li>UXがビジネス成功だけでなく、社会的な価値を生むことを理解している</li>
+                </ul>
+            </section>
+            
+            <!-- サマリー -->
+            <section class="section">
+                <div class="summary-box">
+                    <h4>📌 W2のまとめ（5つの要点）</h4>
+                    <ol style="margin-left: 20px;">
+                        <li><strong>UXデザインは反復的プロセス</strong> — リサーチ→設計→評価を繰り返す中で、ユーザーニーズとビジネスを調和させる</li>
+                        <li><strong>Design ThinkingとHCDが基本</strong> — 共感と理解から始まり、ユーザー中心で問題を解決する</li>
+                        <li><strong>UXグロースは3段階</strong> — 全社的変革から個別サービスの高速改善まで、複数レベルで実行される</li>
+                        <li><strong>アフターデジタル時代</strong> — 顧客体験がビジネスモデルの中心であり、継続的な改善が必須</li>
+                        <li><strong>UXインテリジェンスは社会的責任</strong> — UXは単なるビジネス最適化ではなく、全ての人の幸福度向上を目指す</li>
+                    </ol>
+                </div>
+            </section>
+            
+            <!-- 次週予告 -->
+            <section class="section">
+                <div class="next-week">
+                    <p>次週（W3）は「Human-Centered Design + Design Thinking」について詳しく学びます。<br>
+                    具体的な実行プロセスと事例を見ていきましょう！</p>
+                </div>
+            </section>
+        </div>
+        
+        <div class="footer">
+            <p>📚 UX学習プログラム Week 2/7</p>
+            <p style="margin-top: 10px; color: #999; font-size: 0.9em;">最終更新: 2026年3月</p>
+        </div>
+    </div>
+</body>
+</html>

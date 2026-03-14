@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W6: UXリサーチ + ユーザー理解</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.8;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .week-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 84%;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .section h2 {
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        .section h3 {
+            font-size: 1.4em;
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+        
+        .definition-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .definition-card:hover {
+            transform: translateX(5px);
+        }
+        
+        .definition-card strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+        
+        .tip-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-left: 4px solid #ff9500;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .tip-box h4 {
+            color: #ff6b00;
+            margin-bottom: 10px;
+        }
+        
+        .tip-box h4:before {
+            content: "💡 ";
+            margin-right: 10px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .comparison-table tr:hover {
+            background: #f9f9f9;
+        }
+        
+        .stage-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #0284c7;
+            border-radius: 8px;
+        }
+        
+        .stage-box strong {
+            color: #0284c7;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+        
+        .keyword-box {
+            background: linear-gradient(135deg, #e0e7ff 0%, #f3e7e9 100%);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .keyword-box h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        
+        .keyword-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .keyword-tag {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .keyword-tag:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .summary-box {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            border-left: 4px solid #4ade80;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .summary-box h4 {
+            color: #22863a;
+            margin-bottom: 10px;
+        }
+        
+        .checklist {
+            list-style: none;
+            margin: 15px 0;
+        }
+        
+        .checklist li {
+            padding: 10px;
+            margin: 8px 0;
+            background: white;
+            border-left: 3px solid #667eea;
+            border-radius: 4px;
+        }
+        
+        .checklist li:before {
+            content: "☐ ";
+            margin-right: 10px;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .next-week {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="week-badge">📚 6週目</div>
+            <h1>UXリサーチ + ユーザー理解</h1>
+            <p style="font-size: 1.1em; margin-top: 15px;">データと共感によるユーザー理解を深める</p>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        
+        <div class="content">
+            <!-- ミッション -->
+            <section class="section">
+                <h2>🎯 この週のミッション</h2>
+                <p>定量調査と定性調査、行動データ分析を通じてユーザーを多角的に理解し、ペルソナやカスタマージャーニーマップなどのモデルを作成することで、ユーザー中心のUXデザインの基礎を構築します。</p>
+            </section>
+            
+            <!-- UXリサーチ概要 -->
+            <section class="section">
+                <h2>🔍 UXリサーチとは</h2>
+                <p>UXリサーチは、ユーザーのニーズ、行動、感情を理解するための系統的な調査です。定量的・定性的なデータを組み合わせることで、より正確な洞察が得られます。</p>
+                
+                <h3>UXリサーチの位置づけ</h3>
+                <div class="definition-card">
+                    <strong>定義</strong>
+                    「ユーザーの行動、ニーズ、価値観を理解するための調査研究。定量的データ（アンケートなど）と定性的データ（インタビューなど）を組み合わせて行う」
+                </div>
+                
+                <h3>UXリサーチにおいて重要な視点・考え方</h3>
+                <ul class="checklist">
+                    <li><strong>ユーザーの声を聴く</strong>：何を言っているか、何を考えているか、何を感じているかを理解</li>
+                    <li><strong>観察する</strong>：ユーザーが実際に何をしているかを見る</li>
+                    <li><strong>行動を記録する</strong>：デジタル行動ログなどの客観的データを分析</li>
+                    <li><strong>複合的アプローチ</strong>：定量と定性の両方を組み合わせる</li>
+                    <li><strong>継続的改善</strong>：リサーチは一度ではなく、継続的に実施する</li>
+                </ul>
+                
+                <div class="tip-box">
+                    <h4>覚えやすいコツ</h4>
+                    <p>「UXリサーチ = 聴く + 観察する + 記録する」と覚えましょう。複数の調査方法を組み合わせることで、ユーザーの全体像が見えてきます。</p>
+                </div>
+            </section>
+            
+            <!-- 定量調査 -->
+            <section class="section">
+                <h2>📊 定量調査</h2>
+                <p>定量調査は、ユーザーの思考や行動を「数字」で把握する手法です。統計的に信頼度の高い結果が得られます。</p>
+                
+                <h3>定量調査とは</h3>
+                <div class="definition-card">
+                    <strong>定義</strong>
+                    「ユーザーの思考や行動を量的に把握する調査。アンケートやA/Bテストなどにより、統計的に分析可能なデータを収集する」
+                </div>
+                
+                <h3>定量調査の主要な手法</h3>
+                
+                <div class="stage-box">
+                    <strong>アンケート調査</strong>
+                    大量のユーザーに対して、統一された質問を行い、回答を集計・分析する。サンプルサイズが大きいほど信頼度が高い。
+                </div>
+                
+                <div class="stage-box">
+                    <strong>クロス集計</strong>
+                    複数の質問項目の組み合わせを分析し、ユーザーセグメント間の違いを明らかにする。例：年代別の利用率の違い。
+                </div>
+                
+                <div class="stage-box">
+                    <strong>サンプリング</strong>
+                    全数調査が難しい場合、代表的なサンプルを抽出して調査する。サンプルの選択方法が重要。
+                </div>
+                
+                <h3>定量調査の設計方法</h3>
+                <ul class="checklist">
+                    <li><strong>自由回答法</strong>：回答者が自由に記述する形式。深い情報が得られるが、集計が困難</li>
+                    <li><strong>SA（Single Answer）</strong>：1つの選択肢のみ選ぶ形式</li>
+                    <li><strong>MA（Multiple Answer）</strong>：複数の選択肢を選ぶ形式</li>
+                    <li><strong>プリコード法</strong>：選択肢をあらかじめ決めておく方法</li>
+                </ul>
+                
+                <h3>定量調査において重要な視点</h3>
+                <ul class="checklist">
+                    <li><strong>設問の中立性</strong>：回答を誘導しない質問設計</li>
+                    <li><strong>サンプル数</strong>：統計的信頼性を確保するのに十分なサンプルサイズ</li>
+                    <li><strong>回答率</strong>：回答率が低いと、バイアスが生じる可能性</li>
+                    <li><strong>分析の視点</strong>：相関関係と因果関係を区別する</li>
+                </ul>
+            </section>
+            
+            <!-- 定性調査 -->
+            <section class="section">
+                <h2>💬 定性調査</h2>
+                <p>定性調査は、ユーザーの思考や行動を「言葉や行動」で把握する手法です。深い洞察が得られます。</p>
+                
+                <h3>定性調査とは</h3>
+                <div class="definition-card">
+                    <strong>定義</strong>
+                    「ユーザーの思考や行動を定性的に把握する調査。インタビューやフィールドワークなどにより、ユーザーの本当のニーズや行動パターンを発見する」
+                </div>
+                
+                <h3>定性調査の主要な手法</h3>
+                
+                <div class="stage-box">
+                    <strong>インタビュー</strong>
+                    ユーザーと直接対話し、詳細な情報を得る。半構造化インタビューが一般的。
+                </div>
+                
+                <div class="stage-box">
+                    <strong>グループインタビュー</strong>
+                    複数のユーザーを集めて、グループディスカッションから集団力学による洞察を得る。
+                </div>
+                
+                <div class="stage-box">
+                    <strong>ユーザー観察（フィールドワーク）</strong>
+                    実際の使用環境でユーザーの行動を観察する。文脈に基づくニーズが発見できる。
+                </div>
+                
+                <div class="stage-box">
+                    <strong>エスノグラフィー</strong>
+                    長期間にわたってユーザーの生活や行動を詳細に観察・記録する。文化人類学的なアプローチ。
+                </div>
+                
+                <div class="stage-box">
+                    <strong>ダイアリー法</strong>
+                    ユーザーに日記形式で行動や感情を記録してもらう。時系列での変化を追跡できる。
+                </div>
+                
+                <h3>定性調査の設計方法</h3>
+                <ul class="checklist">
+                    <li><strong>リクルーティング</strong>：適切なユーザーペルソナを特定し、参加者を募集する</li>
+                    <li><strong>インタビューガイド</strong>：質問項目を事前に準備するが、柔軟に対応</li>
+                    <li><strong>KJ法</strong>：インタビュー結果を分類・整理し、パターンを発見する</li>
+                </ul>
+                
+                <div class="tip-box">
+                    <h4>覚えやすいコツ</h4>
+                    <p>「定性調査は『なぜ？』に答える」と覚えましょう。数字にはできない、ユーザーの深い動機や背景にある課題を発見することが、定性調査の価値です。</p>
+                </div>
+            </section>
+            
+            <!-- 行動データ分析 -->
+            <section class="section">
+                <h2>📈 行動データ分析</h2>
+                <p>行動データ分析は、ユーザーの実際のデジタル行動ログから、客観的なパターンを発見します。</p>
+                
+                <h3>行動データ分析とは</h3>
+                <div class="definition-card">
+                    <strong>定義</strong>
+                    「ユーザーIDに紐づく行動データ（ページビュー、クリック、滞在時間など）を分析し、ユーザーの一連の行動の流れを把握する手法」
+                </div>
+                
+                <h3>行動データ分析の主要な手法</h3>
+                
+                <div class="stage-box">
+                    <strong>行動フロー</strong>
+                    ユーザーがどのページからどのページに移動するかの流れを可視化する。ボトルネック発見に有効。
+                </div>
+                
+                <div class="stage-box">
+                    <strong>シーケンス分析</strong>
+                    ユーザーの行動パターンを一連のシーケンスとして分析する。共通のパターンを発見できる。
+                </div>
+                
+                <div class="stage-box">
+                    <strong>行動ギャップ</strong>
+                    ユーザーの「言ったこと」と「実際にしたこと」の乖離を発見する。本当のニーズ把握に重要。
+                </div>
+                
+                <div class="stage-box">
+                    <strong>ペインポイント</strong>
+                    ユーザーが困っている箇所。直帰率が高いページや、エラー発生箇所など。
+                </div>
+                
+                <div class="stage-box">
+                    <strong>ゲインポイント</strong>
+                    ユーザーが満足している箇所。滞在時間が長いページや、コンバージョン箇所など。
+                </div>
+                
+                <h3>行動データをUXデザインに活用する手法</h3>
+                <ul class="checklist">
+                    <li><strong>A/Bテスト</strong>：2つの異なるデザイン案を比較し、どちらがユーザーの行動に影響するか測定</li>
+                    <li><strong>ヒートマップ</strong>：ユーザーがどこをクリックしているかを可視化</li>
+                    <li><strong>ファネル分析</strong>：各ステップでのコンバージョン率を分析</li>
+                </ul>
+            </section>
+            
+            <!-- ユーザーモデリング -->
+            <section class="section">
+                <h2>👥 ユーザーモデリング</h2>
+                <p>ユーザーモデリングは、リサーチ結果から得られたユーザーの情報を体系的に整理し、設計の指針とします。</p>
+                
+                <h3>主要なモデリング手法</h3>
+                
+                <div class="stage-box">
+                    <strong>ペルソナ</strong>
+                    ターゲットユーザーを代表するの架空のキャラクター。年齢、職業、興味、ニーズなどを詳細に記述。設計判断の指針となる。
+                </div>
+                
+                <div class="stage-box">
+                    <strong>カスタマージャーニーマップ</strong>
+                    ユーザーが製品・サービスと関わる一連のプロセスを時系列で可視化。各段階でのユーザーの感情や課題を示す。
+                </div>
+                
+                <div class="stage-box">
+                    <strong>UXカーブ</strong>
+                    ユーザーの体験の質を時系列で表現したグラフ。満足度が高い時点と低い時点を可視化し、改善機会を発見。
+                </div>
+                
+                <div class="stage-box">
+                    <strong>タスク分析</strong>
+                    ユーザーがタスクを完了するために必要な行動ステップを詳細に分解する。各ステップでの認知負荷を把握。
+                </div>
+                
+                <div class="stage-box">
+                    <strong>KA法（Key Activities）</strong>
+                    タスク分析と同様に、ユーザーの活動を細分化して、どこで支援が必要かを明確にする。
+                </div>
+                
+                <div class="stage-box">
+                    <strong>エンパシーマップ</strong>
+                    ペルソナが「見ているもの」「聞いているもの」「話しているもの」「考えていること」「感じていることなど」を可視化。深い共感を生み出す。
+                </div>
+                
+                <div class="stage-box">
+                    <strong>ジョブ理論</strong>
+                    ユーザーが製品やサービスを使用する「目的」（ジョブ）に焦点を当てる。製品の機能ではなく、ユーザーが解決したい課題に基づくセグメンテーション。
+                </div>
+            </section>
+            
+            <!-- ユーザー要求定義 -->
+            <section class="section">
+                <h2>🎯 ユーザー要求定義</h2>
+                <p>ユーザー要求定義は、ユーザーモデリングの結果から、設計の指針となる要件を抽出します。</p>
+                
+                <h3>ユーザー要求の種類</h3>
+                
+                <div class="stage-box">
+                    <strong>現在の利用状況の把握（AS-IS分析）</strong>
+                    ユーザーが現在、どのような方法で課題に対処しているか、現在の体験はどうか。既存の行動パターンを理解。
+                </div>
+                
+                <div class="stage-box">
+                    <strong>理想の利用状況の想定（TO-BE分析）</strong>
+                    ユーザーが理想とする体験はどのようなものか。制約を考慮せず、理想の状態を描く。
+                </div>
+                
+                <h3>理想の利用状況を発想するプロセス</h3>
+                <ul class="checklist">
+                    <li><strong>バリュープロポジション</strong>：「ユーザーが達成したい目標」と「私たちの提供する価値」の交点を見つける</li>
+                    <li><strong>ユーザーストーリーマッピング</strong>：「ユーザーとして、私は〇〇したい。なぜなら△△だから」という形で要求を言語化</li>
+                    <li><strong>ワークショップ</strong>：デザイナー、PM、ステークホルダーで、理想の体験を共創する</li>
+                </ul>
+                
+                <div class="tip-box">
+                    <h4>覚えやすいコツ</h4>
+                    <p>「現在（AS-IS）→ 理想（TO-BE）→ ギャップを埋める設計」と覚えましょう。ユーザー要求定義は、ユーザーの現在と理想の乖離を理解し、その間を埋めるための基礎となります。</p>
+                </div>
+            </section>
+            
+            <!-- リサーチから設計までの流れ -->
+            <section class="section">
+                <h2>🔗 リサーチから設計への流れ</h2>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>段階</th>
+                            <th>活動</th>
+                            <th>成果物</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1. 定量調査</strong></td>
+                            <td>アンケート、統計分析</td>
+                            <td>数字による全体的なトレンド</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. 定性調査</strong></td>
+                            <td>インタビュー、観察</td>
+                            <td>ユーザーの本当のニーズ、背景</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. 行動データ分析</strong></td>
+                            <td>ログ分析、A/Bテスト</td>
+                            <td>実際の行動パターン、ボトルネック</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4. ユーザーモデリング</strong></td>
+                            <td>ペルソナ作成、ジャーニーマップ作成</td>
+                            <td>ユーザーの代表像、体験の流れ</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5. ユーザー要求定義</strong></td>
+                            <td>AS-IS/TO-BE分析、ユーザーストーリー</td>
+                            <td>設計の要件、ユーザーストーリー</td>
+                        </tr>
+                        <tr>
+                            <td><strong>6. 設計実行</strong></td>
+                            <td>ワイヤーフレーム、プロトタイプ作成</td>
+                            <td>実装可能な設計案</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+            
+            <!-- 重要ワード -->
+            <section class="section">
+                <h2>🔑 重要ワード</h2>
+                <div class="keyword-box">
+                    <h4>W6で学んだ重要な言葉</h4>
+                    <div class="keyword-list">
+                        <span class="keyword-tag">UXリサーチ</span>
+                        <span class="keyword-tag">定量調査</span>
+                        <span class="keyword-tag">定性調査</span>
+                        <span class="keyword-tag">アンケート</span>
+                        <span class="keyword-tag">インタビュー</span>
+                        <span class="keyword-tag">観察</span>
+                        <span class="keyword-tag">KJ法</span>
+                        <span class="keyword-tag">行動データ分析</span>
+                        <span class="keyword-tag">行動フロー</span>
+                        <span class="keyword-tag">ペインポイント</span>
+                        <span class="keyword-tag">ゲインポイント</span>
+                        <span class="keyword-tag">ペルソナ</span>
+                        <span class="keyword-tag">カスタマージャーニーマップ</span>
+                        <span class="keyword-tag">エンパシーマップ</span>
+                        <span class="keyword-tag">ユーザーストーリー</span>
+                        <span class="keyword-tag">バリュープロポジション</span>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- チェックリスト -->
+            <section class="section">
+                <h2>✅ W6の学習チェックリスト</h2>
+                <ul class="checklist">
+                    <li>UXリサーチの目的と位置づけを説明できる</li>
+                    <li>定量調査と定性調査の違いと相補性を述べられる</li>
+                    <li>定量調査の主要な手法（アンケート、クロス集計など）を説明できる</li>
+                    <li>定性調査の主要な手法（インタビュー、観察、エスノグラフィーなど）を説明できる</li>
+                    <li>行動データ分析の手法を述べられる</li>
+                    <li>ペルソナの役割と作成方法を説明できる</li>
+                    <li>カスタマージャーニーマップの構成要素を述べられる</li>
+                    <li>AS-IS/TO-BE分析の意義を理解している</li>
+                    <li>ユーザーストーリーの形式と役割を説明できる</li>
+                    <li>リサーチから設計までの全体的な流れを理解している</li>
+                </ul>
+            </section>
+            
+            <!-- サマリー -->
+            <section class="section">
+                <div class="summary-box">
+                    <h4>📌 W6のまとめ（5つの要点）</h4>
+                    <ol style="margin-left: 20px;">
+                        <li><strong>複合的リサーチアプローチ</strong> — 定量と定性、行動データを組み合わせることで、ユーザーの全体像が見える</li>
+                        <li><strong>定量調査は「何か、どのくらいか」</strong> — 統計的な信頼度の高い結果を得られるが、背景や理由は不明</li>
+                        <li><strong>定性調査は「なぜか」</strong> — 深いニーズと動機を発見できるが、サンプル数は限定的</li>
+                        <li><strong>行動データは客観的真実</strong> — ユーザーが「言ったこと」ではなく、「実際にしたこと」を明らかにする</li>
+                        <li><strong>ユーザーモデリングが設計の指針</strong> — リサーチ結果をペルソナやジャーニーマップなどのモデルに落とし込むことで、全員が共通のユーザー理解を持つことができる</li>
+                    </ol>
+                </div>
+            </section>
+            
+            <!-- 次週予告 -->
+            <section class="section">
+                <div class="next-week">
+                    <p>次週（W7・最終週）は「ユーザーモデリング + UXデザイン具現化 + UXデザイン評価 + UX運用」を学びます。<br>
+                    リサーチから実装、評価、改善まで、UX全体のサイクルを完成させましょう！</p>
+                </div>
+            </section>
+        </div>
+        
+        <div class="footer">
+            <p>📚 UX学習プログラム Week 6/7</p>
+            <p style="margin-top: 10px; color: #999; font-size: 0.9em;">最終更新: 2026年3月</p>
+        </div>
+    </div>
+</body>
+</html>

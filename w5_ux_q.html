@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W5: クイズ - 行動経済学 + 認知心理学 + 文化人類学 + 人間工学 + ユーザビリティ + アクセシビリティ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.8;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .week-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        
+        .progress-info {
+            background: rgba(0,0,0,0.1);
+            padding: 15px 30px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .quiz-container {
+            margin-bottom: 30px;
+        }
+        
+        .question {
+            background: #f5f7fa;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+            border-radius: 8px;
+        }
+        
+        .question h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .question p {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .option {
+            padding: 15px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .option input[type="radio"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        .option label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+        
+        .option.selected-correct {
+            background: #d4edda;
+            border-color: #28a745;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.3);
+        }
+        
+        .option.selected-incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.3);
+        }
+        
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .feedback.show {
+            display: block;
+        }
+        
+        .feedback.correct {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+        
+        .feedback.incorrect {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            color: #721c24;
+        }
+        
+        .feedback strong {
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+        
+        .submit-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .score-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            margin-top: 40px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .score-section.show {
+            display: block;
+        }
+        
+        .score-number {
+            font-size: 3em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .score-message {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+        }
+        
+        .reset-btn {
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.2s;
+        }
+        
+        .reset-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .question {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="week-badge">🎯 W5 クイズ</div>
+            <h1>行動経済学 + 認知心理学 + 文化人類学<br>+ 人間工学 + ユーザビリティ + アクセシビリティ</h1>
+        </div>
+        <div class="progress-info">
+            <span id="progress">問題 1/14</span>
+        </div>
+        
+        <div class="content" id="quizContent">
+            <!-- Questions will be inserted here -->
+        </div>
+        
+        <div class="score-section" id="scoreSection">
+            <h2>🎉 クイズ完了！</h2>
+            <div class="score-number"><span id="scoreValue">0</span>/<span id="totalQuestions">14</span></div>
+            <div class="score-message" id="scoreMessage"></div>
+            <button class="reset-btn" onclick="resetQuiz()">もう一度やる</button>
+        </div>
+        
+        <div class="footer">
+            <p>📚 UX学習プログラム Week 5/7 クイズ</p>
+        </div>
+    </div>
+    
+    <script>
+        const quizData = [
+            {
+                question: "行動経済学の基本的な考え方として最も正しいのはどれですか？",
+                options: [
+                    { text: "人間の意思決定は常に合理的である", correct: false },
+                    { text: "人間の意思決定は必ずしも合理的ではなく、認知バイアスや感情に影響される", correct: true },
+                    { text: "経済的な利益だけが判断基準である", correct: false },
+                    { text: "人間の行動は予測不可能である", correct: false }
+                ],
+                explanation: "行動経済学は、人間がプロスペクト理論やアンカリング効果などのバイアスに影響されることを明らかにします。このことを理解してUXを設計することで、より効果的な体験が生まれます。"
+            },
+            {
+                question: "プロスペクト理論について、最も正しい説明はどれですか？",
+                options: [
+                    { text: "人間は利得より損失をより大きく感じる傾向がある", correct: true },
+                    { text: "人間は損失より利得をより大きく感じる傾向がある", correct: false },
+                    { text: "人間は利得と損失を同じように評価する", correct: false },
+                    { text: "人間は利得の可能性だけを考慮する", correct: false }
+                ],
+                explanation: "プロスペクト理論では、人間は同じ金額の利得より損失をより大きく感じます。UXデザインでは、この心理を活用して、『失うこと』を強調することで、ユーザーの行動を促進できます。"
+            },
+            {
+                question: "アンカリング効果について、正しい例はどれですか？",
+                options: [
+                    { text: "最初の印象がその後の判断に影響を与えない", correct: false },
+                    { text: "『定価10,000円から50%割引』と『5,000円』では、前者の方が安く感じられる", correct: true },
+                    { text: "複数回見た情報は信頼度が下がる", correct: false },
+                    { text: "価格は常に客観的に判断される", correct: false }
+                ],
+                explanation: "アンカリング効果は、最初に提示された情報（この場合は定価10,000円）が、その後の判断に大きな影響を与える現象です。マーケティングやUXデザインで頻繁に活用されます。"
+            },
+            {
+                question: "認知心理学の『ヤコブの法則』について、最も正しいのはどれですか？",
+                options: [
+                    { text: "ユーザーは新しいデザインを常に好む", correct: false },
+                    { text: "ユーザーは、他のサイトで見慣れた表現や操作方法を期待する", correct: true },
+                    { text: "ユーザーの期待は常に変わる", correct: false },
+                    { text: "ユーザーは複雑なUIを好む", correct: false }
+                ],
+                explanation: "ヤコブの法則は、ユーザーが既に知っている操作方法や表現を使うことで、学習コストを減らし、ユーザビリティを向上させる原則です。"
+            },
+            {
+                question: "『ヒックの法則』について、最も正しいのはどれですか？",
+                options: [
+                    { text: "選択肢が少ないほど、意思決定に時間がかかる", correct: false },
+                    { text: "選択肢が多いほど、意思決定に要する時間が長くなる", correct: true },
+                    { text: "選択肢の数は意思決定時間に影響しない", correct: false },
+                    { text: "選択肢が10個以上あれば最適である", correct: false }
+                ],
+                explanation: "ヒックの法則は、選択肢が多すぎると、ユーザーの意思決定が遅延することを示しています。UXデザインでは、必要な選択肢に絞り込むことが重要です。"
+            },
+            {
+                question: "認知負荷について、最も正しいのはどれですか？",
+                options: [
+                    { text: "ユーザーの記憶容量は無限である", correct: false },
+                    { text: "複雑な操作や多数の選択肢は、認知負荷を増加させ、ユーザー体験を悪化させる", correct: true },
+                    { text: "情報が多いほどユーザーは満足する", correct: false },
+                    { text: "認知負荷はUXに影響しない", correct: false }
+                ],
+                explanation: "人間の記憶容量は限定されています。認知負荷を減らすため、不要な情報を排除し、シンプルで段階的な情報提示が重要です。"
+            },
+            {
+                question: "『ドハティのしきい値』について、最も正しいのはどれですか？",
+                options: [
+                    { text: "コンピュータの応答時間が1秒以上の場合、ユーザーは即座に反応したと認識する", correct: false },
+                    { text: "コンピュータの応答時間が400ミリ秒以内の場合、ユーザーは即座に反応したと認識する", correct: true },
+                    { text: "応答時間はユーザー体験に影響しない", correct: false },
+                    { text: "応答時間が長いほどユーザーは満足する", correct: false }
+                ],
+                explanation: "ドハティのしきい値は、400ミリ秒以内の応答時間でユーザーは『即座に反応した』と感じるという研究結果です。ウェブやアプリの応答速度最適化の重要な指標です。"
+            },
+            {
+                question: "文化人類学がUXデザインに与える影響として最も正しいのはどれですか？",
+                options: [
+                    { text: "全ての文化で同じUIが通用する", correct: false },
+                    { text: "文化によって色の意味や行動パターンが異なり、それを理解することが重要", correct: true },
+                    { text: "文化的背景はUXに影響しない", correct: false },
+                    { text: "言語を翻訳するだけで十分である", correct: false }
+                ],
+                explanation: "文化人類学は、異なる文化背景を持つユーザーのニーズと価値観を理解するために重要です。グローバルUXでは、言語翻訳だけでなく、カルチュラライズが必須です。"
+            },
+            {
+                question: "人間工学の定義として最も正しいのはどれですか？",
+                options: [
+                    { text: "コンピュータの技術仕様を研究する学問", correct: false },
+                    { text: "人間の身体的・認知的特性を理解し、それに合わせた製品やシステムを設計する学問", correct: true },
+                    { text: "美しいデザインを追求する学問", correct: false },
+                    { text: "マーケティング戦略を研究する学問", correct: false }
+                ],
+                explanation: "人間工学は、人間の身体的特性（寸法、動きの範囲など）を理解し、快適で安全で効率的な相互作用を目指す設計を行う学問です。"
+            },
+            {
+                question: "ユーザビリティの構成要素として挙げられていないのはどれですか？",
+                options: [
+                    { text: "学習しやすさ", correct: false },
+                    { text: "効率性", correct: false },
+                    { text: "マーケティング効果", correct: true },
+                    { text: "間違いにくさ", correct: false }
+                ],
+                explanation: "ユーザビリティの構成要素は、学習しやすさ、効率性、記憶しやすさ、間違いにくさ、主観的満足度です。マーケティング効果はユーザビリティの要素ではありません。"
+            },
+            {
+                question: "アクセシビリティの定義として最も正しいのはどれですか？",
+                options: [
+                    { text: "障害者だけのための特別な機能", correct: false },
+                    { text: "年齢や能力に関わらず、全ての人が等しく製品やサービスを使用できるようにすること", correct: true },
+                    { text: "アプリケーション操作のしやすさ", correct: false },
+                    { text: "ウェブサイトの検索機能", correct: false }
+                ],
+                explanation: "アクセシビリティは、障害者だけでなく、高齢者や一時的な制限を持つユーザーも含む、全員のためのデザインです。"
+            },
+            {
+                question: "WCAG（ウェブコンテンツアクセシビリティガイドライン）の4つの原則『POUR』について、正しい説明はどれですか？",
+                options: [
+                    { text: "Perceivable・Operable・Understandable・Robust", correct: true },
+                    { text: "Plan・Organize・Update・Review", correct: false },
+                    { text: "Provide・Operate・Use・Release", correct: false },
+                    { text: "Presentation・Operation・User・Response", correct: false }
+                ],
+                explanation: "WCAGの4つの原則は、知覚可能性（Perceivable）、操作可能性（Operable）、理解可能性（Understandable）、堅牢性（Robust）です。この枠組みでアクセシビリティを評価します。"
+            },
+            {
+                question: "ユーザビリティとアクセシビリティの関係について、最も正しいのはどれですか？",
+                options: [
+                    { text: "ユーザビリティとアクセシビリティは無関係である", correct: false },
+                    { text: "アクセシビリティはユーザビリティの基礎。全員が使用できることが、優れたユーザビリティの前提条件", correct: true },
+                    { text: "ユーザビリティはアクセシビリティを包含する", correct: false },
+                    { text: "両者は同じ意味である", correct: false }
+                ],
+                explanation: "アクセシビリティはユーザビリティの基盤です。全ての人がアクセスでき、使用できることが、優れたユーザビリティを実現するための前提条件となります。"
+            },
+            {
+                question: "認知心理学の『シグニファイア』について、最も正しいのはどれですか？",
+                options: [
+                    { text: "ボタンが押せることを示す視覚的なヒント（例：立体的に見えるボタン）", correct: true },
+                    { text: "プログラムの命令文", correct: false },
+                    { text: "ユーザーからのサイン", correct: false },
+                    { text: "検索機能", correct: false }
+                ],
+                explanation: "シグニファイアは、何かできることを示す視覚的またはテキスト的なヒントです。例えば、ボタンに『クリック』と書かれていたり、立体的に見えたりすることで、押せることを示します。"
+            }
+        ];
+        
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+        
+        function initQuiz() {
+            renderQuestion();
+        }
+        
+        function renderQuestion() {
+            const container = document.getElementById('quizContent');
+            const question = quizData[currentQuestion];
+            
+            let html = `
+                <div class="quiz-container">
+                    <div class="question">
+                        <h3>Q${currentQuestion + 1}. ${question.question}</h3>
+                        <div class="options" id="optionsContainer">
+            `;
+            
+            question.options.forEach((option, index) => {
+                html += `
+                    <div class="option" id="option-${index}">
+                        <label>
+                            <input type="radio" name="answer" value="${index}" onchange="selectOption(${index})">
+                            ${option.text}
+                        </label>
+                    </div>
+                `;
+            });
+            
+            html += `
+                        </div>
+                        <div class="feedback" id="feedback"></div>
+                        <button class="submit-btn" id="submitBtn" onclick="submitAnswer()">回答する</button>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            updateProgress();
+        }
+        
+        function selectOption(index) {
+            const options = document.querySelectorAll('.option input[type="radio"]');
+            options.forEach((opt, i) => {
+                if (i === index) {
+                    opt.checked = true;
+                }
+            });
+        }
+        
+        function submitAnswer() {
+            if (answered) return;
+            
+            const selected = document.querySelector('input[name="answer"]:checked');
+            if (!selected) {
+                alert('選択してください');
+                return;
+            }
+            
+            answered = true;
+            const answerIndex = parseInt(selected.value);
+            const question = quizData[currentQuestion];
+            const isCorrect = question.options[answerIndex].correct;
+            
+            if (isCorrect) {
+                score++;
+                document.getElementById(`option-${answerIndex}`).classList.add('selected-correct');
+            } else {
+                document.getElementById(`option-${answerIndex}`).classList.add('selected-incorrect');
+                const correctIndex = question.options.findIndex(opt => opt.correct);
+                document.getElementById(`option-${correctIndex}`).classList.add('correct');
+            }
+            
+            const feedback = document.getElementById('feedback');
+            feedback.classList.add('show');
+            feedback.classList.add(isCorrect ? 'correct' : 'incorrect');
+            feedback.innerHTML = `
+                <strong>${isCorrect ? '✓ 正解です！' : '✗ 不正解です'}</strong>
+                ${question.explanation}
+            `;
+            
+            const btn = document.getElementById('submitBtn');
+            btn.textContent = currentQuestion === quizData.length - 1 ? '完了' : '次へ';
+            btn.onclick = nextQuestion;
+        }
+        
+        function nextQuestion() {
+            currentQuestion++;
+            answered = false;
+            
+            if (currentQuestion >= quizData.length) {
+                showScore();
+            } else {
+                renderQuestion();
+            }
+        }
+        
+        function updateProgress() {
+            document.getElementById('progress').textContent = `問題 ${currentQuestion + 1}/${quizData.length}`;
+        }
+        
+        function showScore() {
+            document.getElementById('quizContent').style.display = 'none';
+            const scoreSection = document.getElementById('scoreSection');
+            scoreSection.classList.add('show');
+            
+            document.getElementById('scoreValue').textContent = score;
+            document.getElementById('totalQuestions').textContent = quizData.length;
+            
+            let message = '';
+            const percentage = (score / quizData.length) * 100;
+            
+            if (percentage === 100) {
+                message = '🌟 完璧です！ユーザーの心理と身体特性を完全に理解できています。';
+            } else if (percentage >= 80) {
+                message = '👏 よくできました！包摂的なUXデザインへの理解が深まっています。';
+            } else if (percentage >= 60) {
+                message = '📚 基本は理解できています。各学問分野の関連性をより深く学びましょう。';
+            } else {
+                message = '🔍 もう一度資料を確認して、理解を深めましょう。';
+            }
+            
+            document.getElementById('scoreMessage').textContent = message;
+        }
+        
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answered = false;
+            document.getElementById('quizContent').style.display = 'block';
+            document.getElementById('scoreSection').classList.remove('show');
+            renderQuestion();
+        }
+        
+        // Initialize quiz
+        initQuiz();
+    </script>
+</body>
+</html>
